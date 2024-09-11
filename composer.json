@@ -1,8 +1,8 @@
 {
     "name": "wangta69/laravel_board",
     "description": "BBS bulletin board system",
-    "keywords": ["laravel", "bbs", "pondol" , "board", "게시판", "korea", "라라벨"],
-    "homepage": "https://www.onstory.fun/doc/programming/laravel/package.laravelboard",
+    "keywords": ["laravel", "market", "pondol" , "쇼핑몰", "mall", "독립형", "korea", "라라벨"],
+    "homepage": "https://mall.onstory.fund",
     "license": "MIT",
     "authors": [
       {
@@ -11,9 +11,10 @@
         "homepage": "https://www.onstory.fun"
       }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
       "php": ">=7.0.0",
+      "guzzlehttp/guzzle": "^7",
       "kyslik/column-sortable": "^6",
       "laravel/socialite": "^5",
       "tymon/jwt-auth": "^1",
@@ -23,7 +24,7 @@
     },
     "autoload": {
       "files": [
-        "src/Helper/helpers.php"
+        "src/app/Helper/helpers.php"
       ], "psr-4": {
         "Pondol\\Maarket\\": "src/"
       }
