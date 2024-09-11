@@ -18,9 +18,14 @@ cd example-app
 ```
 composer require wangta69/laravel_market
 ```
+
+
 1. config/auth.php
 
 ```
+
+php artisan storage:link
+
 ..........
 'providers' => [
   'users' => [

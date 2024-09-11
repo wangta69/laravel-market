@@ -28,7 +28,7 @@ class MarketServiceProvider extends ServiceProvider implements DeferrableProvide
     }
 
     $this->commands([
-      app\Console\InstallCommand::class,
+      Console\InstallCommand::class,
     ]);
   }
 
@@ -39,6 +39,6 @@ class MarketServiceProvider extends ServiceProvider implements DeferrableProvide
      */
     public function provides()
     {
-      return [app\Console\InstallCommand::class];
+      return [Console\InstallCommand::class];
     }
 }

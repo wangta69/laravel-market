@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Breeze\Console;
+namespace Pondol\Market\Console;
 
 use Illuminate\Filesystem\Filesystem;
 
