@@ -26,7 +26,7 @@
       "files": [
         "src/app/Helper/helpers.php"
       ], "psr-4": {
-        "Pondol\\Maarket\\": "src/"
+        "Pondol\\Market\\": "src/"
       }
     },
     "extra": {
