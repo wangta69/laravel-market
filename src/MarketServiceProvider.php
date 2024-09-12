@@ -3,7 +3,7 @@ namespace Pondol\Market;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-
+use Pondol\Market\Console\InstallCommand;
 class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
   /**
    * Register any application services.
@@ -24,15 +24,18 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
   {
 
 
-    \Log::info('boot');
-    \Log::info('$this->app->runningInConsole()');
-    if (! $this->app->runningInConsole()) {
-      return;
+    // \Log::info('boot');
+    // \Log::info('$this->app->runningInConsole()');
+    // // if (! $this->app->runningInConsole()) {
+    // //   return;
+    // // }
+    // \Log::info('next');
+    if ($this->app->runningInConsole()) {
+      $this->commands([
+        InstallCommand::class,
+        // Console\InstallCommand::class,
+      ]);
     }
-    \Log::info('next');
-    $this->commands([
-      Console\InstallCommand::class,
-    ]);
   }
 
   /**

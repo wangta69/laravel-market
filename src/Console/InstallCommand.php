@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class InstallCommand extends Command
 {
-  use InstallsBladeStack;
+  // use InstallsBladeStack;
 
   /**
    * The name and signature of the console command.
@@ -35,7 +35,7 @@ class InstallCommand extends Command
   public function handle()
   {
 
-    return $this->installBladeStack();
+    // return $this->installBladeStack();
 
   }
 
