@@ -4,7 +4,7 @@ namespace Pondol\Market;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class MarketServiceProvider extends ServiceProvider implements DeferrableProvider {
+class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
   /**
    * Register any application services.
    *
@@ -40,8 +40,8 @@ class MarketServiceProvider extends ServiceProvider implements DeferrableProvide
      *
      * @return array
      */
-    public function provides()
-    {
-      return [Console\InstallCommand::class];
-    }
+    // public function provides()
+    // {
+    //   return [Console\InstallCommand::class];
+    // }
 }
