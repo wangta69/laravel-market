@@ -12,6 +12,12 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
    */
   public function register()
   {
+    if ($this->app->runningInConsole()) {
+      $this->commands([
+        InstallCommand::class,
+        // Console\InstallCommand::class,
+      ]);
+    }
   }
 
   /**

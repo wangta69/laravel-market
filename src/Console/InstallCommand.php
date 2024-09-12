@@ -34,7 +34,7 @@ class InstallCommand extends Command
 
   public function handle()
   {
-
+    $this->info(" Install Laravel Market ");
     // return $this->installBladeStack();
 
   }
