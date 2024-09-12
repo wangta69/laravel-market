@@ -3,10 +3,10 @@
 namespace Pondol\Market\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
+// use Illuminate\Filesystem\Filesystem;
+// use Illuminate\Support\Str;
+// use Symfony\Component\Process\PhpExecutableFinder;
+// use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
 {
@@ -26,6 +26,11 @@ class InstallCommand extends Command
    */
   protected $description = 'Install the Market controllers and resources';
 
+
+  public function __construct()
+  {
+    parent::__construct();
+  }
 
   public function handle()
   {
