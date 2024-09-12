@@ -15,7 +15,7 @@ class MarketServiceProvider extends ServiceProvider implements DeferrableProvide
   }
 
   /**
-     * Bootstrap any application services.
+     * Bootstrap any application services.exi
      *
      * @return void
      */
@@ -23,10 +23,13 @@ class MarketServiceProvider extends ServiceProvider implements DeferrableProvide
   public function boot()
   {
 
+
+    \Log::info('boot');
+    \Log::info('$this->app->runningInConsole()');
     if (! $this->app->runningInConsole()) {
       return;
     }
-
+    \Log::info('next');
     $this->commands([
       Console\InstallCommand::class,
     ]);

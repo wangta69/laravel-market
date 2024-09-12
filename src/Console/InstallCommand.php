@@ -10,7 +10,7 @@ use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
 {
-  use InstallsInertiaStacks;
+  use InstallsBladeStack;
 
   /**
    * The name and signature of the console command.
