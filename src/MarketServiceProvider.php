@@ -1,7 +1,7 @@
 <?php
 namespace Pondol\Market;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
+// use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Pondol\Market\Console\InstallCommand;
 class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
