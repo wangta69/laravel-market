@@ -44,15 +44,15 @@ return [
     'kakao'=>false
   ],
   'template' => [
-    'layout' => 'default',
-    'main' => 'default',
+    'layout' => ['theme'=>'default'],
+    'main' => ['theme'=>'default'],
     'shop' => ['theme'=>'default', 'lists'=> 20],
     'cart' => ['theme'=>'default'],
-    'order' => 'default',
-    'userpage' => 'default',
+    'order' => ['theme'=>'default'],
+    'userpage' => ['theme'=>'default'],
     'search' => ['theme'=>'default', 'lists'=> 20],
-    'auth' => 'default',
-    'component' => 'default',
+    'auth' => ['theme'=>'default'],
+    'component' => ['theme'=>'default'],
     'ci' => 'logo.png',
   ],
   'banks' => [

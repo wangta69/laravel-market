@@ -55,7 +55,7 @@ class MarketAll extends Migration
         $table->string('addr1', '50')->comment('수신자 주소1');
         $table->string('addr2', '50')->nullable()->comment('수신자 주소2');
         $table->string('message', '200')->nullable()->comment('주문자 입력 메시지');
-        $table->bigInteger('courier')->nullable()->unsigned()>comment('배송업체코드 market_delivery_companies.id');
+        $table->bigInteger('courier')->nullable()->unsigned()->comment('배송업체코드 market_delivery_companies.id');
         $table->string('invoice_no', '20')->nullable()->comment('송장번호(택배번호)');
         $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기, 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료');
         $table->timestamps();
@@ -191,7 +191,7 @@ class MarketAll extends Migration
         $table->tinyInteger('order')->default(0)->unsigned()->comment('순서');
         $table->timestamps();
         $table->softDeletes();
-        $table->unique('item_id', 'name');
+        $table->unique(['item_id', 'name']);
       });
     }
     
@@ -203,7 +203,7 @@ class MarketAll extends Migration
         $table->bigInteger('user_id')->nullable()->unsigned();
         $table->bigInteger('item_id')->unsigned();
         $table->timestamp('created_at');
-        $table->unique('user_id', 'item_id');
+        $table->unique(['user_id', 'item_id']);
       });
     }
     

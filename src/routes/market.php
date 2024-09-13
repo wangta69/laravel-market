@@ -8,7 +8,7 @@ Route::group(['prefix' => 'market', 'as' => 'market.', 'namespace' => 'App\Http\
 });
 
 // 'prefix' => 'market', 
-Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market'], function () {
+Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', 'middleware' => ['web']], function () {
   Route::get('/', 'MainController@index')->name('main');
 
   // Auth

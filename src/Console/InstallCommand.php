@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class InstallCommand extends Command
 {
-  // use InstallsBladeStack;
+  use InstallsBladeStack;
 
   /**
    * The name and signature of the console command.
@@ -35,7 +35,7 @@ class InstallCommand extends Command
   public function handle()
   {
     $this->info(" Install Laravel Market ");
-    // return $this->installBladeStack();
+    return $this->installBladeStack();
 
   }
 
@@ -101,7 +101,7 @@ class InstallCommand extends Command
       });
   }
 
-
+*/
   protected static function updateNodePackages(callable $callback, $dev = true)
   {
     if (! file_exists(base_path('package.json'))) {
@@ -125,7 +125,56 @@ class InstallCommand extends Command
     );
   }
 
+  protected function updateWebpackMix(){
+    
+    $data = "
+mix.sass('resources/market/front.scss', 'public/market/assets/front.css', {
+  sassOptions: {
+    quietDeps: true,
+  },
+});
 
+mix.scripts([
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/@popperjs/core/dist/umd/popper.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
+  // 'node_modules/venobox/dist/venobox.min.js',
+  'resources/market/front.js',
+  'resources/market/common.js',
+  'resources/market/market-route.js',
+], 'public/market/assets/front.js').version();
+  
+  
+  
+mix.sass('resources/market/admin.scss', 'public/market/assets/admin.css', {
+  sassOptions: {
+      quietDeps: true,
+    },
+  }
+);
+  
+ 
+mix.scripts([
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/jquery-ui/dist/jquery-ui.js',
+  'node_modules/@popperjs/core/dist/umd/popper.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
+  'resources/market/common.js',
+  'resources/market/market-route.js',
+  'resources/market/admin.js',
+  'resources/market/date-select.js',
+], 'public/market/assets/admin.js').version();
+";
+
+    $webpackmix = file_get_contents(base_path('webpack.mix.js'));
+    if (!strpos($webpackmix, 'public/market/assets/front.css')) {
+      $this->info(" webpack.mix.js update ");
+      \File::append(base_path('webpack.mix.js'), $data);
+    }
+
+  }
+
+/*
   protected static function flushNodeModules()
   {
     tap(new Filesystem, function ($files) {
@@ -136,12 +185,12 @@ class InstallCommand extends Command
     });
   }
 
-
+*/
   protected function replaceInFile($search, $replace, $path)
   {
     file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
   }
-
+/*
   protected function phpBinary()
   {
     return (new PhpExecutableFinder())->find(false) ?: 'php';

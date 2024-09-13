@@ -4,6 +4,7 @@ namespace Pondol\Market;
 // use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Pondol\Market\Console\InstallCommand;
+use Illuminate\Support\Facades\Route;
 class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
   /**
    * Register any application services.
@@ -26,8 +27,28 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
      * @return void
      */
     //public function boot(\Illuminate\Routing\Router $router)
-  public function boot()
+  public function boot(\Illuminate\Routing\Router $router)
   {
+
+    Route::middleware(['web'])->group(function () {
+      $this->loadRoutesFrom(base_path('/routes/market-admin.php'));
+    });
+    Route::middleware(['web'])->group(function () {
+      $this->loadRoutesFrom(base_path('/routes/market.php'));
+    });
+
+    $router->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
+    // app('router')->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
+		$router->pushMiddlewareToGroup('admin', 'role:administrator');
+
+  //   $this->routes(function () {
+  //     Route::middleware('web')
+  //         ->namespace($this->namespace)
+  //         ->group(base_path('routes/market.php'));
+  //     Route::middleware('web')
+  //         ->namespace($this->namespace)
+  //         ->group(base_path('routes/market-admin.php'));
+  // });
 
 
     // \Log::info('boot');
@@ -36,12 +57,11 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
     // //   return;
     // // }
     // \Log::info('next');
-    if ($this->app->runningInConsole()) {
-      $this->commands([
-        InstallCommand::class,
-        // Console\InstallCommand::class,
-      ]);
-    }
+
+
+    // $this->loadMigrationsFrom(__DIR__.'./database/migrations/');
+    // //$this->artisan('migrate');
+    // \Artisan::call('migrate');
   }
 
   /**

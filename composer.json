@@ -14,9 +14,11 @@
     "minimum-stability": "dev",
     "require": {
       "php": ">=7.0.0",
+      "doctrine/dbal":"*",
       "guzzlehttp/guzzle": "^7",
       "kyslik/column-sortable": "^6",
       "laravel/socialite": "^5",
+      "laravel/ui": "*",
       "tymon/jwt-auth": "^1",
       "wangta69/php-thumbnail": "^1",
       "wangta69/laravel-editor": "^8",
