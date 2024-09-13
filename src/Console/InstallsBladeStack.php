@@ -102,7 +102,8 @@ trait InstallsBladeStack
       // $this->replaceInFile('/home', '/dashboard', resource_path('views/welcome.blade.php'));
       // $this->replaceInFile('Home', 'Dashboard', resource_path('views/welcome.blade.php'));
       $this->replaceInFile('/home', '/', app_path('Providers/RouteServiceProvider.php'));
-
+      // confing > auth 
+      $this->replaceInFile("'model' => App\Models\User::class,", "'model' => App\Models\Market\Auth\User\User::class,", config_path('auth.php'));
       // // Tailwind / Webpack...
       // copy(__DIR__.'/../../stubs/default/tailwind.config.js', base_path('tailwind.config.js'));
       // copy(__DIR__.'/../../stubs/default/webpack.mix.js', base_path('webpack.mix.js'));

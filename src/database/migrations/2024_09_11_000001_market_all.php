@@ -257,7 +257,7 @@ class MarketAll extends Migration
         $table->id();
         $table->bigInteger('user_id')->nullable()->unsigned();
         $table->bigInteger('order_id')->unsigned();
-        $table->bigInteger('useritem_id_id')->unsigned();
+        $table->bigInteger('item_id')->unsigned();
         $table->text('content');
         $table->text('reply')->nullable();
         $table->tinyInteger('rating')->default(0)->unsigned();
