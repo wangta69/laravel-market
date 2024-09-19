@@ -80,5 +80,14 @@ return [
     '092'=>['name'=>'토스뱅크', 'siwft'=>''],
     '081'=>['name'=>'하나은행', 'siwft'=>'HNBNKRSE'],
     '023'=>['name'=>'SC제일은행', 'siwft'=>'SCBLKRSE']
-    ]
+    ],
+    'sms' => [
+      'vendor' => 'smsto',
+      'key' => 'ADFAFAF',
+      'id' => 'ASDFADFADF',
+      'sender' => 'ADFADFA',
+      'manager_rec_order' => true,
+    ],
+    'user' => ['active' => 'auto',
+    ],
 ];

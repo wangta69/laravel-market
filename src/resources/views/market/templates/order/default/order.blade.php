@@ -223,7 +223,7 @@
     </div>
   </div>
 </div>
-{{ Config::get('mart.payment.pg') }}
+{{ Config::get('market.payment.pg') }}
 <!-- Modal for create address start -->
 
 @include('market.templates.userpage.default.address.create-modal')
@@ -231,15 +231,15 @@
 <!-- Modal for create address end -->
 <!-- /banner-feature -->
  <!-- 결제 모듈 삽입 -->
-@if(Config::get('mart.payment.pg') == 'kcp'):
+@if(Config::get('market.payment.pg') == 'kcp'):
   @include('market.payment.pg.kcp.pay-form')
-@elseif(Config::get('mart.payment.pg') == 'lg'):
+@elseif(Config::get('market.payment.pg') == 'lg'):
   @include('market.payment.pg.lg.pay-form')
-@elseif(Config::get('mart.payment.pg') == 'inicis'):
+@elseif(Config::get('market.payment.pg') == 'inicis'):
   @include('market.payment.pg.inicis.pay-form')
 @endif
 
-@if(Config::get('mart.payment.kakao')):
+@if(Config::get('market.payment.kakao')):
   @include('market.payment.smart.kakaopay.pay-form')
 @endif
 @endsection

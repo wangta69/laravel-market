@@ -112,14 +112,15 @@ class TemplateController extends Controller
   public function updateCI(Request $request) {
 
     $file = $request->file('file');
-    $filepath = 'public/market';
-    $fileName = $file->getClientOriginalName();
-    // $ext = $file->getClientOriginalExtension();
-    // $fileName = $name.'.'.$ext;
-    // $path=\Storage::put($filepath, $file); // 
-    $request->file->storeAs($filepath, $fileName);
-    $this->configSvc->set('template.ci', $fileName );
-
+    if($file) {
+      $filepath = storage_path('/market');
+      $fileName = $file->getClientOriginalName();
+      // $ext = $file->getClientOriginalExtension();
+      // $fileName = $name.'.'.$ext;
+      // $path=\Storage::put($filepath, $file); // 
+      $result = $file->storeAs($filepath, $fileName);
+      $this->configSvc->set('template.ci', $fileName );
+    }
 
     return redirect()->back();
   }

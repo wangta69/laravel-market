@@ -18,7 +18,7 @@
     @csrf
     <div class="input-group">
       <div class="input-group-text" id="btnGroupAddon">CI</div>
-      <img src="/storage/market/{{Config::get('mart.template.ci')}}" class="ci-image input-group-text">
+      <img src="/storage/market/{{Config::get('market.template.ci')}}" class="ci-image input-group-text">
       <input type='file' name='file' class="form-control">
       
       <button type="submit" class="btn btn-primary">Logo 변경 </button>
