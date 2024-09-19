@@ -17,4 +17,10 @@ cd example-app
 ### 라라벨 마켙 install
 ```
 composer require wangta69/laravel_market
+php artisan market:install
+```
+```
+Name for administrator?: // 관리자 이름
+Email for administrator?: // 관리자 이메일
+Password for administrator?: // 관리자 패스워드
 ```
