@@ -30,12 +30,12 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
   public function boot(\Illuminate\Routing\Router $router)
   {
 
-    Route::middleware(['web'])->group(function () {
-      $this->loadRoutesFrom(base_path('/routes/market-admin.php'));
-    });
-    Route::middleware(['web'])->group(function () {
-      $this->loadRoutesFrom(base_path('/routes/market.php'));
-    });
+    // Route::middleware(['web'])->group(function () {
+    //   $this->loadRoutesFrom(base_path('/routes/market-admin.php'));
+    // });
+    // Route::middleware(['web'])->group(function () {
+    //   $this->loadRoutesFrom(base_path('/routes/market.php'));
+    // });
 
     $router->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
     // app('router')->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);

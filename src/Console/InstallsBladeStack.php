@@ -109,7 +109,24 @@ trait InstallsBladeStack
     // copy(__DIR__.'/../../stubs/default/webpack.mix.js', base_path('webpack.mix.js'));
     // copy(__DIR__.'/../../stubs/default/resources/css/app.css', resource_path('css/app.css'));
     // copy(__DIR__.'/../../stubs/default/resources/js/app.js', resource_path('js/app.js'));
-    
+    // soft link
+    \Artisan::call('storage:link');
+
+    // editor
+    \Artisan::call('vendor:publish',  [
+      '--force'=> true,
+      '--provider' => 'Pondol\Editor\EditorServiceProvider'
+    ]);
+    $this->info('The laravel editor installed successfully.'); 
+    // laravel board
+    \Artisan::call('vendor:publish',  [
+      '--force'=> true,
+      '--provider' => 'Pondol\Bbs\BbsServiceProvider'
+    ]);
+
+    \Artisan::call('migrate');
+
+
     $user_name = $this->ask('Name for administrator?'); 
     $user_email = $this->ask('Email for administrator?'); 
     $user_password = $this->ask('Password for administrator?'); 
@@ -128,22 +145,7 @@ trait InstallsBladeStack
     }
 
 
-      // soft link
-    \Artisan::call('storage:link');
 
-    // editor
-    \Artisan::call('vendor:publish',  [
-      '--force'=> true,
-      '--provider' => 'Pondol\Editor\EditorServiceProvider'
-    ]);
-    $this->info('The laravel editor installed successfully.'); 
-    // laravel board
-    \Artisan::call('vendor:publish',  [
-      '--force'=> true,
-      '--provider' => 'Pondol\Bbs\BbsServiceProvider'
-    ]);
-
-    \Artisan::call('migrate');
       // $this->info('Breeze scaffolding installed successfully.');
       // $this->comment('Please execute the "php artisan migrate" commands to build market database.');
     $this->comment('Please execute the "npm install" && "npm run dev" commands to build your assets.');
