@@ -13,20 +13,24 @@ class  CreateRoleTable extends Migration
    */
   public function up()
   {
-    Schema::create('roles', function (Blueprint $table) {
-      $table->id();
-      $table->string('name')->unique();
-    });
+    if (!Schema::hasTable('roles')) {
+      Schema::create('roles', function (Blueprint $table) {
+        $table->id();
+        $table->string('name')->unique();
+      });
+    };
 
-    Schema::create('user_roles', function (Blueprint $table) {
-      $table->bigInteger('user_id')->nullable()->unsigned();
-      $table->bigInteger('role_id')->nullable()->unsigned();
-      $table->unique(['user_id', 'role_id']);
-      $table->index(['user_id']);
-      $table->foreign('role_id')->references('id')->on('roles');
-      $table->foreign('user_id')->references('id')->on('users');
-    });
-
+    if (!Schema::hasTable('user_roles')) {
+      Schema::create('user_roles', function (Blueprint $table) {
+        $table->bigInteger('user_id')->nullable()->unsigned();
+        $table->bigInteger('role_id')->nullable()->unsigned();
+        $table->unique(['user_id', 'role_id']);
+        $table->index(['user_id']);
+        $table->foreign('role_id')->references('id')->on('roles');
+        $table->foreign('user_id')->references('id')->on('users');
+      });
+    };
+    
     DB::table('roles')->insert(
     [
       ['name' => 'administrator'],

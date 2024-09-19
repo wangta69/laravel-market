@@ -18,34 +18,3 @@ cd example-app
 ```
 composer require wangta69/laravel_market
 ```
-
-
-1. config/auth.php
-
-```
-
-php artisan storage:link
-
-..........
-'providers' => [
-  'users' => [
-    ..........
-    // 'model' => App\Models\User::class,
-    'model' => App\Models\Market\Auth\User\User::class,
-  ],
-..........
-]
-```
-
-3. npm 관련
-
-```
-npm install jquery@3
-npm install jquery-ui@1
-npm install @popperjs/core@2
-npm install bootstrap@5
-npm install @fortawesome/fontawesome-free@6
-npm install font-awesome@4
-
-npm run dev
-```
