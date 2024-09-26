@@ -124,6 +124,7 @@ trait InstallsBladeStack
       '--provider' => 'Pondol\Bbs\BbsServiceProvider'
     ]);
 
+    \Artisan::call('queue:table'); // job table  생성 (11 은 php artisan make:queue-table) 명령을 사용하는데 호환성 테스트 필요
     \Artisan::call('migrate');
 
 

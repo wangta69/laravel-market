@@ -71,6 +71,14 @@ class TemplateController extends Controller
     $component_dir =  resource_path('views/market/templates/components');
     $components = array_map('basename',\File::directories($component_dir));
 
+    // mail
+    $mail_dir =  resource_path('views/market/templates/mail');
+    $mail = array_map('basename',\File::directories($mail_dir));
+
+    // pages
+    $pages_dir =  resource_path('views/market/templates/pages');
+    $pages = array_map('basename',\File::directories($pages_dir));
+
     $template = $this->configSvc->get('template');
 
 
@@ -84,7 +92,9 @@ class TemplateController extends Controller
       'userpage'=>$userpage,
       'search'=>$search,
       'auth'=>$auth,
-      'components'=>$components
+      'components'=>$components,
+      'mail'=>$mail,
+      'pages'=>$pages,
     ]);
   }
 
@@ -103,7 +113,8 @@ class TemplateController extends Controller
     $template['search']['lists'] = $request->search_lists;
     $template['auth']['theme']  = $request->auth;
     $template['component']['theme']  = $request->component;
-    
+    $template['mail']['theme']  = $request->mail;
+    $template['pages']['theme']  = $request->pages;
 
     $this->configSvc->set('template', $template );
     return response()->json(['error'=>false]);
@@ -113,15 +124,35 @@ class TemplateController extends Controller
 
     $file = $request->file('file');
     if($file) {
-      $filepath = storage_path('/market');
+      // $filepath = storage_path('app/public/market');
+      $filepath = 'public/market';
+      // $filepath = public_path('storage/market');
       $fileName = $file->getClientOriginalName();
       // $ext = $file->getClientOriginalExtension();
       // $fileName = $name.'.'.$ext;
       // $path=\Storage::put($filepath, $file); // 
+
       $result = $file->storeAs($filepath, $fileName);
       $this->configSvc->set('template.ci', $fileName );
     }
 
     return redirect()->back();
+  }
+
+  public function updateFavicon(Request $request) {
+    $file = $request->file('file');
+    if($file) {
+      // $filepath = storage_path('market');
+      $filepath = 'public/market';
+      $fileName = $file->getClientOriginalName();
+      // $ext = $file->getClientOriginalExtension();
+      // $fileName = $name.'.'.$ext;
+      // $path=\Storage::put($filepath, $file); // 
+
+      $result = $file->storeAs($filepath, $fileName);
+      $this->configSvc->set('template.favicon', $fileName );
+    }
+
+    // return redirect()->back();
   }
 }

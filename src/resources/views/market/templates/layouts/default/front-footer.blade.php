@@ -18,15 +18,19 @@
 <!-- /footer -->
 <div class="container-fluid">
   <footer class="py-4 bg-light mt-auto fixed-bottom">
-      <div class="container px-4">
-          <div class="">
-              <div>Copyright &copy; 온스토리</div>
-              <div>
-                  <a href="#">Privacy Policy</a>
-                  &middot;
-                  <a href="#">Terms &amp; Conditions</a>
-              </div>
-          </div>
-      </div> <!-- .container -->
+    <div class="container px-4">
+      <div class="">
+        <div><a href="{{ route('market.pages', ['terms-of-use']) }}">서비스이용약관</a> | <a href="{{ route('market.pages', ['privacy-policy']) }}">개인정보처리방침</a></div>
+        <ul class="mt-2" style="font-size: 12px;">
+          <li>회사명. {{config('market.company.name')}} </li>
+          <li>주소. {{config('market.company.address')}}</li>
+          <li>사업자 등록번호. {{config('market.company.businessNumber')}} 
+            대표. {{config('market.company.representative')}} 전화. {{config('market.company.tel1')}} 팩스. {{config('market.company.fax1')}}</li>
+        </ul>
+
+        <div>Copyright &copy; 온스토리</div>
+        
+      </div>
+    </div> <!-- .container -->
   </footer>
 </div> <!-- .container-fluid -->

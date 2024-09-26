@@ -19,6 +19,7 @@ use App\Http\Controllers\Market\Services\ConfigService;
 use App\Http\Controllers\Controller;
 
 use App\Http\Controllers\Market\Traits\Auth\Login;
+use App\Events\Registered as MarketRegistered;
 
 class LoginController extends Controller
 {
@@ -69,6 +70,7 @@ class LoginController extends Controller
 
   //토큰을 활용하기위해 로컬에 저장해도 되고 세션에 저장하거나 쿠키에 저장해서 활용할 수 있겠습니다.
     if($type=="register") {
+      event(new MarketRegistered($user));
       return redirect()->route('market.register.success');
     } else { // login
       return redirect()->intended(RouteServiceProvider::HOME);

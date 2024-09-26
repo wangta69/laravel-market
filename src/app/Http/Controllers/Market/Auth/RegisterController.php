@@ -10,6 +10,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+// use Illuminate\Auth\Events\Registered;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,8 +26,11 @@ use App\Models\Market\Auth\User\User;
 
 use App\Http\Controllers\Market\Services\ConfigService;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Market\Services\MailService;
 
 use App\Http\Controllers\Market\Traits\Auth\Register;
+
+use App\Events\Registered as MarketRegistered;
 
 class RegisterController extends Controller
 {
@@ -57,10 +61,13 @@ class RegisterController extends Controller
    *
    * @return void
    */
-  public function __construct(ConfigService $configSvc)
-  {
+  public function __construct(
+    ConfigService $configSvc, 
+    MailService $mailSvc
+  ){
     // $this->middleware('guest');
     $this->configSvc = $configSvc;
+    $this->mailSvc = $mailSvc;
   }
 
   // protected function authenticated(Request $request, User $user)
@@ -80,7 +87,7 @@ class RegisterController extends Controller
     \Log::info($data);
     return Validator::make($data, [
       'aggree_terms_of_use' => ['required'],
-      'aggree_personal_information' => ['required'],
+      'privacy_policy' => ['required'],
 
       'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
       'name' => ['required', 'string', 'min:2', 'max:50'],
@@ -89,7 +96,7 @@ class RegisterController extends Controller
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ], [
       'aggree_terms_of_use.required' => '이용약관에 동의해 주세요',
-      'aggree_personal_information.required' => '개인정보 수집 및 이용에 동의해 주세요',
+      'privacy_policy.required' => '개인정보 수집 및 이용에 동의해 주세요',
       'name.required' =>'이름을 입력하세요',
       'name.min' =>'이름은 최소 2자리 이상입니다.',
       'name.max' =>'이름은 최대 20자리 미만입니다',
@@ -122,39 +129,37 @@ class RegisterController extends Controller
       return redirect()->route('market.register.agreement');
     }
 
+    // print_r($request->session()->get('agreement'));
     if ($request->session()->has('agreement')) {
       return view('market.templates.auth.'.config('market.template.auth.theme').'.register', [
         'agreements' => $request->session()->get('agreement')
       ]);
     } else {
       $termsOfUse = MarketConfig::where('key', 'termsOfUse')->first();
-      $termsOfPersonal = MarketConfig::where('key', 'termsOfPersonal')->first();
+      $privacyPolicy = MarketConfig::where('key', 'privacyPolicy')->first();
       return view('market.templates.auth.'.config('market.template.auth.theme').'.register', [
         'termsOfUse' => $termsOfUse->value,
-        'termsOfPersonal' => $termsOfPersonal->value
+        'privacyPolicy' => $privacyPolicy->value
       ]);
     }
-          
-    // create 시 회원가입폼에 따라 분기시킨다.
-    
   }
 
   public function agreement(Request $request) {
     $termsOfUse = MarketConfig::where('key', 'termsOfUse')->first();
-    $termsOfPersonal = MarketConfig::where('key', 'termsOfPersonal')->first();
+    $privacyPolicy = MarketConfig::where('key', 'privacyPolicy')->first();
     return view('market.templates.auth.'.config('market.template.auth.theme').'.register-agreement', [
       'termsOfUse' => $termsOfUse->value,
-      'termsOfPersonal' => $termsOfPersonal->value
+      'privacyPolicy' => $privacyPolicy->value
     ]);
   }
 
   public function agreementstore(Request $request) {
     $validator = Validator::make($request->all(), [
       'aggree_terms_of_use' => ['required'],
-      'aggree_personal_information' => ['required'],
+      'privacy_policy' => ['required'],
     ], [
       'aggree_terms_of_use.required' => '이용약관에 동의해 주세요',
-      'aggree_personal_information.required' => '개인정보 수집 및 이용에 동의해 주세요',
+      'privacy_policy.required' => '개인정보 수집 및 이용에 동의해 주세요',
     ]);
 
     if ($validator->fails()) {
@@ -164,7 +169,7 @@ class RegisterController extends Controller
 
     $request->session()->put('agreement', [
       'aggree_terms_of_use'=>$request->aggree_terms_of_use,
-      'aggree_personal_information'=>$request->aggree_personal_information
+      'privacy_policy'=>$request->privacy_policy
     ]);
 
     return response()->json(['error'=>false, 'next'=>route('market.register')]);
@@ -217,6 +222,7 @@ class RegisterController extends Controller
       DB::commit();
 
       event(new Registered($user));
+      event(new MarketRegistered($user));
       Auth::login($user);
       // return redirect('/register/success');
       return redirect()->route('market.register.success');

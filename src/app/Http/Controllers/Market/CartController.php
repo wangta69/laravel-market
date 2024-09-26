@@ -55,6 +55,7 @@ class CartController extends Controller
     }
 
     // 옵션을 분리하여 처리한다.
+
     return view('market.templates.cart.'.config('market.template.cart.theme').'.cart', [
       'items' => $items
     ]);

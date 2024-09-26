@@ -31,39 +31,6 @@
       </ul>
     </li>
     <li>
-      <a href="#qna-review-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.qna*', 'market.admin.review*']) ? 'true' : 'false' }}"
-        class="dropdown-toggle">
-        <i class="fa-solid fa-comments"></i>
-          상품문의 및 리뷰
-      </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.qna*', 'market.admin.review*']) ? 'show' : '' }}" id="qna-review-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.qna*']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.qnas') }}">상품문의</a>
-        </li>
-        <li class="{{ request()->routeIs(['market.admin.review*']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.reviews') }}">리뷰</a>
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <a href="#product-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.item*']) ? 'true' : 'false' }}"
-        class="dropdown-toggle">
-        <i class="fa-brands fa-product-hunt"></i>
-          상품관리
-      </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.item*']) ? 'show' : '' }}" id="product-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.items']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.items') }}">상품관리</a>
-        </li>
-        <li class="{{ request()->routeIs(['market.admin.item.create']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.item.create') }}">상품등록</a>
-        </li>
-      </ul>
-    </li>
-    <li>
       <a href="#order-sub-menu" data-bs-toggle="collapse" 
         aria-expanded="{{ request()->routeIs(['market.admin.orders*', 'market.admin.order*']) ? 'true' : 'false' }}"
         class="dropdown-toggle">
@@ -88,7 +55,56 @@
         --}}
       </ul>
     </li>
+    <li>
+      <a href="#qna-review-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.qna*', 'market.admin.review*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-solid fa-comments"></i>
+          상품문의 및 리뷰
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.qna*', 'market.admin.review*']) ? 'show' : '' }}" id="qna-review-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.qna*']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.qnas') }}">상품문의</a>
+        </li>
+        <li class="{{ request()->routeIs(['market.admin.review*']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.reviews') }}">리뷰</a>
+        </li>
+      </ul>
+    </li>
 
+
+
+
+
+    <li>
+      <a href="#category-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.category*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-solid fa-list"></i>
+          카테고리
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.category*']) ? 'show' : '' }}" id="category-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.category']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.category') }}">카테고리관리</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#product-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.item*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-brands fa-product-hunt"></i>
+          상품관리
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.item*']) ? 'show' : '' }}" id="product-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.items']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.items') }}">상품관리</a>
+        </li>
+        <li class="{{ request()->routeIs(['market.admin.item.create']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.item.create') }}">상품등록</a>
+        </li>
+      </ul>
+    </li>
     <li>
       <a href="#config-sub-menu" data-bs-toggle="collapse" 
         aria-expanded="{{ request()->routeIs(['market.admin.config*']) ? 'true' : 'false' }}"
@@ -97,6 +113,9 @@
           환경설정
       </a>
       <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.config*']) ? 'show' : '' }}" id="config-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.config.company']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.config.company') }}">쇼핑몰 정보</a>
+        </li>
         <li class="{{ request()->routeIs(['market.admin.config.template']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.config.template') }}">템플릿 설정</a>
         </li>
@@ -118,18 +137,21 @@
       </ul>
     </li>
     <li>
-      <a href="#category-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.category*']) ? 'true' : 'false' }}"
+      <a href="#dev-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.dev*']) ? 'true' : 'false' }}"
         class="dropdown-toggle">
-        <i class="fa-solid fa-list"></i>
-          카테고리
+        <i class="fa-solid fa-code"></i>
+          Dev
       </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.category*']) ? 'show' : '' }}" id="category-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.category']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.category') }}">카테고리관리</a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.dev.mail*']) ? 'show' : '' }}" id="dev-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.dev.mail']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.dev.mail') }}">메일테스트</a>
+        </li>
+        <li class="{{ request()->routeIs(['market.admin.dev.event']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.dev.event') }}">이벤트테스트</a>
         </li>
       </ul>
     </li>
-
+    
   </ul>
 </nav>

@@ -24,7 +24,7 @@ class DashboardController extends Controller
   public function __construct(OrderService $orderSvc)
   {
     $this->orderSvc = $orderSvc;
-      // $this->middleware('auth');
+    // $this->middleware('auth');
   }
 
   /**

@@ -26,6 +26,20 @@
   </form>
 </div><!-- .card -->
 
+<div class="card card-body mt-1">
+  <form method="POST" action="{{ route('market.admin.config.template.favicon') }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="input-group">
+      <div class="input-group-text" id="btnGroupAddon">Favicon</div>
+      <img src="/storage/market/{{Config::get('market.template.favicon')}}" class="ci-image input-group-text">
+      <input type='file' name='file' class="form-control">
+      
+      <button type="submit" class="btn btn-primary">Favicon 변경 </button>
+    </div>
+  </form>
+</div><!-- .card -->
+
 <div class="card mt-1">
   <form name="template_form">
     <div class="card-body">
@@ -114,7 +128,22 @@
           @endforeach
         </select>
       </div>
-
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">Mail</label>
+        <select class="form-select" name="mail">
+          @foreach($mail as $v)
+          <option value="{{$v}}" @if($v == $template["mail"]['theme']) selected @endif>{{$v}}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">Pages</label>
+        <select class="form-select" name="pages">
+          @foreach($pages as $v)
+          <option value="{{$v}}" @if($v == $template["pages"]['theme']) selected @endif>{{$v}}</option>
+          @endforeach
+        </select>
+      </div>
     </div>
     <div class="card-footer text-end">
       <button type="button"class="btn btn-primary act-submit">적용</button>

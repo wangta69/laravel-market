@@ -21,6 +21,8 @@ use App\Http\Controllers\Market\Services\ConfigService;
 use App\Http\Controllers\Market\Services\CalDeliveryFee;
 use App\Http\Controllers\Market\Services\PointService;
 
+use App\Events\OrderShipped;
+
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -51,8 +53,10 @@ class OrderController extends Controller
     $user = $request->user();
     $orders = session()->get('orderItmes'); 
     // $o_id = session()->get('o_id'); 
-    $o_id = $this->order_session();
+    $o_id = $this->order_session('new');
 
+
+   
     if(!$orders) {
       return redirect()->route('market.cart');
     }
@@ -66,9 +70,14 @@ class OrderController extends Controller
         $join->on('market_items.id', '=', 'market_carts.item_id');
       })->orderby('market_carts.id', 'desc')->get();
 
-      foreach($items as $item) {
-        $item->displayOptions = extractOptions($item);     
-      }
+    if ($items->isEmpty()) { // 장바구니로 이동
+      return redirect()->route('market.cart');
+    }
+
+    foreach($items as $item) {
+      $item->displayOptions = extractOptions($item);     
+    }
+
 
     // 기존 배송지들을 가져온다.
     $addresses = new \stdClass;
@@ -83,6 +92,7 @@ class OrderController extends Controller
       }
     }
 
+    
     $display = new \stdClass;
     $display->totalPrice = 0;
     $display->products = $items[0]->name;
@@ -90,6 +100,8 @@ class OrderController extends Controller
       $display->products .= '외 '.(count($items)-1).'종';
     }
     
+
+  
     foreach($items as $v) {
       $display->totalPrice += ($v->item_price + $v->option_price) * $v->qty;
     }
@@ -251,7 +263,7 @@ class OrderController extends Controller
     $user = $request->user();
     
     $paytype = $request->paytype; // online / card
-    $pointamount = str_replace(',', '', $request->pointamount);
+    $pointamount = (int)str_replace(',', '', $request->pointamount);
     $total = str_replace(',', '', $request->total); // 실제 결제 금액
     $bank = $request->bank;
     $inputer = $request->inputer;
@@ -263,7 +275,8 @@ class OrderController extends Controller
     // 현재 선택한 상품을 리스트업 한다.
     $items = MarketCart::
       select(
-        'market_carts.id', 'market_carts.c_id', 'market_carts.item_id', 'market_carts.item_price', 'market_carts.qty', 'market_carts.option_price', 'market_carts.options'
+        'market_carts.id', 'market_carts.c_id', 'market_carts.item_id', 'market_carts.item_price', 'market_carts.qty', 
+        'market_carts.option_price', 'market_carts.point', 'market_carts.options'
       )
       ->whereIn('market_carts.id', $orders)
       ->get();
@@ -286,8 +299,8 @@ class OrderController extends Controller
       ]);
     }
 
-    $sum = $totalPrice + $delivery_fee - $user_point;
-    \Log::info('totalPrice:'.$totalPrice .', delivery_fee:'. $delivery_fee.', user_point:'. $user_point);
+    $sum = $totalPrice + $delivery_fee - $pointamount;
+    \Log::info('totalPrice:'.$totalPrice .', delivery_fee:'. $delivery_fee.', pointamount:'. $pointamount);
     \Log::info('sum:'.$sum .', total:'. $total);
     if($sum != $total) {
       return response()->json([
@@ -330,8 +343,13 @@ class OrderController extends Controller
         // 현재 장바구니에서 삭제
         MarketCart::where('id', $v->id)->delete();
       }
+
+      
+      event(new OrderShipped($user, $o_id));
+
       DB::commit();
 
+     
       // 세션 삭제
       $request->session()->forget(['orderItmes', 'o_id']);
 
@@ -351,10 +369,10 @@ class OrderController extends Controller
     }
   }
 
-  private function order_session() {
+  private function order_session($flag = null) {
     // $o_id = session('o_id');
     $o_id = session()->get('o_id'); 
-    if (!$o_id) {
+    if (!$o_id || $flag === 'new') {
       $o_id = uniqid();
       session(['o_id'=> $o_id]);
     }

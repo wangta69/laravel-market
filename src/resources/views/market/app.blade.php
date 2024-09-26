@@ -21,7 +21,7 @@
    
     <!-- Fonts -->
     <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
-    <link rel="icon" type="image/ico" href="/market/assets/images/favicon.ico">
+    <link rel="icon" type="image/ico" href="/storage/market/{{Config::get('market.template.favicon')}}">
     {{--Styles--}}
     @yield('styles')
     <!-- Styles -->

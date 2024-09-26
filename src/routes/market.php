@@ -118,5 +118,9 @@ Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', '
   Route::delete('item/{fav}/favorite', 'FavoriteController@_destroy');
   // 상품문의
   Route::post('item/{item}/qna', 'QnaController@store')->name('item.qna');
+
+
+  // 일반 페이지
+  Route::get('pages/{page}', 'PagesController@show')->name('pages');
   // Route::match(['get', 'post'], '/order', 'OrderController@index')->name('order');
 });

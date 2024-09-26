@@ -21,13 +21,13 @@
 
             <div class="form-check form-check-inline mt-4">
               <input type="checkbox" class="form-check-input" id="collection-and-use-of-personal-information" 
-              name="aggree_personal_information" value="1" 
-              @if(old('aggree_terms_of_use')) checked @endif>
+              name="privacy_policy" value="1" 
+              @if(old('privacy_policy')) checked @endif>
               <label class="form-check-label" for="collection-and-use-of-personal-information">개인정보 수집 및 이용동의 (필수)</label>
             </div>
 
             <div class="overflow-auto mt-2">
-              {!! $termsOfPersonal !!}
+              {!! $privacyPolicy !!}
             </div>
 
               

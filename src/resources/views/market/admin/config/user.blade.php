@@ -47,9 +47,9 @@
 
         <div class="col-10">
         <x-editor-components 
-          name="termsOfPersonal" 
-          id="termsOfPersonal" 
-          :value=$termsOfPersonal 
+          name="privacyPolicy" 
+          id="privacyPolicy" 
+          :value=$privacyPolicy 
           :attr="['class'=>'form-control']"
           type="end"/>
 

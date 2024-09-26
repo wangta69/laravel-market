@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Auth\User\Traits\Attributes;
+namespace App\Models\Market\Auth\User\Traits\Attributes;
 
 use App\Models\Market\Auth\User\SocialAccount;
 

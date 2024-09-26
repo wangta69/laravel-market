@@ -10,6 +10,7 @@ Route::group(['prefix' => 'adm', 'as' => 'market.admin.', 'namespace' => 'App\Ht
     Route::get('/config/template', 'Config\TemplateController@view')->name('config.template');
     Route::put('/config/template', 'Config\TemplateController@update');
     Route::put('/config/ci', 'Config\TemplateController@updateCI')->name('config.template.ci');
+    Route::put('/config/favicon', 'Config\TemplateController@updateFavicon')->name('config.template.favicon');
 
     Route::get('/config/delivery', 'Config\DeliveryController@index')->name('config.delivery');
     Route::post('/config/delivery', 'Config\DeliveryController@update');
@@ -27,6 +28,9 @@ Route::group(['prefix' => 'adm', 'as' => 'market.admin.', 'namespace' => 'App\Ht
 
     Route::get('/config/user', 'Config\UserController@index')->name('config.user');
     Route::put('/config/user', 'Config\UserController@update');
+
+    Route::get('/config/company', 'Config\CompanyController@index')->name('config.company');
+    Route::put('/config/company', 'Config\CompanyController@update');
 
     // 회원관리
     Route::get('users', 'UserController@index')->name('users');
@@ -84,6 +88,13 @@ Route::group(['prefix' => 'adm', 'as' => 'market.admin.', 'namespace' => 'App\Ht
     Route::delete('/category', 'CategoryController@destroy');
     Route::get('/category/sub', 'CategoryController@sub')->name('category.sub');// 현재 카테고리의 sub list가져오기(ajax로 사용)
 
+    // 개발테스트
+    Route::get('/dev/mail', 'Dev\MailController@view')->name('dev.mail');
+    Route::post('/dev/mail', 'Dev\MailController@send');
+    Route::get('/dev/mail/preview', 'Dev\MailController@preview')->name('dev.mail.preview');
+
+    Route::get('/dev/event', 'Dev\EventController@view')->name('dev.event');
+    Route::post('/dev/event', 'Dev\EventController@send');
 /*
     기본환경
     <li><a href="./main.php?menushow=menu1&theme=basicconfig/basic_info2">기본환경설정</a></li>

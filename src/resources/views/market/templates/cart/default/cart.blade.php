@@ -30,7 +30,9 @@
 
                   @if(isset($item->displayOptions))
                     @foreach($item->displayOptions as $option)
+                      @if(isset($option[1]))
                       {{$option[1]}} : {{$option[2]}} @if($option[3]) ({{number_format($option[3])}} 원 추가) @endif<br>
+                      @endif
                     @endforeach
                   @endif
                   <div class="d-flex">

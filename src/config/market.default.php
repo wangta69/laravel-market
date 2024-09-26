@@ -53,7 +53,10 @@ return [
     'search' => ['theme'=>'default', 'lists'=> 20],
     'auth' => ['theme'=>'default'],
     'component' => ['theme'=>'default'],
+    'mail' => ['theme'=>'default'],
+    'pages' => ['theme'=>'default'],
     'ci' => 'logo.png',
+    'favicon' => 'favicon.ico',
   ],
   'banks' => [
     '039'=>['name'=>'경남은행', 'siwft'=>'KYNAKR22XXX'],
@@ -80,14 +83,24 @@ return [
     '092'=>['name'=>'토스뱅크', 'siwft'=>''],
     '081'=>['name'=>'하나은행', 'siwft'=>'HNBNKRSE'],
     '023'=>['name'=>'SC제일은행', 'siwft'=>'SCBLKRSE']
-    ],
-    'sms' => [
-      'vendor' => 'smsto',
-      'key' => 'ADFAFAF',
-      'id' => 'ASDFADFADF',
-      'sender' => 'ADFADFA',
-      'manager_rec_order' => true,
-    ],
-    'user' => ['active' => 'auto',
-    ],
+  ],
+  'sms' => [
+    'vendor' => 'smsto',
+    'key' => 'ADFAFAF',
+    'id' => 'ASDFADFADF',
+    'sender' => 'ADFADFA',
+    'manager_rec_order' => true,
+  ],
+  'user' => [
+    'active' => 'auto',
+  ],
+  'company' => [
+    'name' => '온스토리몰',
+    'businessNumber' => 'xxx-xx-xxxxx',
+    'mailOrderSalesRegistrationNumber' => '제xxxx-서울강남-xxxx호',
+    'address' => '서울특별시 강남구 멋진빌딩 1F',
+    'representative' => '김재벌',
+    'tel1' => '02-xxxx-xxxx',
+    'fax1' => '02-yyyy-yyyy',
+  ],
 ];

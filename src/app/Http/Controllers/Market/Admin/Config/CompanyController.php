@@ -9,7 +9,7 @@ use App\Http\Controllers\Market\Services\ConfigService;
 use App\Models\Market\MarketBank;
 use App\Models\Market\MarketConfig;
 
-class UserController extends Controller
+class CompanyController extends Controller
 {
   /**
    * Create a new controller instance.
@@ -32,26 +32,28 @@ class UserController extends Controller
   public function index()
   {
 
-    $user = $this->configSvc->get('user');
+    $company = $this->configSvc->get('company');
     $termsOfUse = MarketConfig::where('key', 'termsOfUse')->first();
-    $privacyPolicy = MarketConfig::where('key', 'privacyPolicy')->first();
+    $termsOfPersonal = MarketConfig::where('key', 'termsOfPersonal')->first();
 
-    return view('market.admin.config.user', [
-      'user'=>$user,
-      'termsOfUse' => $termsOfUse->value,
-      'privacyPolicy' => $privacyPolicy->value,
+    return view('market.admin.config.company', [
+      'company'=>$company
     ]);
   }
 
   public function update(Request $request) {
-    print_r($request->all());
-    MarketConfig::where('key', 'termsOfUse')->update(['value'=>$request->termsOfUse]);
-    MarketConfig::where('key', 'privacyPolicy')->update(['value'=>$request->privacyPolicy]);
+
     $params = [
-      'active' => $request->active,
+      'name' => $request->name,
+      'businessNumber' => $request->businessNumber,
+      'mailOrderSalesRegistrationNumber' => $request->mailOrderSalesRegistrationNumber,
+      'address' => $request->address,
+      'representative' => $request->representative,
+      'tel1' => $request->tel1,
+      'fax1' => $request->fax1,
     ];
 
-    $this->configSvc->set('user', $params );
+    $this->configSvc->set('company', $params );
     return response()->json(['error'=>false]);
   }
    
