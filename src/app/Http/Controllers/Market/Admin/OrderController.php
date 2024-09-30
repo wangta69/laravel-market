@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Market\MarketOrder;
 use App\Models\Market\MarketBuyer;
 use App\Models\Market\MarketPayment;
-use App\Models\Market\MarketDeliveryCompany;
+// use App\Models\Market\MarketDeliveryCompany;
 
 use App\Http\Controllers\Market\Services\ConfigService;
 use App\Http\Controllers\Market\Services\OrderService;
+
+use Pondol\DeliveryTracking\Traits\Tracking;
+
 class OrderController extends Controller
 {
   /**
@@ -20,6 +23,8 @@ class OrderController extends Controller
    *
    * @return void
    */
+  use Tracking;
+
   public function __construct(
     ConfigService $configSvc,
     OrderService $ordergSvc
@@ -37,6 +42,8 @@ class OrderController extends Controller
   public function index($status=null, Request $request)
   {
     // DB::enableQueryLog();
+    $sk = $request->sk;
+    $sv = $request->sv;
     $from_date = $request->from_date;
     $to_date = $request->to_date;
     
@@ -47,6 +54,10 @@ class OrderController extends Controller
     $delivery_status = $request->delivery_status;
 
     $items = $this->orderSvc->orderList('admin');
+
+    if ($sv) {
+      $items = $items->where($sk, 'like', '%' . $sv . '%');
+    }
 
     if ($from_date) {
       if (!$to_date) {
@@ -81,7 +92,8 @@ class OrderController extends Controller
     $items = $this->orderSvc->orderItemsByOrderid($o_id)->orderBy('market_orders.id', 'desc')->get();     
     $display = $this->orderSvc->orderDetailByOrderid($o_id);
 
-    $couriers = MarketDeliveryCompany::get();
+    $couriers = $this->_couriers();
+
     $delivery_status = $this->configSvc->get('delivery_status');
     $pay_status = $this->configSvc->get('pay_status');
     

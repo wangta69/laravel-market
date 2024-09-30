@@ -55,7 +55,7 @@ class MarketAll extends Migration
         $table->string('addr1', '50')->comment('수신자 주소1');
         $table->string('addr2', '50')->nullable()->comment('수신자 주소2');
         $table->string('message', '200')->nullable()->comment('주문자 입력 메시지');
-        $table->bigInteger('courier')->nullable()->unsigned()->comment('배송업체코드 market_delivery_companies.id');
+        $table->string('courier', '10')->nullable()->comment('배송업체코드');
         $table->string('invoice_no', '20')->nullable()->comment('송장번호(택배번호)');
         $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기, 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료');
         $table->timestamps();
@@ -110,15 +110,15 @@ class MarketAll extends Migration
     
 
 
-    if (!Schema::hasTable('market_delivery_companies')) {
-      Schema::create('market_delivery_companies', function(BluePrint $table) {
-        $table->id();
-        $table->string('code', '20')->nullable()->comment('택배사코드');
-        $table->string('name', '20')->nullable()->comment('택배사명');
-        $table->string('url', '100')->nullable()->comment('택배사 url');
-        $table->string('query_url', '100')->nullable()->comment('배송조회url');
-      });
-    }
+    // if (!Schema::hasTable('market_delivery_companies')) {
+    //   Schema::create('market_delivery_companies', function(BluePrint $table) {
+    //     $table->id();
+    //     $table->string('code', '20')->nullable()->comment('택배사코드');
+    //     $table->string('name', '20')->nullable()->comment('택배사명');
+    //     $table->string('url', '100')->nullable()->comment('택배사 url');
+    //     $table->string('query_url', '100')->nullable()->comment('배송조회url');
+    //   });
+    // }
 
 
     if (!Schema::hasTable('market_exchange_returns')) {
@@ -135,7 +135,7 @@ class MarketAll extends Migration
         $table->bigInteger('option_price')->default(0)->unsigned()->comment('제품옵션단가');
         $table->bigInteger('point')->default(0)->unsigned()->comment('적립포인트');
         $table->string('options', '200')->nullable()->comment('market_item_options.id | market_item_options.id |');
-        $table->bigInteger('courier')->nullable()->unsigned()->comment('(개별배송시) 각각의 제품에 대한 배송업체 market_delivery_companies.id');
+        $table->string('courier', '10')->nullable()->comment('(개별배송시) 각각의 제품에 대한 배송업체');
         $table->string('invoice_no', '200')->nullable()->comment('(개별배송시) 각각의 제품에 대한 송장번호');
         $table->tinyInteger('delivery_status')->default(0)->unsigned()->comment('(개별배송시) 각각의 제품에 대한 주문상태(앞으로 카트는 단순히 장바구니만을 처리하고 동일한 항목으로 orders등을 별도촐 처리)');
         $table->string('contact', '20')->comment('연락처');
@@ -302,7 +302,7 @@ class MarketAll extends Migration
         $table->bigInteger('option_price')->default(0)->unsigned()->comment('제품옵션단가');
         $table->bigInteger('point')->default(0)->unsigned()->comment('적립포인트');
         $table->string('options', '200')->nullable()->comment('market_item_options.id | market_item_options.id |');
-        $table->bigInteger('courier')->nullable()->unsigned()->comment('(개별배송시) 각각의 제품에 대한 배송업체 market_delivery_companies.id');
+        $table->string('courier', '10')->nullable()->comment('(개별배송시) 각각의 제품에 대한 배송업체');
         $table->string('invoice_no', '20')->nullable()->comment('(개별배송시) 각각의 제품에 대한 송장번호');
         $table->tinyInteger('delivery_status')->default(0)->unsigned()->comment('(개별배송시) 각각의 제품에 대한 주문상태(앞으로 카트는 단순히 장바구니만을 처리하고 동일한 항목으로 orders등을 별도촐 처리)');
         $table->timestamps();
@@ -383,7 +383,7 @@ class MarketAll extends Migration
     Schema::dropIfExists('market_carts');
     Schema::dropIfExists('market_categories');
     Schema::dropIfExists('market_configs');
-    Schema::dropIfExists('market_delivery_companies');
+    // Schema::dropIfExists('market_delivery_companies');
     Schema::dropIfExists('market_exchange_returns');
     Schema::dropIfExists('market_items');
     Schema::dropIfExists('market_item_categories');

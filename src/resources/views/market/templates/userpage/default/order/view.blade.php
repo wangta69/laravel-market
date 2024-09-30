@@ -103,9 +103,12 @@
       </div><!-- .card -->
 
       <div class="card mt-4">
-        <div class="card-header">
-        배송 정보
+      <div class="card-header d-flex justify-content-between">
+        <span>배송정보</span>
+        <div>
+          <a class="btn btn-sm btn-info" onclick="javascript:delivery_logs('{{$display->courier}}', '{{ $display->invoice_no }}')">보기</a>
         </div>
+      </div>
         <div class="card-body">
           <div class="row">
             <label class="col-sm-3 col-md-2">배송상태</label>
@@ -116,7 +119,7 @@
           <div class="row">
             <label class="col-sm-3 col-md-2">배송업체</label>
             <div class="col-sm-9 col-md-10">
-              {{ $display->delivery_company ? $display->delivery_company->name : '' }}
+              {{ $display->delivery_company ? $display->delivery_company['name'] : '' }}
             </div>
           </div>
           <div class="row">

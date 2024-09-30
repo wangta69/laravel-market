@@ -10,9 +10,11 @@ use App\Models\Market\MarketBank;
 use App\Models\Market\MarketDeliveryCompany;
 use App\Models\Market\MarketBuyer;
 use App\Http\Controllers\Market\Services\OrderService;
-
+use Pondol\DeliveryTracking\Traits\Tracking;
 class OrderController extends Controller
 {
+
+  use Tracking;
   /**
    * Create a new controller instance.
    *
@@ -61,7 +63,7 @@ class OrderController extends Controller
     $user = $request->user();
     $items = $this->orderSvc->orderItemsByOrderid($o_id)->orderBy('market_orders.id', 'desc')->get();  
     $display = $this->orderSvc->orderDetailByOrderid($o_id);
-    $display->delivery_company = MarketDeliveryCompany::find($display->courier);
+    $display->delivery_company = $this->_courier($display->courier);// MarketDeliveryCompany::find($display->courier);
 
     foreach($items as $item) {
       $item->displayOptions = extractOptions($item);

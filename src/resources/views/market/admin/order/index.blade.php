@@ -52,6 +52,12 @@
             </div>
 
             <div class="input-group">
+            <select class="form-select" name="sk">
+                <option value="it.name" @if( request()->get('sk') == 'it.name')) selected="selected" @endif >상품명</option>
+                <option value="market_orders.o_id" @if( request()->get('sk') == 'market_orders.o_id')) selected="selected" @endif >주문번호</option>
+                <option value="u.name" @if( request()->get('sk') == 'u.name')) selected="selected" @endif >주문자명</option>
+              </select>
+              <input type="text" name="sv" value="{{ request()->sv}}" placeholder="검색어를 입력해주세요." class="form-control">
               <button class="btn btn-success btn-serch-keyword">검색</button>
             </div>
         </div>
@@ -85,7 +91,7 @@
 
     <table class="table items">
       <tr>
-        <th class="text-center">상품명</th>
+        <th class="text-center">상품명/주문번호</th>
         <th class="text-center">결재방식</th>
         <th class="text-center">결재상태</th>
         <th class="text-center">배송상태</th>
@@ -95,7 +101,10 @@
       </tr>
       @forelse ($items as $item)
       <tr>
-        <td class="text-center">{{$item->name}} @if($item->count > 1 ) 외 {{($item->count - 1)}}건 @endif</td>
+        <td class="text-center">
+          {{$item->name}} @if($item->count > 1 ) 외 {{($item->count - 1)}}건 @endif
+          <br>({{$item->o_id}})
+        </td>
         <td class="text-center">{{ __('market.pay_method.'.$item->method) }}</td>
         <td class="text-center">{{ __('market.pay_status.'.$item->status) }}</td>
         <td class="text-center">{{ __('market.delivery_status.'.$item->delivery_status) }}</td>

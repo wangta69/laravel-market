@@ -41,16 +41,18 @@ class FavoriteController extends Controller
     
   }
 
-  public function view($o_id, Request $request) {
-    $user = $request->user();
-    $items = $this->orderSvc->orderItemsByOrderid($o_id)->orderBy('market_orders.id', 'desc')->get();  
-    $display = $this->orderSvc->orderDetailByOrderid($o_id);
-    $display->delivery_company = MarketDeliveryCompany::find($display->courier);
+  // public function view($o_id, Request $request) {
+  //   $user = $request->user();
+  //   $items = $this->orderSvc->orderItemsByOrderid($o_id)->orderBy('market_orders.id', 'desc')->get();  
+  //   $display = $this->orderSvc->orderDetailByOrderid($o_id);
+  //   $display->delivery_company = MarketDeliveryCompany::find($display->courier);
 
-    return view('market.templates.'.config('market.template.userpage.theme').'.mypage.order-view', [
-      'user' => $user,
-      'items' => $items,
-      'display' =>$display,
-    ]);
-  }
+  //   // exit;
+
+  //   return view('market.templates.'.config('market.template.userpage.theme').'.mypage.order-view', [
+  //     'user' => $user,
+  //     'items' => $items,
+  //     'display' =>$display,
+  //   ]);
+  // }
 }

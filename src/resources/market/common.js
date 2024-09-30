@@ -254,45 +254,6 @@ var search_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, fr
 }
 
 
-
-
-
-// function numkeyCheck(e) {
-//   var keyValue = event.keyCode;
-//   if( ((keyValue >= 48) && (keyValue <= 57)) ) return true;
-//   else return false;
-// }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// 전역 변수
-// var errmsg = "";
-// var errfld = null;
-
-// 필드 검사
-// function check_field(fld, msg)
-// {
-//   if ((fld.value = trim(fld.value)) == "")
-//     error_field(fld, msg);
-//   else
-//     clear_field(fld);
-//   return;
-// }
-
-// // 필드 오류 표시
-// function error_field(fld, msg)
-// {
-//   if (msg != "")
-//     errmsg += msg + "\n";
-//   if (!errfld) errfld = fld;
-//   fld.style.background = "#BDDEF7";
-// }
-
-// // 필드를 깨끗하게
-// function clear_field(fld)
-// {
-//   fld.style.background = "#FFFFFF";
-// }
-
 function trim(s)
 {
   var t = "";
@@ -324,39 +285,6 @@ function trim(s)
   //				alert(from_pos + ',' + to_pos + ',' + t+'.');
   return t;
 }
-
-
-
-// // 새 창
-// function popup_window(url, winname, opt)
-// {
-//   window.open(url, winname, opt);
-// }
-
-
-// 폼메일 창
-// function popup_formmail(url)
-// {
-//   opt = 'scrollbars=yes,width=417,height=385,top=10,left=20';
-//   popup_window(url, "wformmail", opt);
-// }
-
-// , 를 없앤다.
-// function no_comma(data)
-// {
-//   var tmp = '';
-//   var comma = ',';
-//   var i;
-
-//   for (i=0; i<data.length; i++)
-//   {
-//     if (data.charAt(i) != comma)
-//       tmp += data.charAt(i);
-//   }
-//   return tmp;
-// }
-
-
 
 // 쿠키 입력
 function set_cookie(name, value, expirehours, domain)
@@ -409,30 +337,33 @@ function delete_cookie(name)
   today.setTime(today.getTime() - 1);
   var value = get_cookie(name);
   if(value != "")
-      document.cookie = name + "=" + value + "; path=/; expires=" + today.toGMTString();
+    document.cookie = name + "=" + value + "; path=/; expires=" + today.toGMTString();
 }
 
+// 새 창
+function window_open (url, winname, params) {
+  var defaultOpt = {width: 700, height: 500, scrollbars: 'auto'};
 
+  params = params || [];
+  var objs = [defaultOpt, params];
+  var newOpts =  objs.reduce(function (r, o) {
+    Object.keys(o).forEach(function (k) {
+      r[k] = o[k];
+    });
+    return r;
+  }, {});
 
-// 글숫자 검사
-// function check_byte(content, target)
-// {
-//   var i = 0;
-//   var cnt = 0;
-//   var ch = '';
-//   var cont = document.getElementById(content).value;
+  newOpts.left = (document.body.offsetWidth / 2) - (200 / 2);
+  //&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
-//   for (i=0; i<cont.length; i++) {
-//     ch = cont.charAt(i);
-//     if (escape(ch).length > 4) {
-//       cnt += 2;
-//     } else {
-//       cnt += 1;
-//     }
-//   }
-//   // 숫자를 출력
-//   document.getElementById(target).innerHTML = cnt;
+  newOpts.top= (window.screen.height / 2) - (300 / 2);
+  //&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 
-//   return cnt;
-// }
+  var opt = 'scrollbars = ' + newOpts.scrollbars + ', width=' + newOpts.width + ', height=' + newOpts.height + ', left=' + newOpts.left + ', top=' + newOpts.top;
+  window.open(url, winname, opt);
+}
 
+function delivery_logs(courier, invoicenumber) {
+  var url = `/delivery-tracking/${courier}/${invoicenumber}/html`;
+  window_open(url, '', {width: 900, height: 600});
+}

@@ -77,31 +77,35 @@
 </div><!-- .card -->
 
 <div class="card mt-4">
-  <div class="card-header">
-  배송정보
+  <div class="card-header d-flex justify-content-between">
+    <span>배송정보</span>
+    <div>
+      <a class="btn btn-sm btn-info" onclick="javascript:delivery_logs('{{$display->courier}}', '{{ $display->invoice_no }}')">보기</a>
+    </div>
   </div>
   <div class="card-body">
     <form name="delivery-form">
       <input type="hidden" name="o_id" value="{{$display->o_id}}">
       <div class="input-group mt-1">
-          <label class="col-sm-3 col-md-2">배송상태</label>
+            <label class="col-sm-3 col-md-2">배송상태</label>
           <div class="col-sm-9 col-md-10">
-              <select name="delivery_status" class="form-select">
-              
+            <select name="delivery_status" class="form-select">
+            
               @foreach($delivery_status as $k => $v)
-                <option value="{{$k}}" @if($k == $display->delivery_status) selected @endif> {{$v}}</option>
-                @endforeach
-              </select>
+              <option value="{{$k}}" @if($k == $display->delivery_status) selected @endif> {{$v}}</option>
+              @endforeach
+            </select>
           </div>
       </div>
       <div class="input-group mt-1">
           <label class="col-sm-3 col-md-2">배송업체</label>
 
             <select name="courier" class="form-select">
-              @foreach($couriers as $c)
-                <option value="{{$c->id}}" @if($c->id == $display->courier) selected @endif>{{$c->name}}</option>
+              <option value="">선택</option>
+              @foreach($couriers as $k=>$c)
+              <option value="{{$k}}" @if($k == $display->courier) selected @endif>{{$c['name']}}</option>
               @endforeach
-              </select>
+            </select>
 
       </div>
       <div class="input-group mt-1">
