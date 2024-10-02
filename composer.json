@@ -23,7 +23,8 @@
       "wangta69/php-thumbnail": "^1",
       "wangta69/laravel-editor": "^8",
       "wangta69/laravel_board": "^8",
-      "wangta69/laravel_delivery_tracking": "^1"
+      "wangta69/laravel_delivery_tracking": "^1",
+      "wangta69/laravel_auth": "^0"
     },
     "autoload": {
       "files": [
