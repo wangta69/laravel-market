@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers\Market;
 
-use App\Providers\RouteServiceProvider;
-use App\Models\Auth\User\User;
-// use Illuminate\Foundation\Auth\RegistersUsers;
-// use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use Illuminate\Auth\Events\Registered;
-use DB;
-// use App\Models\Auth\Role\Role;
-// use App\Models\UserBank;
-// use App\Models\Agent;
+
 
 
 class CommonController extends Controller

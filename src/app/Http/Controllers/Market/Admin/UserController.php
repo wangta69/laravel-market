@@ -9,8 +9,8 @@ use App\Notifications\CountChanged;
 use Validator;
 use DB;
 
-use App\Models\Market\Auth\User\User;
-use App\Models\Market\Auth\Role\Role;
+use App\Models\Auth\User\User;
+use App\Models\Auth\Role\Role;
 
 class UserController extends Controller
 {
@@ -35,7 +35,7 @@ class UserController extends Controller
     // $role = $request->role;
 
     // $users =  User::with('roles')->sortable(['created_at' => 'desc']);
-    $users = app('App\Models\Market\Auth\User\User')
+    $users = app('App\Models\Auth\User\User')
     ->select(
       'users.id', 'users.email', 'users.name', 'users.active', 'users.point', 'users.logined_at', 'users.created_at', 'users.deleted_at'
     );

@@ -112,6 +112,11 @@ trait InstallsBladeStack
     // soft link
     \Artisan::call('storage:link');
 
+    \Artisan::call('vendor:publish',  [
+      '--force'=> true,
+      '--provider' => 'Pondol\Market\MarketServiceProvider'
+    ]);
+
     // editor
     \Artisan::call('vendor:publish',  [
       '--force'=> true,
@@ -126,24 +131,24 @@ trait InstallsBladeStack
 
     \Artisan::call('queue:table'); // job table  생성 (11 은 php artisan make:queue-table) 명령을 사용하는데 호환성 테스트 필요
     \Artisan::call('migrate');
+    \Artisan::call('pondol:install-auth');
 
-
-    $user_name = $this->ask('Name for administrator?'); 
-    $user_email = $this->ask('Email for administrator?'); 
-    $user_password = $this->ask('Password for administrator?'); 
+    // $user_name = $this->ask('Name for administrator?'); 
+    // $user_email = $this->ask('Email for administrator?'); 
+    // $user_password = $this->ask('Password for administrator?'); 
     
-    $count = User::where('email', $user_email)->count();
-    if(!$count) {
-      $user = User::create([
-        'name' => $user_name,
-        'email' => $user_email,
-        'password' => Hash::make($user_password),
-      ]);
+    // $count = User::where('email', $user_email)->count();
+    // if(!$count) {
+    //   $user = User::create([
+    //     'name' => $user_name,
+    //     'email' => $user_email,
+    //     'password' => Hash::make($user_password),
+    //   ]);
 
-      $user->active = 1;
-      $user->save();
-      $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
-    }
+    //   $user->active = 1;
+    //   $user->save();
+    //   $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
+    // }
 
 
 

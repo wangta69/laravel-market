@@ -19,6 +19,14 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
         // Console\InstallCommand::class,
       ]);
     }
+
+    if(file_exists( app_path('/Listeners/OrderShippedEventSubscriber.php')  )) {
+      Event::subscribe(\App\Listeners\OrderShippedEventSubscriber::class);
+    }
+
+    // if(file_exists( app_path('/Listeners/SendRegisteredNotification.php')  )) {
+    //   Event::subscribe(\App\Listeners\SendRegisteredNotification::class);
+    // }
   }
 
   /**
@@ -39,9 +47,18 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
       });
     }
 
-    $router->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
+    $this->publishes([
+      // Events and Listeners;
+      __DIR__.'/Events/' => app_path('Events'),
+      __DIR__.'/Listeners/' => app_path('Listeners')
+    ]);
+
+
+
+
+    // $router->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
     // app('router')->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
-		$router->pushMiddlewareToGroup('admin', 'role:administrator');
+		// $router->pushMiddlewareToGroup('admin', 'role:administrator');
 
   //   $this->routes(function () {
   //     Route::middleware('web')
