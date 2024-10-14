@@ -1,54 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'market', 'as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', 'middleware' => ['web']], function () {
-  Route::get('route-url', 'Services\ServiceController@routeUrl');
+  Route::get('route-url', function (Request $request) {
+    try {
+      return route($request->route, $request->segments);
+    } catch (\Exception $e) {
+    }
+  });
 });
 
 // 'prefix' => 'market', 
 Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', 'middleware' => ['web']], function () {
   Route::get('/', 'MainController@index')->name('main');
-
-  // Auth
-  // Route::get('register', 'Auth\RegisterController@create')->name('register')->middleware('guest');
-  // Route::post('register', 'Auth\RegisterController@store')->middleware('guest');
-  // Route::get('register/agreement', 'Auth\RegisterController@agreement')->name('register.agreement')->middleware('guest');
-  // Route::post('register/agreement', 'Auth\RegisterController@agreementstore')->middleware('guest');
-  // Route::get('register/success', 'Auth\RegisterController@success')->name('register.success');
-  // Route::get('login', 'Auth\LoginController@create')->name('login')->middleware('guest');
-  // Route::post('login', 'Auth\LoginController@store')->middleware('guest');
-  // Route::get('logout', 'Auth\LoginController@destroy')->name('logout');
-  // Route::get('validation/email/{email}', 'CommonController@validationEmail')->name('validation.email');
-
-  // Route::get('password-request', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
-  // Route::post('password-request', 'ForgotPasswordController@sendResetLinkEmail');
-  // // Route::get('/reset-password/{token}', 'ForgotPasswordController@resetPasswordForm');
-  // Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
-  // Route::post('password/reset', 'ResetPasswordController@reset');
-  // Route::get('forgot-password', 'Auth\ForgotPasswordController@forgotPassword')->name('forgot.password');
-  // Route::post('forgot-password', 'Auth\ForgotPasswordController@resetPassword');
-  // Route::post('forgot-email', 'Auth\ForgotPasswordController@resetPassword')->name('forgot.email');
-
-  // Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-  // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-  // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-  // Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-
-  // Route::get('cancel-account', 'Auth\DestroyController@delete')->name('cancel.account')->middleware('auth');
-  // Route::delete('cancel-account', 'Auth\DestroyController@destroy')->middleware('auth');
-  // Route::get('cancel-account/success', 'Auth\DestroyController@success')->name('cancel.account.success');
-
-  // // 로그인창 가져오기위한 라우터
-  // Route::get('/auth/social/{provider}/redirect', 'Auth\Social\LoginController@redirectToProvider');
-
-  // // 로그인 인증후 데이터를 제공해주는 라우터
-  // Route::get('/auth/social/{provider}/callback', 'Auth\Social\LoginController@handleProviderCallback');
-  // Route::get('/auth/social/{provider}/login', 'Auth\Social\LoginAppController@handleProviderAppCallback');
-  // Route::get('/auth/social/{provider}/logout', 'Auth\Social\LoginAppController@logout');
-
-
 
   Route::get('category/{category}', 'MarketController@category')->name('category');
   Route::get('item/{item}', 'MarketController@view')->name('item');
@@ -87,12 +53,7 @@ Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', '
   Route::post('mypage/order/refund', 'Mypage\CancelReturnExchangeController@refundUpdate');
   Route::get('mypage/order/cancel-return-exchange/{type}/{o_id}', 'Mypage\CancelReturnExchangeController@create')->name('mypage.order.cancel-return-exchange');
   Route::post('mypage/order/cancel-return-exchange/{type}/{o_id}', 'Mypage\CancelReturnExchangeController@store');
-  // Route::get('mypage/order/return/{o_id}', 'Mypage\ReturnController@create')->name('mypage.order.return');
-  // Route::post('mypage/order/return/{o_id}', 'Mypage\RetrunController@store');
 
-
-  // Route::get('mypage/order/exchange/{order_id}', 'Mypage\ExchangeController@create')->name('mypage.order.exchange');
-  // Route::get('mypage/order/refund/{order_id}', 'Mypage\RefundController@create')->name('mypage.order.refund');
 
   Route::get('mypage/addresses', 'Mypage\AddressController@index')->name('mypage.addresses'); 
   Route::get('mypage/address', 'Mypage\AddressController@create')->name('mypage.address'); 

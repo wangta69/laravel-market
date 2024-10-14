@@ -17,7 +17,7 @@ class InstallCommand extends Command
    *
    * @var string
    */
-  protected $signature = 'market:install';
+  protected $signature = 'pondol:install-market';
 
   /**
    * The console command description.
@@ -34,12 +34,111 @@ class InstallCommand extends Command
 
   public function handle()
   {
-    $this->info(" Install Laravel Market ");
+    $this->info("# Install Pondol's Laravel Market ");
     return $this->installBladeStack();
 
   }
 
+
+  protected static function updateNodePackages(callable $callback, $dev = true)
+  {
+    if (! file_exists(base_path('package.json'))) {
+      return;
+    }
+
+    $configurationKey = $dev ? 'devDependencies' : 'dependencies';
+
+    $packages = json_decode(file_get_contents(base_path('package.json')), true);
+
+    $packages[$configurationKey] = $callback(
+      array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
+      $configurationKey
+    );
+
+    ksort($packages[$configurationKey]);
+
+    file_put_contents(
+      base_path('package.json'),
+      json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
+    );
+  }
+
+  protected function updateWebpackMix(){
+    
+    $data = "
+mix.sass('resources/pondol/market/front.scss', 'public/pondol/market/assets/front.css', {
+  sassOptions: {
+    quietDeps: true,
+  },
+});
+
+mix.scripts([
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/@popperjs/core/dist/umd/popper.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
+  // 'node_modules/venobox/dist/venobox.min.js',
+  'resources/pondol/market/front.js',
+  'resources/pondol/market/common.js',
+  'resources/pondol/route.js',
+], 'public/pondol/market/assets/front.js').version();
+  
+  
+  
+mix.sass('resources/pondol/market/admin.scss', 'public/pondol/market/assets/admin.css', {
+  sassOptions: {
+      quietDeps: true,
+    },
+  }
+);
+  
+ 
+mix.scripts([
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/jquery-ui/dist/jquery-ui.js',
+  'node_modules/@popperjs/core/dist/umd/popper.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
+  'resources/pondol/market/common.js',
+  'resources/pondol/route.js',
+  'resources/pondol/market/admin.js',
+  'resources/pondol/market/date-select.js',
+], 'public/pondol/market/assets/admin.js').version();
+";
+
+    $webpackmix = file_get_contents(base_path('webpack.mix.js'));
+    if (!strpos($webpackmix, 'public/pondol/market/assets/front.css')) {
+      $this->info(" webpack.mix.js update ");
+      \File::append(base_path('webpack.mix.js'), $data);
+    }
+
+  }
+
+  protected function replaceInFile($search, $replace, $path)
+  {
+    file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
+  }
+  
 /*
+  protected static function flushNodeModules()
+  {
+    tap(new Filesystem, function ($files) {
+      $files->deleteDirectory(base_path('node_modules'));
+
+      $files->delete(base_path('yarn.lock'));
+      $files->delete(base_path('package-lock.json'));
+    });
+  }
+
+*/
+
+/*
+  protected function phpBinary()
+  {
+    return (new PhpExecutableFinder())->find(false) ?: 'php';
+  }
+  */
+
+
+  /*
   protected function installTests()
   {
     (new Filesystem)->ensureDirectoryExists(base_path('tests/Feature/Auth'));
@@ -102,98 +201,4 @@ class InstallCommand extends Command
   }
 
 */
-  protected static function updateNodePackages(callable $callback, $dev = true)
-  {
-    if (! file_exists(base_path('package.json'))) {
-      return;
-    }
-
-    $configurationKey = $dev ? 'devDependencies' : 'dependencies';
-
-    $packages = json_decode(file_get_contents(base_path('package.json')), true);
-
-    $packages[$configurationKey] = $callback(
-      array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
-      $configurationKey
-    );
-
-    ksort($packages[$configurationKey]);
-
-    file_put_contents(
-      base_path('package.json'),
-      json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
-    );
-  }
-
-  protected function updateWebpackMix(){
-    
-    $data = "
-mix.sass('resources/market/front.scss', 'public/market/assets/front.css', {
-  sassOptions: {
-    quietDeps: true,
-  },
-});
-
-mix.scripts([
-  'node_modules/jquery/dist/jquery.js',
-  'node_modules/@popperjs/core/dist/umd/popper.js',
-  'node_modules/bootstrap/dist/js/bootstrap.js',
-  // 'node_modules/venobox/dist/venobox.min.js',
-  'resources/market/front.js',
-  'resources/market/common.js',
-  'resources/market/market-route.js',
-], 'public/market/assets/front.js').version();
-  
-  
-  
-mix.sass('resources/market/admin.scss', 'public/market/assets/admin.css', {
-  sassOptions: {
-      quietDeps: true,
-    },
-  }
-);
-  
- 
-mix.scripts([
-  'node_modules/jquery/dist/jquery.js',
-  'node_modules/jquery-ui/dist/jquery-ui.js',
-  'node_modules/@popperjs/core/dist/umd/popper.js',
-  'node_modules/bootstrap/dist/js/bootstrap.js',
-  'resources/market/common.js',
-  'resources/market/market-route.js',
-  'resources/market/admin.js',
-  'resources/market/date-select.js',
-], 'public/market/assets/admin.js').version();
-";
-
-    $webpackmix = file_get_contents(base_path('webpack.mix.js'));
-    if (!strpos($webpackmix, 'public/market/assets/front.css')) {
-      $this->info(" webpack.mix.js update ");
-      \File::append(base_path('webpack.mix.js'), $data);
-    }
-
-  }
-
-/*
-  protected static function flushNodeModules()
-  {
-    tap(new Filesystem, function ($files) {
-      $files->deleteDirectory(base_path('node_modules'));
-
-      $files->delete(base_path('yarn.lock'));
-      $files->delete(base_path('package-lock.json'));
-    });
-  }
-
-*/
-  protected function replaceInFile($search, $replace, $path)
-  {
-    file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
-  }
-/*
-  protected function phpBinary()
-  {
-    return (new PhpExecutableFinder())->find(false) ?: 'php';
-  }
-  */
 }

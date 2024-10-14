@@ -106,9 +106,8 @@ $(function(){
   
   // 카운트 업/다운
   $(".act-create-bank").on('click', function(){
-    MARKET.ajaxroute('POST', 
-    {'name': 'market.mypage.order.refund'}, 
-		$("form[name='bank-create-form']").serializeObject(), 
+    ROUTE.ajaxroute('POST', 
+    {route: 'market.mypage.order.refund', data: $("form[name='bank-create-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

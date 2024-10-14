@@ -368,9 +368,8 @@ $(function(){
     $this = $(this);
     var favId = $this.attr('user-attr-favorite');
     if (favId) { 
-      MARKET.ajaxroute('delete', 
-      {'name': 'market.item.favorite', 'params[0]': favId}, 
-      {}, 
+      ROUTE.ajaxroute('delete', 
+      {route: 'market.item.favorite', segments: [favId]}, 
       function(resp) {
         if(resp.error) {
           showToaster({title: '알림', message: resp.error});
@@ -381,9 +380,8 @@ $(function(){
         }
       })
     } else {
-      MARKET.ajaxroute('post', 
-      {'name': 'market.item.favorite', 'params[0]': item_id}, 
-      {}, 
+      ROUTE.ajaxroute('post', 
+      {route: 'market.item.favorite', segments: item_id},
       function(resp) {
         if(resp.error) {
           showToaster({title: '알림', message: resp.error});
@@ -400,9 +398,8 @@ $(function(){
 
 function saveCart(){
 
-  MARKET.ajaxroute('post', 
-    {'name': 'market.cart.add'}, 
-      $("form[name=cart-form]").serialize(), 
+  ROUTE.ajaxroute('post', 
+    {route: 'market.cart.add', data: $("form[name=cart-form]").serialize()}, 
     function(resp) {
       console.log('saveCart >> resp >>', resp);
       if(resp.error) {
@@ -420,9 +417,8 @@ function directOrder(){
   var data = $("form[name=cart-form]").serialize();
   data += '&direct=1';
 
-  MARKET.ajaxroute('post', 
-    {'name': 'market.cart.add'}, 
-    data, 
+  ROUTE.ajaxroute('post', 
+    {route: 'market.cart.add', data: data}, 
     function(resp) {
       console.log(resp);
       if(resp.error) {

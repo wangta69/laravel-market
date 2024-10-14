@@ -60,9 +60,8 @@ $(function(){
   // var addressCreateModal = new bootstrap.Modal(document.getElementById('addressCreateModal'), {})
   $("#btn-store-address").on('click', function(){
 
-    MARKET.ajaxroute('post', 
-    {'name': 'market.mypage.address'}, 
-      $("form[name=address-form]").serializeObject(), 
+    ROUTE.ajaxroute('post', 
+    {route: 'market.mypage.address', data: $("form[name=address-form]").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

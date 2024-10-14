@@ -159,9 +159,8 @@
 <script>
 $(function(){
   $("#btn-change-email").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.mypage.user.update.email'}, 
-      $("form[name=email-change-form]").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.mypage.user.update.email', data: $("form[name=email-change-form]").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -177,9 +176,8 @@ $(function(){
 
 
   $("#btn-change-mobile").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.mypage.user.update.mobile'}, 
-      $("form[name=mobile-change-form]").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.mypage.user.update.mobile', data: $("form[name=mobile-change-form]").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -195,9 +193,8 @@ $(function(){
 
 
   $("#btn-change-password").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.mypage.user.update.password'}, 
-      $("form[name=password-change-form]").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.mypage.user.update.password', data: $("form[name=password-change-form]").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -205,7 +202,7 @@ $(function(){
         showToaster({title: '알림', message: '정상적으로 변경처리 되었습니다', alert: false});
         var newEmail = $("form[name=password-change-form] input[name='email']").eq(0).val();
         $("#user-email").val(newEmail);
-        $('#emailChangeModal').modal('hide');
+        $('#passwordChangeModal').modal('hide');
         $("form[name=email-change-form] input[name='password']").eq(0).val(null);
       }
     })

@@ -26,14 +26,18 @@ Route::group(['prefix' => 'adm', 'as' => 'market.admin.', 'namespace' => 'App\Ht
     Route::get('/config/pg', 'Config\PgController@index')->name('config.pg');
     Route::put('/config/pg', 'Config\PgController@update');
 
-    Route::get('/config/user', 'Config\UserController@index')->name('config.user');
-    Route::put('/config/user', 'Config\UserController@update');
+    
+
+    // Route::get('config', 'ConfigController@index')->name('config'); // 관리
+    // Route::put('config', 'ConfigController@update')->name('config.update'); 
 
     Route::get('/config/company', 'Config\CompanyController@index')->name('config.company');
     Route::put('/config/company', 'Config\CompanyController@update');
 
     // 회원관리
     Route::get('users', 'UserController@index')->name('users');
+    Route::get('user/config', 'Config\UserController@index')->name('user.config');
+    Route::put('user/config', 'Config\UserController@update');
     // Route::get('user/create', 'UserController@create')->name('user.create');
     // Route::post('user/create', 'UserController@store');
 

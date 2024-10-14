@@ -13,19 +13,34 @@
 </div>
 
 <div class="card">
-	 <!-- <form name="user-form" method="POST" action="{{ route('market.admin.config.user') }}" onsubmit="return checkUserForm();">
-    @csrf
-    @method('PUT') -->
+
   <form name="user-form">
 		<div class="card-body">
 			<div class="input-group">
 				<label for='name' class='col-sm-2 col-form-label'>회원 활성</label>
-				<select class="form-select" name="active">
-          <option value="auto" @if($user['active'] == "auto") selected @endif>회원가입시</option>
-          <option value="email" @if($user['active'] == "email") selected @endif>이메일 인증시</option>
-          <option value="admin" @if($user['active'] == "admin") selected @endif>관리자 별도 인증</option>
+				<select class="form-select" name="activate">
+          <option value="auto" @if($user['activate'] == "auto") selected @endif>회원가입시</option>
+          <option value="email" @if($user['activate'] == "email") selected @endif>이메일 인증시</option>
+          <option value="admin" @if($user['activate'] == "admin") selected @endif>관리자 별도 인증</option>
 				</select>
 			</div>
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">User template</label>
+        <select class="form-select" name="t_user">
+          @foreach($templates['user'] as $v)
+          <option value="{{$v}}" @if($v == $user['template']['user']) selected @endif>{{$v}}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">Mail template</label>
+        <select class="form-select" name="t_mail">
+          @foreach($templates['mail'] as $v)
+          <option value="{{$v}}" @if($v == $user['template']['mail']) selected @endif>{{$v}}</option>
+          @endforeach
+        </select>
+      </div>
 			<div class="input-group mt-1">
         <div class="col-2">
 				  <label class='form-label'>이용약관</label>
@@ -44,7 +59,6 @@
         <div class="col-2">
 				  <label class='form-label'>개인정보 수집 및 이용</label>
         </div>
-
         <div class="col-10">
         <x-editor-components 
           name="privacyPolicy" 
@@ -52,10 +66,16 @@
           :value=$privacyPolicy 
           :attr="['class'=>'form-control']"
           type="end"/>
-
         </div>
-
 			</div>
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">회원가입 포인트</label>
+        <input class="form-control" name="r_point" value="{{$user['point']['register']}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class="col-form-label col-2">회원로그인 포인트</label>
+        <input class="form-control" name="l_point" value="{{$user['point']['login']}}">
+      </div>
 		</div> <!-- .card-body -->
 
 		<div class="card-footer text-end">
@@ -81,9 +101,8 @@ function checkUserForm() {
 $(function(){
 	$(".act-update-user").on('click', function(){
     updateContentsField();
-    MARKET.ajaxroute('put', 
-    {'name': 'market.admin.config.user'}, 
-		$("form[name='user-form']").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.admin.user.config', data: $("form[name='user-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

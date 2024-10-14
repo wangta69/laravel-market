@@ -144,17 +144,15 @@ $(function () {
     //   _token: csrf_token
     // };
 
-    MARKET.ajaxroute('DELETE', 
-      {'name': 'market.admin.item', 'params[0]': item_id}, 
-      {}, 
-    function(resp) {
-      console.log('loadOptions >>resp >>', resp);
-      if(resp.error) {
-        showToaster({title: '알림', message: resp.error});
-      } else {
-        location.href = listUrl;
-      }
-    })
+    ROUTE.ajaxroute('DELETE', 
+      {route: 'market.admin.item', segments: [item_id]}, 
+      function(resp) {
+        if(resp.error) {
+          showToaster({title: '알림', message: resp.error});
+        } else {
+          location.href = listUrl;
+        }
+      })
 
 
     // $.ajax({

@@ -102,8 +102,8 @@ function checkCart(f) {
 }
 
 function deleteItem(id) { // id: cart id
-  MARKET.ajaxroute('delete', 
-    {'name': 'market.cart.delete', 'params[0]':id}, {}, 
+  ROUTE.ajaxroute('delete', 
+    {route: 'market.cart.delete', segments:[id]}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -131,8 +131,8 @@ function updateqty(parent, flag) {
 
   total_price.html(add_comma((parseInt(item_price) + parseInt(option_price)) * itemQty));
 
-  MARKET.ajaxroute('put', 
-    {'name': 'market.cart.update.qty'}, {id: id, qty: itemQty}, 
+  ROUTE.ajaxroute('put', 
+    {route: 'market.cart.update.qty', data: {id: id, qty: itemQty}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -144,10 +144,9 @@ function updateqty(parent, flag) {
 
 function updateoverview() {
   
-  MARKET.ajaxroute('get', 
-    {'name': 'market.cart.update.overview'}, $("form[name=cart-form]").serializeObject(), 
+  ROUTE.ajaxroute('get', 
+    {route: 'market.cart.update.overview', data: $("form[name=cart-form]").serializeObject()}, 
     function(resp) {
-      console.log('updateoverview resp >>', resp);
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
       } else {

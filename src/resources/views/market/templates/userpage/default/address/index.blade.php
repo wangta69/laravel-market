@@ -61,9 +61,8 @@
 $(function(){
   $(".act-change-to-default").on('click', function(){
     var id =  $(this).parents('tr').attr('user-attr-id');
-    MARKET.ajaxroute('put', 
-      {'name': 'market.mypage.address.default', 'params[0]': id}, 
-      {}, 
+    ROUTE.ajaxroute('put', 
+      {route: 'market.mypage.address.default', segments: [id]}, 
       function(resp) {
         if(resp.error) {
           showToaster({title: '알림', message: resp.error});
@@ -78,9 +77,8 @@ $(function(){
 
   $(".act-delete-address").on('click', function(){
     var id =  $(this).parents('tr').attr('user-attr-id');
-    MARKET.ajaxroute('delete', 
-      {'name': 'market.mypage.address.destroy', 'params[0]': id}, 
-      {}, 
+    ROUTE.ajaxroute('delete', 
+      {route: 'market.mypage.address.destroy', segments: [id]},
       function(resp) {
         if(resp.error) {
           showToaster({title: '알림', message: resp.error});

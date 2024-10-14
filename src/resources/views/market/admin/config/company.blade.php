@@ -13,10 +13,9 @@
 </div>
 
 <div class="card">
-	 <!-- <form name="user-form" method="POST" action="{{ route('market.admin.config.user') }}" onsubmit="return checkUserForm();">
-    @csrf
-    @method('PUT') -->
   <form name="company-form">
+		@csrf
+		@method('PUT')
 		<div class="card-body">
 			<div class="input-group">
 				<label class='col-sm-2 col-form-label'>쇼핑몰명</label>
@@ -70,9 +69,8 @@
 <script>
 $(function(){
 	$(".act-update-company").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.admin.config.company'}, 
-		$("form[name='company-form']").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.admin.config.company', data: $("form[name='company-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

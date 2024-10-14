@@ -1,7 +1,6 @@
 <?php
 
 return [
-  'roles'=>['default_role'=>'user'],
   'delivery' => [
     'fee' => 0,
     'type' => 'none',
@@ -90,9 +89,6 @@ return [
     'id' => 'ASDFADFADF',
     'sender' => 'ADFADFA',
     'manager_rec_order' => true,
-  ],
-  'user' => [
-    'active' => 'auto',
   ],
   'company' => [
     'name' => '온스토리몰',

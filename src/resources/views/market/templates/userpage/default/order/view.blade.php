@@ -197,9 +197,8 @@
 var changeto = null;
 var o_id = '{{$display->o_id}}';
 function statusChange() {
-    MARKET.ajaxroute('put', 
-    {'name': 'market.mypage.order.status', 'params[0]': o_id, 'params[1]': changeto}, 
-      {}, 
+  ROUTE.ajaxroute('put', 
+    {route: 'market.mypage.order.status', segments: [o_id, changeto]}, 
     function(resp) {
       changeto = null;
       if(resp.error) {

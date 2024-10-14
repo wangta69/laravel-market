@@ -44,9 +44,8 @@ $(function(){
   })
 
   $(".act-qna-submit").on('click', function(){
-    MARKET.ajaxroute('POST', 
-    {'name': 'market.item.qna', 'params[0]': item_id}, 
-    $("form[name=qna-form]").serializeObject(), 
+    ROUTE.ajaxroute('POST', 
+    {route: 'market.item.qna', segments: [item_id], data: $("form[name=qna-form]").serializeObject()}, 
     function(resp) {
       console.log('resp >>', resp);
       if(resp.error) {

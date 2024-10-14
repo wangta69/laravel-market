@@ -103,9 +103,8 @@
 <script>
 $(function(){
   $(".act-bank-create").on('click', function(){
-		MARKET.ajaxroute('POST', 
-    {'name': 'market.admin.config.bank'}, 
-		$("form[name='bank-create-form']").serializeObject(), 
+		ROUTE.ajaxroute('POST', 
+    {route: 'market.admin.config.bank', data: $("form[name='bank-create-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -118,9 +117,8 @@ $(function(){
 
   $(".act-bank-delete").on('click', function(){
     var id = $(this).parents('tr').attr('user-attr-id')
-    MARKET.ajaxroute('delete', 
-    {'name': 'market.admin.config.bank.delete', 'params[0]': id}, 
-		{}, 
+    ROUTE.ajaxroute('delete', 
+    {route: 'market.admin.config.bank.delete', segments: [id]}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

@@ -1,6 +1,6 @@
 <?php
 namespace Pondol\Market;
-
+use Illuminate\Support\Facades\Event;
 // use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Pondol\Market\Console\InstallCommand;
@@ -19,7 +19,7 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
         // Console\InstallCommand::class,
       ]);
     }
-
+    
     if(file_exists( app_path('/Listeners/OrderShippedEventSubscriber.php')  )) {
       Event::subscribe(\App\Listeners\OrderShippedEventSubscriber::class);
     }
@@ -38,6 +38,10 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
   public function boot(\Illuminate\Routing\Router $router)
   {
 
+    if(file_exists( app_path('/Listeners/MarketEventSubscriber.php')  )) {
+      Event::subscribe(\App\Listeners\MarketEventSubscriber::class);
+    }
+
     if(file_exists( base_path('/routes/market-admin.php')  )) {
       Route::middleware(['web'])->group(function () {
         $this->loadRoutesFrom(base_path('/routes/market-admin.php'));
@@ -49,47 +53,15 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
 
     $this->publishes([
       // Events and Listeners;
+      
       __DIR__.'/Events/' => app_path('Events'),
-      __DIR__.'/Listeners/' => app_path('Listeners')
+      __DIR__.'/Listeners/' => app_path('Listeners'),
+      __DIR__.'/resources/market/images/' => public_path('pondol/market/assets/images'),
+      __DIR__.'/resources/views/market/3rdparty-templates/auth/' => resource_path('views/auth/templates/views'),
+      __DIR__.'/resources/views/market/3rdparty-templates/mail/' => resource_path('views/auth/templates/mail'),
     ]);
 
-
-
-
-    // $router->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
-    // app('router')->aliasMiddleware('role', \App\Http\Middleware\CheckRole::class);
-		// $router->pushMiddlewareToGroup('admin', 'role:administrator');
-
-  //   $this->routes(function () {
-  //     Route::middleware('web')
-  //         ->namespace($this->namespace)
-  //         ->group(base_path('routes/market.php'));
-  //     Route::middleware('web')
-  //         ->namespace($this->namespace)
-  //         ->group(base_path('routes/market-admin.php'));
-  // });
-
-
-    // \Log::info('boot');
-    // \Log::info('$this->app->runningInConsole()');
-    // // if (! $this->app->runningInConsole()) {
-    // //   return;
-    // // }
-    // \Log::info('next');
-
-
-    // $this->loadMigrationsFrom(__DIR__.'./database/migrations/');
-    // //$this->artisan('migrate');
-    // \Artisan::call('migrate');
   }
 
-  /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    // public function provides()
-    // {
-    //   return [Console\InstallCommand::class];
-    // }
+
 }

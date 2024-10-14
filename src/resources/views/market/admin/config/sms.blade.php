@@ -66,9 +66,8 @@
   <script>
 $(function(){
 	$(".act-sms-save").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.admin.config.sms'}, 
-		$("form[name='sms-form']").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.admin.config.sms', data: $("form[name='sms-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

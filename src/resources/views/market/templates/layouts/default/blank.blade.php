@@ -11,10 +11,10 @@
 
 @section('styles')
 @parent
-<link media="all" type="text/css" rel="stylesheet" href="{{ mix('market-assets/assets/css/front/default.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ mix('pondol/market-assets/assets/css/front/default.css') }}">
 @endsection
 
 @section('scripts')
 @parent
-<script src="{{ mix('market-assets/assets/js/front/default.js') }}"></script>
+<script src="{{ mix('pondol/market-assets/assets/js/front/default.js') }}"></script>
 @endsection

@@ -77,9 +77,8 @@
 <script>
 $(function(){
 	$(".act-update-pg").on('click', function(){
-    MARKET.ajaxroute('put', 
-    {'name': 'market.admin.config.pg'}, 
-		$("form[name='pg-form']").serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.admin.config.pg', data: $("form[name='pg-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

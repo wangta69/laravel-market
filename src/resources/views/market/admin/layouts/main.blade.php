@@ -39,12 +39,12 @@
 @stop
 
 @section('styles')
-<link media="all" type="text/css" rel="stylesheet" href="{{ mix('market/assets/admin.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ mix('pondol/market/assets/admin.css') }}">
 @endsection
 
 
 @section('scripts')
-<script src="{{ mix('market/assets/admin.js') }}"></script>
+<script src="{{ mix('pondol/market/assets/admin.js') }}"></script>
 <script type="text/javascript">
   $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {

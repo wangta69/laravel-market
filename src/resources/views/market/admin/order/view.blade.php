@@ -194,9 +194,8 @@
 @parent
 <script>
 $(".act-update-devery").on('click', function(){
-  MARKET.ajaxroute('PUT', 
-    {'name': 'market.admin.order.update.delivery'}, 
-    $("form[name='delivery-form']").serializeObject(), 
+  ROUTE.ajaxroute('PUT', 
+    {route: 'market.admin.order.update.delivery', data: $("form[name='delivery-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -207,9 +206,8 @@ $(".act-update-devery").on('click', function(){
 })
 
 $(".act-update-pay").on('click', function(){
-  MARKET.ajaxroute('PUT', 
-    {'name': 'market.admin.order.update.pay'}, 
-    $("form[name='pay-form']").serializeObject(), 
+  ROUTE.ajaxroute('PUT', 
+    {route: 'market.admin.order.update.pay', data: $("form[name='pay-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

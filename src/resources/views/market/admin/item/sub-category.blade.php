@@ -15,9 +15,8 @@ var categories = {!! $categories !!};
 */
 function loadOptions(category, index, cat, callback) {
   console.log('loadOptions', 'category:', category, 'index:', index, cat);
-  MARKET.ajaxroute('GET', 
-    {'name': 'market.admin.category.sub'}, 
-      {type:'json', category: category}, 
+  ROUTE.ajaxroute('GET', 
+    {route: 'market.admin.category.sub', data: {type:'json', category: category}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

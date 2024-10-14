@@ -109,9 +109,8 @@
 
   /** 생성 */
   function store(name, callback) {
-    MARKET.ajaxroute('POST', 
-    {'name': 'market.admin.category'}, 
-      {name:name, parent: _category}, 
+    ROUTE.ajaxroute('POST', 
+    {route: 'market.admin.category', data: {name:name, parent: _category}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -123,9 +122,8 @@
   }
   /** 삭제 */
   function destroy(category, callback) {
-    MARKET.ajaxroute('DELETE', 
-    {'name': 'market.admin.category'}, 
-      {category: category}, 
+    ROUTE.ajaxroute('DELETE', 
+    {route: 'market.admin.category', data: {category: category}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -137,9 +135,8 @@
   }
   /** 수정 */
   function update(category, name, callback) {
-    MARKET.ajaxroute('PUT', 
-    {'name': 'market.admin.category'}, 
-      {category: category, name: name}, 
+    ROUTE.ajaxroute('PUT', 
+    {route: 'market.admin.category', data: {category: category, name: name}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

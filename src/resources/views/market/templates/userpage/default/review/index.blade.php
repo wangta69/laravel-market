@@ -146,9 +146,8 @@ $(function(){
     $form = $(this).parents('form');
     var order_id = $form.attr('user-attr-id')
 
-    MARKET.ajaxroute('POST', 
-    {'name': 'market.mypage.review', 'params[0]': order_id}, 
-    $form.serializeObject(), 
+    ROUTE.ajaxroute('POST', 
+    {route: 'market.mypage.review', segments: [order_id], data: $form.serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

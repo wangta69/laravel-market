@@ -16,6 +16,9 @@
         <li class="{{ request()->routeIs(['market.admin.users*']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.users') }}">회원</a>
         </li>
+        <li class="{{ request()->routeIs(['market.admin.user.config']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.user.config') }}">회원 설정</a>
+        </li>
         <!-- <li>
             <a href="{{ route('market.admin.config.delivery') }}">배송비 설정</a>
         </li>
@@ -122,9 +125,7 @@
         <li class="{{ request()->routeIs(['market.admin.config.delivery']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.config.delivery') }}">배송비 설정</a>
         </li>
-        <li class="{{ request()->routeIs(['market.admin.config.user']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.config.user') }}">회원가입 설정</a>
-        </li>
+        
         <li class="{{ request()->routeIs(['market.admin.config.pg']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.config.pg') }}">PG 및 결제 설정</a>
         </li>

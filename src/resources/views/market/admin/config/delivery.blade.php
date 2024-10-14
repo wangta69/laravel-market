@@ -101,9 +101,8 @@
 
 $(function(){
 	$(".act-update-delivery").on('click', function(){
-		MARKET.ajaxroute('POST', 
-    {'name': 'market.admin.config.delivery'}, 
-		$("form[name='delivery-fee-form']").serializeObject(), 
+		ROUTE.ajaxroute('POST', 
+    {route: 'market.admin.config.delivery', data: $("form[name='delivery-fee-form']").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

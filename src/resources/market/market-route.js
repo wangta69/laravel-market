@@ -34,28 +34,40 @@ var MARKET = {
       }
     });
   },
-  ajaxroute: function(type, route, data, callback) {
-    var routedata = $.param( route);
-    onprocessing = true;
-
-    console.log('ajaxroute >> csrf_token >>', csrf_token);
-    console.log('ajaxroute >> data >>', data);
-    $.ajax({
-      url: '/market/route-url',
-      type: 'GET',
-      data: routedata,
-      success: function(url) {
-        data._token = csrf_token;
-        $.ajax({
-          url: url,
-          type: type,
-          data: data,
-          success: function(resp) {
-            onprocessing = false;
-            callback(resp);
-          }
-        });
-      }
-    });
+  ajaxroute: function(type, params, callback) {
+    // {route: '', segments: [], data: {}}
+    if (onprocessing === false) {
+      onprocessing = true;
+      params.segments = params.segments || [];
+      params.data = params.data || {};
+      $.ajax({
+        url: '/market/route-url',
+        type: 'GET',
+        data: $.param({route: params.route, segments: params.segments}),
+        success: function(url) {
+          params.data._token = csrf_token;
+          $.ajax({
+            url: url,
+            type: type,
+            data: params.data,
+            success: function(resp) {
+              onprocessing = false;
+              callback(resp);
+            },
+            error : function(xhr, ajaxSettings, thrownError) 
+            {
+              console.log('xhr:', xhr);
+              console.log('ajaxSettings:', ajaxSettings);
+              console.log('thrownError:', thrownError);
+            },
+            complete : function()
+            {
+              onprocessing = false;
+            }
+         
+          });
+        }
+      });
+    }
   }
 };

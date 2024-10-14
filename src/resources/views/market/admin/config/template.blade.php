@@ -170,9 +170,8 @@ $(function(){
 	$(".act-submit").on('click', function(){
 
     // var layout = $("select[name=layout] > option:selected").val();
-    MARKET.ajaxroute('put', 
-    {'name': 'market.admin.config.template'}, 
-		$('form[name=template_form]').serializeObject(), 
+    ROUTE.ajaxroute('put', 
+    {route: 'market.admin.config.template', data: $('form[name=template_form]').serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

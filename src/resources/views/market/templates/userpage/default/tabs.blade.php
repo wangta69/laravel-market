@@ -54,13 +54,13 @@
     </a>
   </li>
   <li class="nav-item">
-    <a href="{{ route('market.logout') }}" class="link">
+    <a href="{{ route('logout') }}" class="link">
       <i class="fa-solid fa-right-from-bracket"></i>
       <span >로그아웃</span>
     </a>
   </li>
   <li class="nav-item">
-    <a href="{{ route('market.cancel.account') }}" class="link">
+    <a href="{{ route('cancel.account') }}" class="link">
     <i class="fa-solid fa-user-xmark"></i>
       <span >회원탈퇴</span>
     </a>

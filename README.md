@@ -39,7 +39,7 @@ cd example-app
 ### 라라벨 마켙 install
 ```
 composer require wangta69/laravel_market
-php artisan market:install
+php artisan pondol:install-market
 ```
 ```
 Name for administrator?: // 관리자 이름

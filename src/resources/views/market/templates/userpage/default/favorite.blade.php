@@ -67,9 +67,8 @@ $(function(){
     $li = $(this).parents('li');
     var favId = $(this).parent().attr('user-attr-favorite');
     if (favId) { 
-      MARKET.ajaxroute('delete', 
-      {'name': 'market.item.favorite', 'params[0]': favId}, 
-      {}, 
+      ROUTE.ajaxroute('delete', 
+      {route: 'market.item.favorite', segments: [favId]},
       function(resp) {
         if(resp.error) {
           showToaster({title: '알림', message: resp.error});

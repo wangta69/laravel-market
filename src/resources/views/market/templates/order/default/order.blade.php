@@ -263,9 +263,8 @@ var total = {{$display->totalPrice + $display->delivery_fee}} // 총 결제 금�
 paycalculate();
 
 function saveOrder(){
-  MARKET.ajaxroute('post', 
-    {'name': 'market.order.store.address'}, 
-      $("form[name=order-form]").serialize(), 
+  ROUTE.ajaxroute('post', 
+    {route: 'market.order.store.address', data: $("form[name=order-form]").serialize()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -279,7 +278,7 @@ function saveOrder(){
 
 // my page > order > view 로 이동
 function gotoOrderView(o_id) {
-  MARKET.routetostring({'name': 'market.mypage.order.view', 'params[0]': o_id},
+  ROUTE.routetostring({'name': 'market.mypage.order.view', 'params[0]': o_id},
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
@@ -294,9 +293,8 @@ function payMentProcessing(){
   var paytype = $("input[name='paytype']:checked").val();
   switch(paytype) {
     case 'online': // 별도 결제 없이 진행
-      MARKET.ajaxroute('post', 
-        {'name': 'market.order.store.payment'}, 
-        $("form[name=order-form]").serialize(), 
+      ROUTE.ajaxroute('post', 
+        {route: 'market.order.store.payment', data: $("form[name=order-form]").serialize()}, 
         function(resp) {
           if(resp.error) {
             showToaster({title: '알림', message: resp.error});

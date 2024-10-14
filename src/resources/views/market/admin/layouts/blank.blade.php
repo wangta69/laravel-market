@@ -11,11 +11,11 @@
 @stop
 
 @section('styles')
-<link media="all" type="text/css" rel="stylesheet" href="{{ mix('market/assets/admin.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ mix('pondol/market/assets/admin.css') }}">
 @endsection
 
 
 @section('scripts')
-<script src="{{ mix('market/assets/admin.js') }}"></script>
+<script src="{{ mix('pondol/market/assets/admin.js') }}"></script>
 <script src="/assets/pondol/market/market.js?v=7"></script>
 @endsection

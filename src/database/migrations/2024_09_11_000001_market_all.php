@@ -101,12 +101,12 @@ class MarketAll extends Migration
     
 
 
-    if (!Schema::hasTable('market_configs')) {
-      Schema::create('market_configs', function(BluePrint $table) {
-        $table->string('key', '20');
-        $table->text('value');
-      });
-    }
+    // if (!Schema::hasTable('market_configs')) {
+    //   Schema::create('market_configs', function(BluePrint $table) {
+    //     $table->string('key', '20');
+    //     $table->text('value');
+    //   });
+    // }
     
 
 
@@ -331,18 +331,18 @@ class MarketAll extends Migration
     
 
 
-    if (!Schema::hasTable('market_points')) {
-      Schema::create('market_points', function(BluePrint $table) {
-        $table->id();
-        $table->bigInteger('user_id')->index()->unsigned();
-        $table->bigInteger('point')->default(0)->unsigned();
-        $table->bigInteger('cur_sum')->default(0)->unsigned()->comment('users.point + users.hold_point 와 동일한 값이 되어야 함');
-        $table->string('item', '20')->comment('이벤트, 구매포인트');
-        $table->string('sub_item', '20')->nullable()->comment('item의 세부정, buy, event..');
-        $table->bigInteger('rel_item')->nullable()->unsigned()->comment('주로 참조 테이블 아이디');
-        $table->timestamp('created_at')->index();
-      });
-    }
+    // if (!Schema::hasTable('market_points')) {
+    //   Schema::create('market_points', function(BluePrint $table) {
+    //     $table->id();
+    //     $table->bigInteger('user_id')->index()->unsigned();
+    //     $table->bigInteger('point')->default(0)->unsigned();
+    //     $table->bigInteger('cur_sum')->default(0)->unsigned()->comment('users.point + users.hold_point 와 동일한 값이 되어야 함');
+    //     $table->string('item', '20')->comment('이벤트, 구매포인트');
+    //     $table->string('sub_item', '20')->nullable()->comment('item의 세부정, buy, event..');
+    //     $table->bigInteger('rel_item')->nullable()->unsigned()->comment('주로 참조 테이블 아이디');
+    //     $table->timestamp('created_at')->index();
+    //   });
+    // }
     
 
 
@@ -397,7 +397,7 @@ class MarketAll extends Migration
     Schema::dropIfExists('market_log_logins');
     Schema::dropIfExists('market_orders');
     Schema::dropIfExists('market_payments');
-    Schema::dropIfExists('market_points');
+    // Schema::dropIfExists('market_points');
     Schema::dropIfExists('market_tags');
   }
 }

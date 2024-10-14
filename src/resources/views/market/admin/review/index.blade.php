@@ -105,9 +105,8 @@ $(function(){
   $(".act-save-review").on('click', function(){
     var id = $(this).parents('tr').attr('user-attr-id')
     var form = $(this).parents('form').serializeObject();
-    MARKET.ajaxroute('PUT', 
-    {'name': 'market.admin.review', 'params[0]': id}, 
-    form, 
+    ROUTE.ajaxroute('PUT', 
+    {route: 'market.admin.review', segments: [id], data: form}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

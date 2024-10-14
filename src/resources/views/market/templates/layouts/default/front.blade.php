@@ -37,12 +37,12 @@
 
 @section('styles')
 @parent
-<link media="all" type="text/css" rel="stylesheet" href="{{ mix('market/assets/front.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ mix('pondol/market/assets/front.css') }}">
 @endsection
 
 @section('scripts')
 @parent
-<script src="{{ mix('market/assets/front.js') }}"></script>
+<script src="{{ mix('pondol/market/assets/front.js') }}"></script>
 <script>
 function documentLoaded() {
   if ($("body").height() > $(window).height()) {

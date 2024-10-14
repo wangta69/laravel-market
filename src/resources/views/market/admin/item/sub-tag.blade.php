@@ -43,9 +43,8 @@ $(function(){
   // 태그 추가
   function addTag() {
     var tag = $('input[name=taginput]').val();
-    MARKET.ajaxroute('POST', 
-    {'name': 'market.admin.tag'}, 
-      {tag}, 
+    ROUTE.ajaxroute('POST', 
+    {route: 'market.admin.tag', data: {tag}}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

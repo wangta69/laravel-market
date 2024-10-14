@@ -96,9 +96,8 @@ var LGD_window_type = "{{ $LGD_WINDOW_TYPE }}";
 * 수정불가
 */
 function launchCrossPlatform(frm) {
-  MARKET.ajaxroute('post', 
-    {'name': 'market.pay.lg.hashdata'}, 
-      $("form[name=payment-form]").serializeObject(), 
+  ROUTE.ajaxroute('post', 
+    {route: 'market.pay.lg.hashdata', data: $("form[name=payment-form]").serializeObject()}, 
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});
