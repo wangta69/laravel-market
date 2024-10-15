@@ -56,6 +56,10 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
       
       __DIR__.'/Events/' => app_path('Events'),
       __DIR__.'/Listeners/' => app_path('Listeners'),
+      __DIR__.'/Notifications/' => app_path('Notifications'),
+      __DIR__.'/Services/' => app_path('Services'),
+      __DIR__.'/Traits/' => app_path('Traits'),
+     
       __DIR__.'/resources/market/images/' => public_path('pondol/market/assets/images'),
       __DIR__.'/resources/views/market/3rdparty-templates/auth/' => resource_path('views/auth/templates/views'),
       __DIR__.'/resources/views/market/3rdparty-templates/mail/' => resource_path('views/auth/templates/mail'),

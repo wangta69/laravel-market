@@ -12,8 +12,8 @@ use App\Models\Market\MarketItemQna;
 use App\Models\Market\MarketItemFavorite;
 use App\Models\Market\MarketCategory;
 
-use App\Http\Controllers\Market\Traits\Item;
-use App\Http\Controllers\Market\Services\Meta;
+use App\Traits\Market\Item;
+use App\Services\Market\Meta;
 
 class MarketController extends Controller
 {

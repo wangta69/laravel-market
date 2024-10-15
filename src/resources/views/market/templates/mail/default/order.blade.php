@@ -12,7 +12,7 @@
       </div>
 
       <div style="padding: 20px 5px;">
-        {{$mailData->user->name}}님 {{config('app.name')}}에서 주문하신 구매내역을 안내해 드립니다.<br>
+         {{$user->name}}님, {{config('app.name')}}에서 주문하신 구매내역을 안내해 드립니다.<br>
       </div>
 
 
@@ -28,7 +28,7 @@
               <td style="padding: 10px; text-align: center;">수량</td>
               <td style="padding: 10px; text-align: center;">구매금액</td>
             </tr>
-          @foreach($mailData->items as $item)
+          @foreach($data->items as $item)
             <tr>
               <td style="padding: 10px; border-bottom: 2px solid #f3f2f2;">{{$item->name}}
               @if(isset($item->displayOptions))
@@ -49,9 +49,9 @@
 
       <div style="padding: 20px;">
         <h3>받는사람 정보</h3>
-          {{$mailData->display->name}} / 
-          Tel: {{addHypenToMobile($mailData->display->tel1)}} /  
-          ({{$mailData->display->zip}}) {{$mailData->display->addr1}}  {{$mailData->display->addr2}}
+          {{$data->display->name}} / 
+          Tel: {{addHypenToMobile($data->display->tel1)}} /  
+          ({{$data->display->zip}}) {{$data->display->addr1}}  {{$data->display->addr2}}
       </div>
 
 
@@ -64,5 +64,7 @@
 
     </div>
   <!-- Body End -->
+
+
   </body>
 </html>

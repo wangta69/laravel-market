@@ -9,7 +9,7 @@ use App\Models\Market\MarketOrder;
 use App\Models\Market\MarketBank;
 use App\Models\Market\MarketDeliveryCompany;
 use App\Models\Market\MarketBuyer;
-use App\Http\Controllers\Market\Services\OrderService;
+use App\Services\Market\OrderService;
 use Pondol\DeliveryTracking\Traits\Tracking;
 class OrderController extends Controller
 {

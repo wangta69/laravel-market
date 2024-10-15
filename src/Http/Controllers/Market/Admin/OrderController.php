@@ -11,8 +11,8 @@ use App\Models\Market\MarketBuyer;
 use App\Models\Market\MarketPayment;
 // use App\Models\Market\MarketDeliveryCompany;
 
-use App\Http\Controllers\Market\Services\ConfigService;
-use App\Http\Controllers\Market\Services\OrderService;
+use App\Services\Market\ConfigService;
+use App\Services\Market\OrderService;
 
 use Pondol\DeliveryTracking\Traits\Tracking;
 

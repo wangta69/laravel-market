@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Market\Services;
+namespace App\Services\Market;
 use Pondol\Image\GetHttpImage;
 class ViewerService
 {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Auth\User\User;
-use App\Http\Controllers\Market\Services\OrderService;
+use App\Services\Market\OrderService;
 
 use App\Models\Market\MarketItemQna;
 use App\Models\Market\MarketItemReview;

@@ -136,7 +136,7 @@
             <label class="col-sm-3 col-form-label">사용 포인트</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <input value='{{$display->user_point}}' type="number" name='pointamount' size=10 onkeyup='paycalculate();'  class="form-control"/>
+                <input value='{{$display->user_point}}' type="number" name='pointamount' min='0', size=10 onkeyup='paycalculate();'  class="form-control"/>
                 <span class="input-group-text">원</span>
               </div>
             </div>

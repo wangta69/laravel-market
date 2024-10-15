@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Market\Auth\User\User;
-use App\Http\Controllers\Market\Services\OrderService;
+use App\Services\Market\OrderService;
 
 
-use App\Events\Registered;
-// use App\Http\Controllers\Market\Traits\Tag;
+// use App\Events\Registered;
+
 
 class EventController extends Controller
 {
@@ -45,19 +45,15 @@ class EventController extends Controller
       
       case 'notice':
         
-        // print_r($request->all());
-        // print_r($user);
-        // $this->mailSvc->noticeMail($user, $request);
-        // return view('market.templates.mail.'.config('market.template.mail.theme').'.'.$request->type,  ['mailData'=>$request]);
 
         break;
       case 'order':
-        // $this->mailSvc->orderMail($user, $request);
+
         break;
       case 'register':
         \Log::info('register event fired');
         // Registered::dispatch($user);
-        event(new Registered($user));
+        // event(new Registered($user));
         break;
       
     }

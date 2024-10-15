@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Market\Services\ConfigService;
+use App\Services\Market\ConfigService;
 use App\Models\Market\MarketBank;
 
 class SmsController extends Controller

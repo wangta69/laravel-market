@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Market\Traits;
+namespace App\Traits\Market;
 
 use App\Models\Market\MarketItemFavorite;
 

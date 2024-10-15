@@ -3,15 +3,15 @@
 namespace App\Listeners;
  
 use App\Events\OrderShipped;
-
-use App\Http\Controllers\Market\Services\MailService;
-
+use Illuminate\Support\Facades\Notification;
+// use App\Services\Market\MailService;
+use App\Notifications\OrderShippedNotification;
 class MarketEventSubscriber
 {
 
-  public function __construct(MailService $mailSvc)
+  public function __construct() // MailService $mailSvc
   {
-    $this->mailSvc = $mailSvc;
+    // $this->mailSvc = $mailSvc;
   }
   
     // /**
@@ -25,11 +25,14 @@ class MarketEventSubscriber
     // public function handleUserLogout($event) {}
 
 
-    public function ordered(OrderShipped $event) {
-      // $params = new \stdClass;
-      // $params->o_id = $event->order;
-      // $params->type = 'order';
-      // $this->mailSvc->orderMail($event->user, $params);
+    public function ordered($event) {
+      \Log::info('ordered =====================================');
+    // \Log::info(json_encode($event));
+    // \Log::info(json_encode($event->user));
+    // \Log::info(json_encode($event->order));
+    // \Log::info('event end =====================================');
+      $event->user->notify(new OrderShippedNotification($event->user, $event->order));
+      // Notification::send($event->user, new OrderShippedNotification);
     }
  
     /**

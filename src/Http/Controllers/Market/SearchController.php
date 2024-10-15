@@ -7,8 +7,8 @@ use DB;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Market\MarketCategory;
-use App\Http\Controllers\Market\Services\Meta;
-use App\Http\Controllers\Market\Traits\Item;
+use App\Services\Market\Meta;
+use App\Traits\Market\Item;
 
 class SearchController extends Controller
 {

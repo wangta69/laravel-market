@@ -17,16 +17,18 @@ use App\Models\Market\MarketPayment;
 use App\Models\Market\MarketOrder;
 use App\Models\Market\MarketAddress;
 
-use App\Http\Controllers\Market\Services\ConfigService;
-use App\Http\Controllers\Market\Services\CalDeliveryFee;
-use App\Http\Controllers\Market\Services\PointService;
+use App\Services\Market\ConfigService;
+use App\Services\Market\CalDeliveryFee;
+// use App\Services\Market\PointService;
 
 use App\Events\OrderShipped;
-
+use App\Traits\Point;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+
+  use Point;
   /**
    * Create a new controller instance.
    *
@@ -34,12 +36,12 @@ class OrderController extends Controller
    */
   public function __construct(
     ConfigService $configSvc,
-    CalDeliveryFee $delivery,
-    PointService $pointSvc
+    CalDeliveryFee $delivery
+    // PointService $pointSvc
   ){
     $this->configSvc = $configSvc;
     $this->delivery = $delivery;
-    $this->pointSvc = $pointSvc;
+    // $this->pointSvc = $pointSvc;
   }
 
   /**
@@ -281,6 +283,12 @@ class OrderController extends Controller
       ->whereIn('market_carts.id', $orders)
       ->get();
 
+    if($pointamount < 0) {
+      return response()->json([
+        'error' => '사용할 포인트가 잘못 되었습니다.',
+      ]);
+    }
+
     
     // 총 상품 금액
     $totalPrice = 0;
@@ -325,7 +333,7 @@ class OrderController extends Controller
       $payment->save();
       // 회원 포인트 변경
       if($user) {
-        $this->pointSvc->insertPoint($user, -$pointamount, 'buy', null, $payment->id);
+        $this->_insertPoint($user, -$pointamount, 'buy', null, $payment->id);
       }
       // market_orders에 입력
       foreach($items as $v) {
@@ -344,7 +352,7 @@ class OrderController extends Controller
         MarketCart::where('id', $v->id)->delete();
       }
 
-      
+      // $user->
       event(new OrderShipped($user, $o_id));
 
       DB::commit();

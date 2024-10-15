@@ -9,7 +9,7 @@ use App\Models\Market\MarketConfig;
 // use App\Models\Market\MarketCategory;
 // use App\Models\Market\MarketItem;
 // use App\Models\Market\MarketItemQna;
-use App\Http\Controllers\Market\Services\Meta;
+use App\Services\Market\Meta;
 
 
 

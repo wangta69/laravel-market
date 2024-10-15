@@ -5,10 +5,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Market\Services\MailService;
+use App\Services\Market\MailService;
 use App\Models\Market\Auth\User\User;
-use App\Http\Controllers\Market\Services\OrderService;
-// use App\Http\Controllers\Market\Traits\Tag;
+use App\Services\Market\OrderService;
+
 
 class MailController extends Controller
 {
@@ -43,17 +43,15 @@ class MailController extends Controller
       
       case 'notice':
         
-        // print_r($request->all());
-        // print_r($user);
-        $this->mailSvc->noticeMail($user, $request);
-        // return view('market.templates.mail.'.config('market.template.mail.theme').'.'.$request->type,  ['mailData'=>$request]);
 
+        // $this->mailSvc->noticeMail($user, $request);
+ 
         break;
       case 'order':
-        $this->mailSvc->orderMail($user, $request);
+        // $this->mailSvc->orderMail($user, $request);
         break;
       case 'register':
-        $this->mailSvc->registerMail($user);
+        // $this->mailSvc->registerMail($user);
         break;
       
     }

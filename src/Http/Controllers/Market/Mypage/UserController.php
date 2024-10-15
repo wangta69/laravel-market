@@ -10,11 +10,9 @@ use Validator;
 use DB;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Controllers\Market\Services\ErrorHandleService;
 
 use App\Models\Market\MarketAddress;
-// use App\Models\Market\MarketBank;
-use App\Http\Controllers\Market\Services\OrderService;
+use App\Services\Market\OrderService;
 
 class UserController extends Controller
 {

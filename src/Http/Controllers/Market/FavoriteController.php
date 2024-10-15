@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
 
-use App\Http\Controllers\Market\Traits\Favorite;
+use App\Traits\Market\Favorite;
 
 class FavoriteController extends Controller
 {

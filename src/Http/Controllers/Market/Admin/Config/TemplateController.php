@@ -9,7 +9,7 @@ use File;
 use Storage;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Market\Services\ConfigService;
+use App\Services\Market\ConfigService;
 
 
 class TemplateController extends Controller

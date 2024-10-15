@@ -9,7 +9,7 @@ use DB;
 
 use App\Models\Market\MarketItem;
 use App\Models\Market\MarketCart;
-use App\Http\Controllers\Market\Services\CalDeliveryFee;
+use App\Services\Market\CalDeliveryFee;
 
 use App\Http\Controllers\Controller;
 

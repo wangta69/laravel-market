@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Market\MarketItemQna;
-// use App\Models\Market\MarketBank;
-// use App\Http\Controllers\Market\Services\OrderService;
+
 
 class QnaController extends Controller
 {
