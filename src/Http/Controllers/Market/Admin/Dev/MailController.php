@@ -2,13 +2,17 @@
 namespace App\Http\Controllers\Market\Admin\Dev;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use App\Events\OrderShipped;
+
 use DB;
 use Illuminate\Support\Facades\Log;
 use App\Services\Market\MailService;
-use App\Models\Market\Auth\User\User;
+use App\Models\Auth\User\User;
 use App\Services\Market\OrderService;
 
+
+use App\Http\Controllers\Controller;
 
 class MailController extends Controller
 {
@@ -48,10 +52,11 @@ class MailController extends Controller
  
         break;
       case 'order':
-        // $this->mailSvc->orderMail($user, $request);
+        event(new OrderShipped($user, $request->o_id));
         break;
       case 'register':
         // $this->mailSvc->registerMail($user);
+        event(new Registered($user));
         break;
       
     }
@@ -83,11 +88,11 @@ class MailController extends Controller
           $item->displayOptions = extractOptions($item);     
         }
 
-        return view('market.templates.mail.'.config('market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view('market.templates.mail.'.config('market.template.mail.theme').'.'.$request->type,  ['user'=>$user, 'data'=>$mailData]);
         break;
       case 'register':
 
-        return view('market.templates.mail.'.config('market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view('auth.templates.mail.'.config('auth-pondol.template.mail').'.register',  ['notifiable'=>$user]);
         break;
       
     }

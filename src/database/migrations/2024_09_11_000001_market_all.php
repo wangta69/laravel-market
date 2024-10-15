@@ -57,7 +57,7 @@ class MarketAll extends Migration
         $table->string('message', '200')->nullable()->comment('주문자 입력 메시지');
         $table->string('courier', '10')->nullable()->comment('배송업체코드');
         $table->string('invoice_no', '20')->nullable()->comment('송장번호(택배번호)');
-        $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기, 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료');
+        $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기(주문접수), 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료');
         $table->timestamps();
       });
     }

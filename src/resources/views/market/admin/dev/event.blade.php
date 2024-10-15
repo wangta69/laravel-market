@@ -64,7 +64,7 @@
 <script>
 $(function(){
   $(".act-mail-preview").on('click', function(){
-    ROUTE.routetostring({'name': 'market.admin.dev.mail.preview', 'params[0]': $("form[name='mail-form']").serialize(), },
+    ROUTE.routetostring({route: 'market.admin.dev.mail.preview', segments: $("form[name='mail-form']").serialize(), },
     function(resp) {
       console.log(resp);
       if(resp.error) {

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Market\Auth\User\User;
+use App\Models\Auth\User\User;
 use App\Services\Market\OrderService;
 
 

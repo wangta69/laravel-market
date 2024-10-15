@@ -1,5 +1,5 @@
 {
-    "name": "wangta69/laravel_market",
+    "name": "wangta69/laravel-market",
     "description": "BBS bulletin board system",
     "keywords": ["laravel", "market", "pondol" , "쇼핑몰", "mall", "독립형", "korea", "라라벨"],
     "homepage": "https://mall.onstory.fun",
@@ -20,9 +20,9 @@
       "laravel/ui": "*",
       "wangta69/php-thumbnail": "^1",
       "wangta69/laravel-editor": "^8",
-      "wangta69/laravel_board": "^8",
-      "wangta69/laravel_delivery_tracking": "^1",
-      "wangta69/laravel_auth": "^0"
+      "wangta69/laravel-board": "^8",
+      "wangta69/laravel-delivery-tracking": "^1",
+      "wangta69/laravel-auth": "^0"
     },
     "autoload": {
       "files": [

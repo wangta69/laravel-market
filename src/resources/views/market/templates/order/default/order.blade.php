@@ -278,7 +278,7 @@ function saveOrder(){
 
 // my page > order > view 로 이동
 function gotoOrderView(o_id) {
-  ROUTE.routetostring({'name': 'market.mypage.order.view', 'params[0]': o_id},
+  ROUTE.routetostring({route: 'market.mypage.order.view', segments: [o_id]},
     function(resp) {
       if(resp.error) {
         showToaster({title: '알림', message: resp.error});

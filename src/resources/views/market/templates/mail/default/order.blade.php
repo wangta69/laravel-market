@@ -19,7 +19,7 @@
       <div style="padding: 20px;">
         <div style="display: flex;justify-content: space-between;align-items: center;">
           <h3>구매정보</h3>
-          <a href="">배송정보</a>
+          <a href="{{config('app.url')}}/mypage/order/view/{{$data->display->o_id}}">배송정보</a>
         </div>
         <table style="width: 100%;">
           <tr style="background-color: #f3f2f2;">

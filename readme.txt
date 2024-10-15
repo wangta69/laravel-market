@@ -31,7 +31,7 @@ php artisan storage:link
   'users' => [
     ..........
     // 'model' => App\Models\User::class,
-    'model' => App\Models\Market\Auth\User\User::class,
+    'model' => App\Models\Auth\User\User::class,
   ],
 ..........
 ]

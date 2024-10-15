@@ -5,8 +5,8 @@ namespace Pondol\Market\Console;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Market\Auth\User\User;
-use App\Models\Market\Auth\Role\Role;
+use App\Models\Auth\User\User;
+use App\Models\Auth\Role\Role;
 
 trait InstallsBladeStack
 {
@@ -105,7 +105,7 @@ trait InstallsBladeStack
     // $this->replaceInFile('Home', 'Dashboard', resource_path('views/welcome.blade.php'));
     $this->replaceInFile('/home', '/', app_path('Providers/RouteServiceProvider.php'));
     // confing > auth 
-    $this->replaceInFile("'model' => App\Models\User::class,", "'model' => App\Models\Market\Auth\User\User::class,", config_path('auth.php'));
+    // $this->replaceInFile("'model' => App\Models\User::class,", "'model' => App\Models\Auth\User\User::class,", config_path('auth.php'));
     // // Tailwind / Webpack...
     // copy(__DIR__.'/../../stubs/default/tailwind.config.js', base_path('tailwind.config.js'));
     // copy(__DIR__.'/../../stubs/default/webpack.mix.js', base_path('webpack.mix.js'));
