@@ -1,11 +1,10 @@
 <?php
  
-namespace App\Listeners;
+namespace Pondol\Market\Listeners;
  
-use App\Events\OrderShipped;
+use Pondol\Market\Events\OrderShipped;
 use Illuminate\Support\Facades\Notification;
-// use App\Services\Market\MailService;
-use App\Notifications\OrderShippedNotification;
+use Pondol\Market\Notifications\OrderShippedNotification;
 class MarketEventSubscriber
 {
 
@@ -26,13 +25,7 @@ class MarketEventSubscriber
 
 
     public function ordered($event) {
-      \Log::info('ordered =====================================');
-    // \Log::info(json_encode($event));
-    // \Log::info(json_encode($event->user));
-    // \Log::info(json_encode($event->order));
-    // \Log::info('event end =====================================');
       $event->user->notify(new OrderShippedNotification($event->user, $event->order));
-      // Notification::send($event->user, new OrderShippedNotification);
     }
  
     /**

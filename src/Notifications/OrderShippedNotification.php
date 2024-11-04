@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Notifications;
+namespace Pondol\Market\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Services\Market\OrderService;
+use Pondol\Market\Services\OrderService;
 // 
 class OrderShippedNotification extends Notification  implements ShouldQueue
 {
@@ -61,17 +61,17 @@ class OrderShippedNotification extends Notification  implements ShouldQueue
     // \Log::info('display data start =====================================');
     // \Log::info(json_encode($data));
     // \Log::info(json_encode($this->user));
-    // \Log::info(json_encode('market.templates.mail.'.config('market.template.mail.theme').'.order'));
+    // \Log::info(json_encode('market.templates.mail.'.config('pondol-market.template.mail.theme').'.order'));
     // \Log::info('end =====================================');
     return (new MailMessage)
       ->subject($user->name.'님의 주문정보입니다.')
-      ->markdown('market.templates.mail.'.config('market.template.mail.theme').'.order', [
+      ->markdown('market.templates.mail.'.config('pondol-market.template.mail.theme').'.order', [
         'user' => $this->user,
         'data' => $data
       ]);
 
     // return (new MailMessage)->subject($notifiable->name.'님의 주문정보입니다.')
-    //   ->view('market.templates.mail.'.config('market.template.mail.theme').'.order')
+    //   ->view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.order')
     //   ->with([
     //     'user' => $user,
     //     'data' => $data

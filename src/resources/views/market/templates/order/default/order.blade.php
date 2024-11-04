@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('market.template.layout.theme').'.front')
+@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
 @section('title', '상품구매')
 @section('content')
 <div class="container body">
@@ -232,15 +232,15 @@
 <!-- /banner-feature -->
  <!-- 결제 모듈 삽입 -->
 @if(Config::get('market.payment.pg') == 'kcp'):
-  @include('market.payment.pg.kcp.pay-form')
+  @include('market::payment.pg.kcp.pay-form')
 @elseif(Config::get('market.payment.pg') == 'lg'):
-  @include('market.payment.pg.lg.pay-form')
+  @include('market::payment.pg.lg.pay-form')
 @elseif(Config::get('market.payment.pg') == 'inicis'):
-  @include('market.payment.pg.inicis.pay-form')
+  @include('market::payment.pg.inicis.pay-form')
 @endif
 
 @if(Config::get('market.payment.kakao')):
-  @include('market.payment.smart.kakaopay.pay-form')
+  @include('market::payment.smart.kakaopay.pay-form')
 @endif
 @endsection
 

@@ -22,10 +22,10 @@
       <div class="">
         <div><a href="{{ route('market.pages', ['terms-of-use']) }}">서비스이용약관</a> | <a href="{{ route('market.pages', ['privacy-policy']) }}">개인정보처리방침</a></div>
         <ul class="mt-2" style="font-size: 12px;">
-          <li>회사명. {{config('market.company.name')}} </li>
-          <li>주소. {{config('market.company.address')}}</li>
-          <li>사업자 등록번호. {{config('market.company.businessNumber')}} 
-            대표. {{config('market.company.representative')}} 전화. {{config('market.company.tel1')}} 팩스. {{config('market.company.fax1')}}</li>
+          <li>회사명. {{config('pondol-market.company.name')}} </li>
+          <li>주소. {{config('pondol-market.company.address')}}</li>
+          <li>사업자 등록번호. {{config('pondol-market.company.businessNumber')}} 
+            대표. {{config('pondol-market.company.representative')}} 전화. {{config('pondol-market.company.tel1')}} 팩스. {{config('pondol-market.company.fax1')}}</li>
         </ul>
 
         <div>Copyright &copy; 온스토리</div>

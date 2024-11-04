@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components;
+namespace Pondol\Market\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\Market\MarketCategory as CategoryModel;
+use Pondol\Market\Models\MarketCategory as CategoryModel;
 // use DB;
 
 class MarketCategory extends Component
@@ -21,7 +21,7 @@ class MarketCategory extends Component
   {
 
     $category = CategoryModel::whereRaw('LENGTH(category) = 3')->orderBy('order', 'asc')->get();
-    return view('market.templates.components.'.config('market.template.component.theme').'.category', [
+    return view('market.templates.components.'.config('pondol-market.template.component.theme').'.category', [
       'category'=>$category
     ]);
   }

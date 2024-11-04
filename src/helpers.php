@@ -1,6 +1,6 @@
 <?php
 function market_get_thumb($file, $width=null, $height=null){
-  return App\Services\Market\ViewerService::get_thumb($file, $width, $height);
+  return Pondol\Market\Services\ViewerService::get_thumb($file, $width, $height);
 }
 
 function astro($str, $len, $position='end') {

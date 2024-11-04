@@ -56,10 +56,10 @@
 
 
       <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #cccccc;color: #aaa; font-size: 11px;">
-        {{config('market.company.name')}} / 
-        사업번호 : {{config('market.company.businessNumber')}} / 
-        대표 : {{config('market.company.representative')}}<br>
-        주소 : {{config('market.company.address')}}
+        {{config('pondol-market.company.name')}} / 
+        사업번호 : {{config('pondol-market.company.businessNumber')}} / 
+        대표 : {{config('pondol-market.company.representative')}}<br>
+        주소 : {{config('pondol-market.company.address')}}
       </div>
 
     </div>

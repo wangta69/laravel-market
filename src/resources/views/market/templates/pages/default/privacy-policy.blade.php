@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('market.template.layout.theme').'.front')
+@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
 @section('meta')
 @include('market.meta')
 @endsection

@@ -41,10 +41,9 @@ cd example-app
 composer require wangta69/laravel_market
 php artisan pondol:install-market
 ```
+### 관리자 생성
 ```
-Name for administrator?: // 관리자 이름
-Email for administrator?: // 관리자 이메일
-Password for administrator?: // 관리자 패스워드
+php artisan pondol:create-auth
 ```
 
 

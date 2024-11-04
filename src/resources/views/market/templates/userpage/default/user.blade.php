@@ -1,11 +1,11 @@
-@extends('market.templates.layouts.'.config('market.template.layout.theme').'.front')
+@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
 @section('title', '개인정보')
 @section('content')
 <div class="container body">
 
   <div class="row">
     <div class="col-3">
-      @include('market.templates.userpage.'.config('market.template.userpage.theme').'.tabs')
+      @include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.tabs')
     </div>
     <div class="col-9">
       <div class="card mt-5">

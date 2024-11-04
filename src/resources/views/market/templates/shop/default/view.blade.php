@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('market.template.layout.theme').'.front')
+@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
 @section('meta')
 @include('market.meta')
 @endsection
@@ -26,7 +26,7 @@
       <article>
         <div class="d-flex title">
           <div class="">{{$item->name}}</div>
-          @include('market.templates.shop.'.config('market.template.shop.theme').'.sns')
+          @include('market.templates.shop.'.config('pondol-market.template.shop.theme').'.sns')
         </div>
         @if($item->shorten_description)
         <div class="p-2 mt-1 bg-light rounded-3">{{$item->shorten_description}}</div>
@@ -168,7 +168,7 @@
         <div class="d-flex justify-content-end mt-2">
           <button class="btn btn-primary" id="btn-open-qna-form">상품문의</button>
         </div>
-        @include('market.templates.shop.'.config('market.template.shop.theme').'.qna-form')
+        @include('market.templates.shop.'.config('pondol-market.template.shop.theme').'.qna-form')
       </div>
 
       <div>

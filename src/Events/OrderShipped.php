@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Pondol\Market\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;

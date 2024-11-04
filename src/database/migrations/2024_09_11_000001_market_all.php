@@ -163,7 +163,7 @@ class MarketAll extends Migration
         $table->tinyInteger('sell_cnt')->default(0)->unsigned()->comment('총판매수량');
         $table->smallInteger('stock')->default(-1)->comment('-1: 무제한, 0: 품절, 기타');
         $table->string('shorten_description', '500')->nullable()->comment('간략 제품설명');
-        $table->text('description')->nullable()->comment('제품설명');
+        $table->longText('description')->nullable()->comment('제품설명');
         $table->timestamps();
         $table->softDeletes();
         $table->fullText(['name', 'shorten_description', 'description', 'model']);
@@ -275,21 +275,6 @@ class MarketAll extends Migration
         $table->foreign('item_id')->references('id')->on('market_items')->onDelete('cascade');
       });
     }
-    
-
-    if (!Schema::hasTable('market_log_logins')) {
-      Schema::create('market_log_logins', function(BluePrint $table) {
-        $table->id();
-        $table->bigInteger('user_id')->nullable()->unsigned()->index();
-        $table->string('http_user_agent', '255')->nullable();
-        $table->string('http_referer', '255')->nullable();
-        $table->string('http_origin', '255')->nullable();
-        $table->string('remote_addr', '255')->nullable();
-        $table->timestamp('created_at');
-      });
-    }
-    
-
 
     if (!Schema::hasTable('market_orders')) {
       Schema::create('market_orders', function(BluePrint $table) {
@@ -394,7 +379,6 @@ class MarketAll extends Migration
     Schema::dropIfExists('market_item_qnas');
     Schema::dropIfExists('market_item_reviews');
     Schema::dropIfExists('market_item_tags');
-    Schema::dropIfExists('market_log_logins');
     Schema::dropIfExists('market_orders');
     Schema::dropIfExists('market_payments');
     // Schema::dropIfExists('market_points');

@@ -17,7 +17,7 @@ class InstallCommand extends Command
    *
    * @var string
    */
-  protected $signature = 'pondol:install-market';
+  protected $signature = 'pondol:install-market {type=full}';
 
   /**
    * The console command description.
@@ -34,8 +34,8 @@ class InstallCommand extends Command
 
   public function handle()
   {
-    $this->info("# Install Pondol's Laravel Market ");
-    return $this->installBladeStack();
+    $type = $this->argument('type');
+    return $this->installBladeStack($type);
 
   }
 

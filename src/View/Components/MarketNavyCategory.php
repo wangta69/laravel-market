@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components;
+namespace Pondol\Market\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\Market\MarketCategory;
+use Pondol\Market\Models\MarketCategory;
 
 class MarketNavyCategory extends Component
 {
@@ -70,7 +70,7 @@ class MarketNavyCategory extends Component
       return null;
     }
     
-    return view('market.templates.components.'.config('market.template.component.theme').'.navycategory', [
+    return view('market.templates.components.'.config('pondol-market.template.component.theme').'.navycategory', [
       'categoryObj'=>$this->categoryObj
       // 'category'=>$this->category,
       // 'path'=>$path,

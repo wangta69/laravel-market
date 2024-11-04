@@ -4,9 +4,9 @@
 
 @section('page')
 
-  @include('market.templates.layouts.'.config('market.template.layout.theme').'.front-header')
+  @include('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front-header')
   <div id="layout-sidenav">
-  @include('market.templates.layouts.'.config('market.template.layout.theme').'.front-sidebar')
+  @include('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front-sidebar')
       <div id="layout-sidenav-content">
           <main>
               <div class="container-fluid">
@@ -16,7 +16,7 @@
                       @yield('content')
               </div>
           </main>
-          @include('market.templates.layouts.'.config('market.template.layout.theme').'.front-footer')
+          @include('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front-footer')
       </div>
   </div>
   
