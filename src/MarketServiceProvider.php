@@ -10,6 +10,7 @@ use Pondol\Market\Console\InstallCommand;
 use Pondol\Market\Listeners\MarketEventSubscriber;
 use Pondol\Market\View\Components\MarketCategory;
 use Pondol\Market\View\Components\MarketNavyCategory;
+use Pondol\Market\View\Components\Banner;
 
 class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
   /**
@@ -33,6 +34,7 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
     Event::subscribe(MarketEventSubscriber::class);
     Blade::component('market-category', MarketCategory::class);
     Blade::component('market-navy-category', MarketNavyCategory::class);
+    Blade::component('market-banner', Banner::class);
 
     $this->publishes([
       __DIR__ . '/config/pondol-market.php' => config_path('pondol-market.php'),
@@ -48,25 +50,9 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
       InstallCommand::class
     ]);
 
-
     $this->loadViewsFrom(__DIR__.'/resources/views', 'market');
-
-        // migration
-    // (new Filesystem)->copyDirectory(__DIR__.'/../database/migrations', database_path('migrations'));
     $this->loadMigrationsFrom(__DIR__.'/database/migrations/');
-        //resources
-        // (new Filesystem)->copyDirectory(__DIR__.'/../resources/market', resource_path('pondol/market'));
-    
-        // language
-   // new Filesystem)->copyDirectory(__DIR__.'/../resources/lang', resource_path('lang'));
     $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'market');
-         // resource > view...
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/market'));
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/layouts'));
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/components'));
-
-    // (new Filesystem)->copyDirectory(__DIR__.'/../resources/views/market', resource_path('views/market'));
-
 
     $this->publishes([
       __DIR__.'/resources/market/images/' => public_path('pondol/market/assets/images'),
@@ -76,8 +62,7 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
       __DIR__.'/resources/views/market' => resource_path('views/market')
     ]);
 
-    
-
+  
   }
 
   private function loadMarketRoutes()

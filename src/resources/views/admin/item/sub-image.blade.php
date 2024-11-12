@@ -3,7 +3,7 @@
   <div class="input-group">
     <input type='file' name='files[]' class="form-control">
     @if($item->image)
-    <img src="{{getImageUrl($item->image)}}" class="prod-image">
+    <img src="{{market_get_thumb($item->image, 30, 30)}}" class="img-thumbnail">
     @endif
   </div>
 </div>

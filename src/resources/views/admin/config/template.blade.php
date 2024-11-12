@@ -103,14 +103,14 @@
       <div class="input-group mt-1">
         <label class="col-form-label col-2">Search</label>
         <select class="form-select" name="search">
-          @foreach($auth as $v)
+          @foreach($search as $v)
           <option value="{{$v}}" @if($v == $template["search"]['theme']) selected @endif>{{$v}}</option>
           @endforeach
         </select>
         <label class="col-form-label col-2 text-center">페이지당 상품수</label>
         <input type="text" class="form-control" name="search_lists" value="{{$template["search"]['lists']}}">
       </div>
-
+{{-- 
       <div class="input-group mt-1">
         <label class="col-form-label col-2">Auth</label>
         <select class="form-select" name="auth">
@@ -119,7 +119,7 @@
           @endforeach
         </select>
       </div>
-
+      --}}
       <div class="input-group mt-1">
         <label class="col-form-label col-2">Component</label>
         <select class="form-select" name="component">

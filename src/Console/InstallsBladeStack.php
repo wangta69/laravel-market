@@ -24,6 +24,7 @@ trait InstallsBladeStack
         'alpinejs' => '^3.4.2',
         'autoprefixer' => '^10.4.2',
         "axios" => "^0.21",
+        "chart.js" => "^4.4.6",
         "laravel-mix" => "^6.0.6",
         "lodash" => "^4.17.19",
         'postcss' => '^8.4.6',
@@ -47,81 +48,11 @@ trait InstallsBladeStack
 
     $this->updateWebpackMix();
 
-    // Controllers...
-    // (new Filesystem)->ensureDirectoryExists(app_path('Http/Controllers/Market'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../Http/Controllers/Market', app_path('Http/Controllers/Market'));
-    
-    // Models...
-    // (new Filesystem)->ensureDirectoryExists(app_path('Models/Market'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../Models/Market', app_path('Models/Market'));
-
-    // // Requests...
-    // (new Filesystem)->ensureDirectoryExists(app_path('Http/Requests/Auth'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/App/Http/Requests/Auth', app_path('Http/Requests/Auth'));
-
-    // View 
-    // (new Filesystem)->copyDirectory(__DIR__.'/../View/Components', app_path('View/Components'));
-
-    // resource > view...
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/market'));
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/layouts'));
-    // (new Filesystem)->ensureDirectoryExists(resource_path('views/components'));
-
-    // (new Filesystem)->copyDirectory(__DIR__.'/../resources/views/market', resource_path('views/market'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/resources/views/layouts', resource_path('views/layouts'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/resources/views/components', resource_path('views/components'));
-
-    // copy(__DIR__.'/../../stubs/default/resources/views/dashboard.blade.php', resource_path('views/dashboard.blade.php'));
-    // Middle ware
-    // copy(__DIR__.'/../app/Http/Middleware/CheckRole.php', app_path('Http/Middleware/CheckRole.php'));
-    // // Components...
-    // (new Filesystem)->ensureDirectoryExists(app_path('View/Components'));
-    // (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/App/View/Components', app_path('View/Components'));
-
-    // // Tests...
-    // $this->installTests();
-
-    // Routes...
-    // copy(__DIR__.'/../routes/market-admin.php', base_path('routes/market-admin.php'));
-    // $this->info('copy '.__DIR__.'/../routes/market-admin.php to '.base_path('routes/market-admin.php')); 
-    // copy(__DIR__.'/../routes/market.php', base_path('routes/market.php'));
     // 기존 web.php 백업시킨다.
     copy(base_path('routes/web.php'), base_path('routes/web.back.php'));
     copy(__DIR__.'/../routes/web-blank.php', base_path('routes/web.php'));
-    // config
-    // copy(__DIR__.'/../config/market.default.php', base_path('config/market.php'));
 
-    // // migration
-    // (new Filesystem)->copyDirectory(__DIR__.'/../database/migrations', database_path('migrations'));
-
-    // //resources
-    // (new Filesystem)->copyDirectory(__DIR__.'/../resources/market', resource_path('pondol/market'));
-
-    // // language
-    // (new Filesystem)->copyDirectory(__DIR__.'/../resources/lang', resource_path('lang'));
-
-    // Home route
-    // $this->replaceInFile('/home', '/dashboard', resource_path('views/welcome.blade.php'));
-    // $this->replaceInFile('Home', 'Dashboard', resource_path('views/welcome.blade.php'));
     $this->replaceInFile('/home', '/', app_path('Providers/RouteServiceProvider.php'));
-    // confing > auth 
-    // $this->replaceInFile("'model' => App\Models\User::class,", "'model' => App\Models\Auth\User\User::class,", config_path('auth.php'));
-    // // Tailwind / Webpack...
-    // copy(__DIR__.'/../../stubs/default/tailwind.config.js', base_path('tailwind.config.js'));
-    // copy(__DIR__.'/../../stubs/default/webpack.mix.js', base_path('webpack.mix.js'));
-    // copy(__DIR__.'/../../stubs/default/resources/css/app.css', resource_path('css/app.css'));
-    // copy(__DIR__.'/../../stubs/default/resources/js/app.js', resource_path('js/app.js'));
-    // soft link
-    // \Artisan::call('storage:link');
-
-
-    // $this->info("# Install Pondol's Laravel Editor ");
-    // // editor
-    // \Artisan::call('vendor:publish',  [
-    //   '--force'=> true,
-    //   '--provider' => 'Pondol\Editor\EditorServiceProvider'
-    // ]);
-    // $this->info('The laravel editor installed successfully.'); 
 
     $this->call('pondol:install-editor');
     $this->call('pondol:install-auth', ['type'=> 'only']);
@@ -146,12 +77,6 @@ trait InstallsBladeStack
     configSet('pondol-auth', ['activate' => 'auto', 'template.user'=>'default-market', 'template.mail'=>'default-market']); // 
 
     \Artisan::call('migrate');
-
-    // laravel board
-
-    // $this->info('php artisan pondol:install-auth'); 
-    // \Artisan::call('pondol:install-auth');
-
 
     $this->comment('Please execute the "npm install" && "npm run dev" commands to build your assets.');
   }

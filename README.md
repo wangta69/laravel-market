@@ -46,6 +46,10 @@ php artisan pondol:install-market
 php artisan pondol:create-auth
 ```
 
+### 관리자 페이지 접근
+```
+https://yourdomain/adm
+```
 
 ### 기타 설정
 #### Queue Worker 실행하기

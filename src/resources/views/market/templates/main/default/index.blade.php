@@ -3,8 +3,7 @@
 
 <div class="container body">
 
-@include('market.templates.main.default.carousel')
-
+<x-market-banner />
   <h3 class="mt-5">MD 추천 상품 </h3>
 
   <div class="row item-list" typeof="ItemList">

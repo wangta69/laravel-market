@@ -21,9 +21,7 @@ class MarketCategory extends Component
   {
 
     $category = CategoryModel::whereRaw('LENGTH(category) = 3')->orderBy('order', 'asc')->get();
-    return view('market.templates.components.'.config('pondol-market.template.component.theme').'.category', [
-      'category'=>$category
-    ]);
+    return view('market.templates.components.'.config('pondol-market.template.component.theme').'.category', compact('category'));
   }
 
 

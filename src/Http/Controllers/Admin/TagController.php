@@ -27,9 +27,9 @@ class TagController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function _store(Request $request)
+  public function store(Request $request)
   {
-    return response()->json($this->store($request));
+    return response()->json($this->_store($request));
   }
 
 

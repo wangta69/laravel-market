@@ -2,10 +2,9 @@
 namespace Pondol\Market\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
-
+use DB;
+use Carbon\Carbon;
 use File;
 use Storage;
 
@@ -15,6 +14,8 @@ use Pondol\Market\Models\MarketItemOption;
 use Pondol\Market\Models\MarketItemDisplay;
 use Pondol\Market\Models\MarketItemImage;
 use Pondol\Market\Models\MarketItemTag;
+
+use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
 {
@@ -51,9 +52,15 @@ class ItemController extends Controller
       if (!$to_date) {
         $to_date = date("Y-m-d");
       }
-      $items = $users->where(function ($q) use($from_date, $to_date) {
-        $q->whereRaw("DATE(market_items.created_at) >= '".$from_date."' AND DATE(market_items.created_at)<= '".$to_date."'" );
-      });
+
+      $from_date = Carbon::createFromFormat('Y-m-d', $from_date);
+      $to_date = Carbon::createFromFormat('Y-m-d', $to_date);
+      $items =  $items->whereBetween('market_items.created_at', [$from_date->startOfDay(), $to_date->endOfDay()]);
+
+
+      // $items = $users->where(function ($q) use($from_date, $to_date) {
+      //   $q->whereRaw("DATE(market_items.created_at) >= '".$from_date."' AND DATE(market_items.created_at)<= '".$to_date."'" );
+      // });
     }
 
     $items = $items->orderBy('id', 'desc')->paginate(15)->withQueryString();

@@ -1,12 +1,7 @@
 <?php
-
 namespace Pondol\Market\Console;
 
 use Illuminate\Console\Command;
-// use Illuminate\Filesystem\Filesystem;
-// use Illuminate\Support\Str;
-// use Symfony\Component\Process\PhpExecutableFinder;
-// use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
 {
@@ -97,6 +92,7 @@ mix.scripts([
   'node_modules/jquery-ui/dist/jquery-ui.js',
   'node_modules/@popperjs/core/dist/umd/popper.js',
   'node_modules/bootstrap/dist/js/bootstrap.js',
+  'node_modules/chart.js/dist/chart.umd.js',
   'resources/pondol/market/common.js',
   'resources/pondol/route.js',
   'resources/pondol/market/admin.js',

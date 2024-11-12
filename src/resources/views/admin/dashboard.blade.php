@@ -142,18 +142,12 @@
     </div><!-- .card -->
   </div>
 </div>
-
-
-
-
 @endsection
+
 @section('styles')
-    @parent
-
-
-        
+@parent
+       
 @endsection
 @section('scripts')
-    @parent
-
-    @endsection
+  @parent
+@endsection

@@ -79,7 +79,7 @@
       </div>
       <div class="row form-group mt-2">
         <div class="col col-md-12">
-          @include ('editor::tinymce.editor', ['name'=>'body', 'id'=>'body', 'value'=>old('body'), 'attr'=>['class'=>'form-control']])
+          @include ('editor::default', ['name'=>'body', 'id'=>'body', 'value'=>old('body'), 'attr'=>['class'=>'form-control']])
         </div>
       </div>
     </div>

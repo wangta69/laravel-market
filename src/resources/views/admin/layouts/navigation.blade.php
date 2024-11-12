@@ -124,7 +124,19 @@
         </li>
       </ul>
     </li>
-
+    <li>
+      <a href="#banners-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.banner*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-regular fa-images"></i>
+          베너관리
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.banner*']) ? 'show' : '' }}" id="banners-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.bannerㄴ']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.banners') }}">베너관리</a>
+        </li>
+      </ul>
+    </li>
     <li>
       <a href="#config-sub-menu" data-bs-toggle="collapse" 
         aria-expanded="{{ request()->routeIs(['market.admin.config*']) ? 'true' : 'false' }}"
@@ -154,6 +166,23 @@
         </li>
       </ul>
     </li>
+    <li>
+      <a href="#visitors-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.visitors*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-solid fa-chart-simple"></i>
+          방문자통계
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.visitors*']) ? 'show' : '' }}" id="visitors-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.visitors']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.visitors') }}">Summarize</a>
+        </li>
+        <li class="{{ request()->routeIs(['market.admin.visitors.log']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.visitors.log') }}">Log</a>
+        </li>
+      </ul>
+    </li>
+
     <li>
       <a href="#dev-sub-menu" data-bs-toggle="collapse" 
         aria-expanded="{{ request()->routeIs(['market.admin.dev*']) ? 'true' : 'false' }}"

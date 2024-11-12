@@ -24,9 +24,31 @@ class MainController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
 
+
+        // print_r(Request::server('HTTP_REFERER')); 
+       // $visitorInformation['referer'] = Request::server('HTTP_REFERER');
+    // $visitorInformation['referer'] = url()->previous();
+
+    // $referer = Request::server('HTTP_REFERER');
+
+    // $visitorInformation['referer'] = Request::server('HTTP_REFERER');
+    // $visitorInformation['referer'] = url()->previous();
+    // $visitorInformation['referer'] = request()->headers->get('referer');
+
+    // print_r(url()->previous());
+    // print_r($request->header('HTTP_REFERRER'));
+    // print_r(isset($_SERVER['HTTP_REFERER']) ?$_SERVER['HTTP_REFERER']: '' );
+    // print_r($request->header('HTTP_REFERRER'));
+    // $referer = $_SERVER['HTTP_REFERER'];
+
+    // print_r( $_SERVER);
+    // print_r($referer);
+    // $referer = Request::server('HTTP_REFERER');
+
+    
     $items = MarketItemDisplay::select(
       'market_item_displays.name as display',
       'it.id', 'it.name', 'it.model', 'it.price', 'it.image',

@@ -1,35 +1,26 @@
 @extends('market::admin.layouts.main')
-@section('title', '리뷰')
+@section('title', '방문자통계')
 @section('content')
-@include('market::admin.layouts.main-top',  ['path'=>['메일', '발송리스트']])
+
+@include('market::admin.layouts.main-top', ['path'=>['방문자통계', '로그']])
 <div class="p-3 mb-4 bg-light rounded-3">
-  <h2 class="fw-bold">발송리스트</h2>
+  <h2 class="fw-bold">상세로그</h2>
 
   <div class="card">
     <div class="card-body">
-      <div>발송내역입니다.</div>
+      <div>방문자별 상세로그를 확인 하실 수 있습니다.</div>
     </div><!-- .card-body -->
   </div><!-- .card -->
 </div>
 
-<form method="get" action="{{ route('market.admin.mailer') }}" id="search-form" >
+
+<form method="get" action="{{ route('market.admin.visitors.log') }}" id="search-form" >
   <div class="card mt-1 p-2">
     <div class="card-body">
       <div class="row">
 
         <div class="col-6">
-            <div class="form-check">
 
-            </div>
-   
-            <div class="input-group">
-              <select class="form-select" name="sk">
-                <option value="msg.title" @if( request()->get('sk') == 'msg.title') selected="selected" @endif >Title</option>
-                <option value="msg.body" @if( request()->get('sk') == 'msg.body') selected="selected" @endif >Body</option>
-              </select>
-              <input type="text" name="sv" value="{{ request()->sv}}" placeholder="검색어를 입력해주세요." class="form-control">
-              <button class="btn btn-success btn-serch-keyword">검색</button>
-            </div>
         </div>
 
         <div class="ps-5 col-6">
@@ -58,7 +49,7 @@
 
 
 <div class="text-end mt-2">
-    검색 기간내:  발송건 수 {{ number_format($items->total())}}명
+
 </div>
 <div class="card mt-1">
   <div class="card-body">
@@ -67,42 +58,48 @@
       <col width="*">
       <col width="*">
       <col width="*">
+      <col width="*">
+      <col width="*">
       <thead>
         <tr>
-          <th class="text-center">Id</th>
-          <th class="text-center">전송수단</th>
-          <th class="text-center">Title</th>
-          <th class="text-center">생성일</th>
+          <th class="text-center">IP</th>
+          <th class="text-center">User Id</th>
+          <th class="text-center">Continent</th>
+          <th class="text-center">Country</th>
+          <th class="text-center">City</th>
+          <th class="text-center">Device</th>
+          <th class="text-center">Browser</th>
+          <th class="text-center"></th>
         </tr>
       </thead>
       <tbody>
-        @forelse($items as $item)
-        <tr user-attr-id="{{ $item->id }}">
-          <td class="text-center">{{ $item->id }}</td>
-          <td class="text-center">{{ $item->type }} </td>
-          <td class="text-center">{{ $item->title }}<a href="{{ route('market.admin.mailer.show', $item->id) }}"><i class="fas fa-search"></i></a></td>
-          <td class="text-center">{{ date("Y-m-d H:i", strtotime($item->created_at)) }}</td>
+
+        @forelse($logs as $log)
+        <tr>
+          <td class="text-center">{{ $log->ip }}</td>
+          <td class="text-center">{{ $log->user_id }}</a></td>
+          <td class="text-center">{{ $log->continent }} </td>
+          <td class="text-center">{{ $log->country }} </td>
+
+          <td class="text-center">{{ $log->city }} </td>
+          <td class="text-center">{{ $log->device }} </td>
+          <td class="text-center">{{ $log->browser }} </td>
+          <td class="text-center">{{ $log->referer }} </td>
+          <td class="text-center">{{ $log->created_at }}</td>
         </tr>
         @empty
         <tr>
-          <td colspan="5" class="text-center">
+          <td colspan="7" class="text-center">
             디스플레이할 데이타가 없습니다.
           </td>
         </tr>
         @endforelse
       </tbody>
+
     </table>
   </div><!-- .card-body -->
   <div  class="card-footer">
-    {{ $items->links("pagination::bootstrap-4") }}
+     {{$logs->links("pagination::bootstrap-4")}}
   </div><!-- .card-footer -->
 </div><!-- .card -->
-@endsection
-
-@section('styles')
-@parent
-@endsection
-
-@section('scripts')
-@parent
 @endsection

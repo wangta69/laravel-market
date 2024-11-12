@@ -19,8 +19,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container d-flex justify-content-between">
       <a class="navbar-brand  ps-3" href="{{ route('market.main') }}"><img src="/storage/market/{{Config::get('market.template.ci')}}" ></a>
-      
-
 
       <form action="{{ route('market.search') }}" onsubmit="return search_submit(this);">
         <div  class="input-group mt-2">

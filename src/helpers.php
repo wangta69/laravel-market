@@ -3,6 +3,8 @@ function market_get_thumb($file, $width=null, $height=null){
   return Pondol\Market\Services\ViewerService::get_thumb($file, $width, $height);
 }
 
+
+
 function astro($str, $len, $position='end') {
   $ast = '';
   for ($i = 0; $i < $len; $i++) {

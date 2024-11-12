@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-
 // 'prefix' => 'market', 
 Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', 'middleware' => ['web']], function () {
 });

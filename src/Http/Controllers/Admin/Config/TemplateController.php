@@ -64,8 +64,8 @@ class TemplateController extends Controller
     $search = array_map('basename',\File::directories($search_dir));
 
     // auth
-    $auth_dir =  resource_path('views/market/templates/auth');
-    $auth = array_map('basename',\File::directories($auth_dir));
+    // $auth_dir =  resource_path('views/market/templates/auth');
+    // $auth = array_map('basename',\File::directories($auth_dir));
 
     // components
     $component_dir =  resource_path('views/market/templates/components');
@@ -90,7 +90,7 @@ class TemplateController extends Controller
       'order'=>$order,
       'userpage'=>$userpage,
       'search'=>$search,
-      'auth'=>$auth,
+      // 'auth'=>$auth,
       'components'=>$components,
       'mail'=>$mail,
       'pages'=>$pages,

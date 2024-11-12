@@ -61,7 +61,7 @@ Route::put('/item/{item}', 'ItemController@update'); //->name('item.update');
 Route::delete('/item/{item}', 'ItemController@destroy'); //->name('item.destroy');
 
 // 상품관리 > 태그관리
-Route::post('/tag', 'TagController@_store')->name('tag');
+Route::post('/tag', 'TagController@store')->name('tag');
 
 // 환경설정
 Route::get('/config/template', 'Config\TemplateController@view')->name('config.template');
@@ -86,11 +86,24 @@ Route::put('/config/pg', 'Config\PgController@update');
 Route::get('/config/company', 'Config\CompanyController@index')->name('config.company');
 Route::put('/config/company', 'Config\CompanyController@update');
 
+// 베너관리
+Route::get('/banners', 'BannerController@index')->name('banners');
+Route::get('/banner/{type}', 'BannerController@view')->name('banner');
+Route::get('/banner/{type}/create', 'BannerController@create')->name('banner.create');
+Route::post('/banner/{type}/create', 'BannerController@store');
+Route::get('/banner/{type}/edit/{item}', 'BannerController@edit')->name('banner.edit');
+Route::put('/banner/{type}/edit/{item}', 'BannerController@update');
+Route::delete('/banner/{type}', 'BannerController@destroy');
 // 메일
 Route::get('/mailer/index', 'MailerController@index')->name('mailer');
 Route::get('/mailer', 'MailerController@create')->name('mailer.create');
 Route::post('/mailer', 'MailerController@store');
 Route::get('/mailer/show/{message}', 'MailerController@show')->name('mailer.show');
+
+
+// 방문자 통계
+Route::get('/visitors/dashboard', 'VisitorController@dashboard')->name('visitors');
+Route::get('/visitors/logs', 'VisitorController@log')->name('visitors.log');
 
 // 개발테스트
 Route::get('/dev/mail', 'Dev\MailController@view')->name('dev.mail');

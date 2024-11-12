@@ -2,10 +2,10 @@
 namespace Pondol\Market\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
 
+use DB;
+use Carbon\Carbon;
 use Pondol\Market\Models\MarketOrder;
 use Pondol\Market\Models\MarketBuyer;
 use Pondol\Market\Models\MarketPayment;
@@ -14,6 +14,7 @@ use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Services\OrderService;
 
 use Pondol\DeliveryTracking\Traits\Tracking;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -63,13 +64,18 @@ class OrderController extends Controller
         $to_date = date("Y-m-d");
       }
 
-      $from_date = $from_date.' 00:00:00';
-      $to_date = $to_date.' 23:59:59';
-      $items = $items->where(function ($q) use($from_date, $to_date) {
-        // qiuery 속도를 위해 DATE 함수는 사용하지 않는다.
-        // $q->whereRaw("DATE(buyer.created_at) >= '".$from_date."' AND DATE(buyer.created_at)<= '".$to_date."'" );
-        $q->whereRaw("buyer.created_at >= '".$from_date."' AND buyer.created_at <= '".$to_date."'" );
-      });
+      $from_date = Carbon::createFromFormat('Y-m-d', $from_date);
+      $to_date = Carbon::createFromFormat('Y-m-d', $to_date);
+      $items =  $items->whereBetween('buyer.created_at', [$from_date->startOfDay(), $to_date->endOfDay()]);
+
+
+      // $from_date = $from_date.' 00:00:00';
+      // $to_date = $to_date.' 23:59:59';
+      // $items = $items->where(function ($q) use($from_date, $to_date) {
+      //   // qiuery 속도를 위해 DATE 함수는 사용하지 않는다.
+      //   // $q->whereRaw("DATE(buyer.created_at) >= '".$from_date."' AND DATE(buyer.created_at)<= '".$to_date."'" );
+      //   $q->whereRaw("buyer.created_at >= '".$from_date."' AND buyer.created_at <= '".$to_date."'" );
+      // });
     }
 
     if($delivery_status) {
