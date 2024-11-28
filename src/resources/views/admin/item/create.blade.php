@@ -29,7 +29,7 @@
         <col width="*" />
         <tr>
           <th class="active">카테고리</th>
-          <td>@include("market.admin.item.sub-category", ['category'=>$categories])</td>
+          <td>@include("market::admin.item.sub-category", ['category'=>$categories])</td>
         </tr>
         <tr>
           <th class="active">상품명</th>
@@ -57,11 +57,11 @@
         </tr>
         <tr>
           <th class="active">등록옵션</th>
-          <td>@include("market.admin.item.sub-option", [])</td>
+          <td>@include("market::admin.item.sub-option", [])</td>
         </tr>
         <tr>
           <th class="active">이미지</th>
-          <td>@include("market.admin.item.sub-image", ['images'=>$images])</td>
+          <td>@include("market::admin.item.sub-image", ['images'=>$images])</td>
         </tr>
         <tr>
           <th class="active">간략설명</th>
@@ -70,25 +70,12 @@
         <tr>
           <th class="active">자세한설명</th>
           <td>
-          {{-- 
-            <x-editor-components 
-            name="description" 
-            id="description" 
-            :value="$item->description"
-            :attr="['class'=>'form-control']"
-            onsubmit="true"
-            type="single"/>
-          
-          @include ('editor::smart-editor.editor', ['name'=>'description', 'id'=>'description', 'value'=>$item->description, 'attr'=>['class'=>'form-control']])
-          @include ('editor::froala.editor', ['name'=>'description', 'id'=>'description', 'value'=>$item->description, 'attr'=>['class'=>'form-control']])
-          --}}
-         adadf
           @include ('editor::default', ['name'=>'description', 'id'=>'description', 'value'=>$item->description, 'attr'=>['class'=>'form-control']])
           </td>
         </tr>
         <tr>
           <th class="active">태그</th>
-          <td>@include("market.admin.item.sub-tag")</td>
+          <td>@include("market::admin.item.sub-tag")</td>
         </tr>
         <tr>
           <th class="active">표시 옵션</th>
@@ -143,11 +130,6 @@ var listUrl = "{{ route('market.admin.items') }}";
 $(function () {
   $(".btn-delete").on('click', function () {
     var item_id = $(this).parent().attr("user-attr-id");
-    // var url = '/market-adm/item/' + item_id;
-    // var csrf_token = $("meta[name=csrf-token]").attr("content");
-    // var data = {
-    //   _token: csrf_token
-    // };
 
     ROUTE.ajaxroute('DELETE', 
       {route: 'market.admin.item', segments: [item_id]}, 
@@ -158,16 +140,6 @@ $(function () {
           location.href = listUrl;
         }
       })
-
-
-    // $.ajax({
-    //   url: url,
-    //   type: 'DELETE',
-    //   data: data,
-    //   success: function (resp) {
-    //     location.href = listUrl;
-    //   }
-    // });
   })
 })
 

@@ -39,18 +39,16 @@ class OrderController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index($status=null, Request $request)
+  public function index(Request $request)
   {
-    // DB::enableQueryLog();
+    DB::enableQueryLog();
     $sk = $request->sk;
     $sv = $request->sv;
     $from_date = $request->from_date;
     $to_date = $request->to_date;
     
 
-    if($status) {
-      $request->merge(['delivery_status' => [$status]]);
-    }
+ 
     $delivery_status = $request->delivery_status;
 
     $items = $this->orderSvc->orderList('admin');
@@ -77,10 +75,21 @@ class OrderController extends Controller
       //   $q->whereRaw("buyer.created_at >= '".$from_date."' AND buyer.created_at <= '".$to_date."'" );
       // });
     }
-
-    if($delivery_status) {
-      $items = $items->whereIn('buyer.delivery_status', $delivery_status);
+    $status_array = [];
+    if(!$delivery_status) {
+      $delivery_status = ['ready', 'ing'];
     }
+    foreach($delivery_status as $v) {
+      switch($v) {
+        case 'ready': $status_array = array_merge($status_array, [0]); break;
+        case 'ing':$status_array = array_merge($status_array, [10, 30]);  break;
+        case 'done': $status_array = array_merge($status_array, [90]); break;
+      }
+    }
+    $request->merge(['delivery_status' => $delivery_status]);
+
+   
+    $items = $items->whereIn('buyer.delivery_status', $status_array);
 
     $items = $items->orderBy('market_orders.id', 'desc')
       ->paginate(15)->withQueryString();

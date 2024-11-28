@@ -143,7 +143,6 @@ class ItemController extends Controller
     if ($tags->isEmpty()) {
       $tags = [];
     }
-    // print_r(json_encode($tags));
     return view('market::admin.item.create', [
       'item' => $item,
       'display' => $display,

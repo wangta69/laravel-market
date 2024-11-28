@@ -41,7 +41,7 @@ class ReviewController extends Controller
       'o.id', 'o.item_id', 'o.created_at', 'it.name', 'it.image',
       'review.content', 'review.reply', 'review.rating'
     )
-    ->where('market_buyers.user_id', $user->id)->where('market_buyers.delivery_status', 20)
+    ->where('market_buyers.user_id', $user->id)->where('market_buyers.delivery_status', 90)
     ->join('market_orders as o', function($join){
       $join->on('market_buyers.o_id', '=', 'o.o_id');
     })

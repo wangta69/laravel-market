@@ -19,7 +19,7 @@ use Pondol\Market\Models\MarketAddress;
 use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Services\CalDeliveryFee;
 
-use App\Events\OrderShipped;
+use Pondol\Market\Events\OrderShipped;
 use Pondol\Auth\Traits\Point;
 use App\Http\Controllers\Controller;
 
@@ -172,7 +172,6 @@ class OrderController extends Controller
    *   배송지 정보 저장
    */
   public function storeAddress(Request $request) {
-    // print_r($request->all());
     $user = $request->user();
 
     $validator = Validator::make($request->all(), [

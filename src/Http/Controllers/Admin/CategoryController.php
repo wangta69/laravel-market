@@ -94,8 +94,7 @@ class CategoryController extends Controller
     }
 
     $sub_len = $len  + 3;
-    // DB::enableQueryLog();
-    // echo $len.','.$depth.','.$sub_len.PHP_EOL;
+
     $items = MarketCategory::where(DB::raw("LENGTH(`category`)"), $sub_len)
     ->where(DB::raw("LEFT(`category`, $len)"), $category)
     ->get(); // 대분류 카테고리

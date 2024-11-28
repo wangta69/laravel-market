@@ -62,8 +62,6 @@ Route::post('mypage/review/{order}', 'Mypage\ReviewController@store');
 // 찜한 상품
 Route::get('mypage/favorite', 'Mypage\FavoriteController@_index')->name('mypage.favorite');
 
-// 사용후기
-
 // 상품찜하기
 Route::post('item/{item}/favorite', 'FavoriteController@_store')->name('item.favorite');
 Route::delete('item/{fav}/favorite', 'FavoriteController@_destroy');

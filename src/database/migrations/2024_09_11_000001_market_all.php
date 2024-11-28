@@ -57,7 +57,7 @@ class MarketAll extends Migration
         $table->string('message', '200')->nullable()->comment('주문자 입력 메시지');
         $table->string('courier', '10')->nullable()->comment('배송업체코드');
         $table->string('invoice_no', '20')->nullable()->comment('송장번호(택배번호)');
-        $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기(주문접수), 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료');
+        $table->tinyInteger('delivery_status')->nullable()->unsigned()->comment('0: 배송대기(주문접수), 10: 배송중,  30: 배송완료, 40: 주문취소, 50: 반품, 60:교환, 70: 교환완료, 90: 거래완료');
         $table->timestamps();
       });
     }
@@ -285,7 +285,7 @@ class MarketAll extends Migration
         $table->smallInteger('qty')->default(0)->unsigned()->comment('구매갯수');
         $table->bigInteger('item_price')->default(0)->unsigned()->comment('제품단가');
         $table->bigInteger('option_price')->default(0)->unsigned()->comment('제품옵션단가');
-        $table->bigInteger('point')->default(0)->unsigned()->comment('적립포인트');
+        $table->bigInteger('point')->default(0)->unsigned()->comment('적립포인트 (실제적립시  qty x point)');
         $table->string('options', '200')->nullable()->comment('market_item_options.id | market_item_options.id |');
         $table->string('courier', '10')->nullable()->comment('(개별배송시) 각각의 제품에 대한 배송업체');
         $table->string('invoice_no', '20')->nullable()->comment('(개별배송시) 각각의 제품에 대한 송장번호');

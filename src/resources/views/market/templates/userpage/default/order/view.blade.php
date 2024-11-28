@@ -60,6 +60,8 @@
           주문 취소 및 환불중
           @elseif($display->delivery_status == 59)
           주문 취소 완료
+          @elseif($display->delivery_status == 90)
+          구매완료 <a href="{{ route('market.mypage.reviews')}}" class="btn btn-sm btn-primary">상품후기작성</a>
           @else
           <!-- 배송중 시점에서 아래 3개가 뜲 -->
           <a class="btn" href="{{ route('market.mypage.order.cancel-return-exchange', ['return', $display->o_id]) }}">반품신청</a>

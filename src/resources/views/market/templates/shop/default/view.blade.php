@@ -78,7 +78,7 @@
                 <span id="option-price"></span>
               </label>
               <div class="qty-adjust">
-                <input type="number" name="qty" value="1" class="float-start form-control" style="width: 50px">
+                <input type="number" name="qty" value="1" class="float-start form-control" style="width: 100px">
                 <div class="float-start" style="width: 30px; text-align: center">
                   <div style="height: 20px"><i class="fa-solid fa-plus"></i></div>
                   <div style="height: 20px"><i class="fa-solid fa-minus"></i></div>

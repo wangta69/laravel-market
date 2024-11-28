@@ -46,7 +46,6 @@ class BankController extends Controller
 
     // [TACKBAE_MONEY] => 1000 
     $codes = $this->configSvc->get('banks');
-    // print_r($codes);
     return view('market::admin.config.bank-create', [
       'codes' => $codes
     ]);

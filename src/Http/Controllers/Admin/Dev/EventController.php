@@ -64,8 +64,6 @@ class EventController extends Controller
   {
 
     $user = User::select('id', 'email', 'name')->find($request->to);
-      // print_r($request->all());
-      // print_r($user);
       $mailData = $request;
       $mailData->user = $user;
       

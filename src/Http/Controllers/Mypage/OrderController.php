@@ -11,10 +11,12 @@ use Pondol\Market\Models\MarketDeliveryCompany;
 use Pondol\Market\Models\MarketBuyer;
 use Pondol\Market\Services\OrderService;
 use Pondol\DeliveryTracking\Traits\Tracking;
+use Pondol\Auth\Traits\Point; // _insertPoint
+
 class OrderController extends Controller
 {
 
-  use Tracking;
+  use Tracking, Point;
   /**
    * Create a new controller instance.
    *
@@ -43,7 +45,6 @@ class OrderController extends Controller
       return redirect()->route('market.login', ['f'=>'market.mypage.order']);
     } else if($o_id){ // 주문 아이디가 있을 경우 바로 상세 보기로 넘긴다.
       return redirect()->route('market.mypage.order.view', [$o_id]);
-      
     }
 
     // DB::enableQueryLog();
@@ -78,10 +79,15 @@ class OrderController extends Controller
   }
 
   public function statusUpdate($o_id, $status, Request $request) {
+    $user = $request->user();
     $order = MarketBuyer::where('o_id', $o_id)->first();
+
+    if($order->delivery_status == 90) {
+      return response()->json(['error'=>'수취확인된 주문입니다.'], 203);
+    }
     if($status == 50) { // 주문취소
       if($order->delivery_status < 0) {
-        return response()->json(['error'=>'배송중이므로 주문을 취소할 수 없습니다.'], 203);//500, 203
+        return response()->json(['error'=>'배송중이므로 주문을 취소할 수 없습니다.'], 203);
         // if($request->ajax()){
         //   return response()->json(['error'=>$validator->errors()->first()], 203);//500, 203
         // } else {
@@ -90,17 +96,27 @@ class OrderController extends Controller
       } else {
         $order->delivery_status = $status;
         $order->save();
-        return response()->json(['error'=>false, 'next'=>null], 200);//500, 203
+        return response()->json(['error'=>false, 'next'=>null], 200);
       }
-    } else if($status == 90) { // 거래완료
+    } else { // 거래완료
       // 거래완료시점에 상품 구매 포인트를 회원에게 제공한다.
+      if($status == 90) {
+
+        // 적립포인트 계산
+        $orders = MarketOrder::where('o_id', $o_id)->get();
+        $savings = 0;
+        foreach($orders as $o) {
+          $savings =+ floor($o->point * $o->qty);
+        }
+
+        if($savings) {
+          $this->_insertPoint($user, $savings, $item = 'order', $o_id);
+        }
+      }
 
       $order->delivery_status = $status;
       $order->save();
-
-    } else {
-      $order->delivery_status = $status;
-      $order->save();
+      return response()->json(['error'=>false], 200);
     }
   }
 }

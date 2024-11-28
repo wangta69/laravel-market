@@ -92,13 +92,6 @@ class MarketController extends Controller
     // $category = $request->session()->get('category');
    
     $request->session()->forget('category');
-    // echo "11".PHP_EOL;
-    // print_r($item->category->category);
-    // echo "22".PHP_EOL;
-    // 만약 존재 하지 않으면 대표 카테고리를 가져온다.
-    // if(!$category) {
-    //   $category = $item->category;
-    // }
 
     $categoryObj = $this->buildCategory($item->category);
 
@@ -136,7 +129,6 @@ class MarketController extends Controller
     }
 
     $this->meta->setItem($item);
-    // print_r($reviews);
 
     return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.view', [
       'meta' => $this->meta,

@@ -63,7 +63,6 @@ class CartController extends Controller
 
   public function store(Request $request)
   {
-  // print_r($request->all());
     $c_id = $this->cart_cookie();
     $user = $request->user();
 

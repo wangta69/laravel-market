@@ -116,7 +116,7 @@ class UserController extends Controller
   }
 
   /**
-   * 패스워드 변경
+   * 모바일 변경
    */
   public function updateMobile(Request $request) {
     $user = $request->user();

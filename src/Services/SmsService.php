@@ -124,7 +124,6 @@ class directSend {
     . "&key=" . urlencode($key);
 
 
-    //echo $postvars;
     $url = "https://directsend.co.kr/index.php/api/v1/sms";
 
     curl_setopt($ch,CURLOPT_URL, $url);
