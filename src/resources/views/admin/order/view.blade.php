@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', '주문내역 상세보기')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['주문/배송관리', '주문내역', '상세보기']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['주문/배송관리', '주문내역', '상세보기']"> 
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">상세보기</h2>
 
@@ -184,8 +185,6 @@
   </div><!-- .card-body -->
 </div><!-- .card -->
 
-
-@endsection
 @section('styles')
 @parent
 @endsection
@@ -231,3 +230,4 @@ $(".act-update-pay").on('click', function(){
 })
 </script>
 @endsection
+</x-dynamic-component>

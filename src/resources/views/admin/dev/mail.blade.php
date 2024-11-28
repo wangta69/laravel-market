@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', '메일테스트')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['Dev', '메일테스트']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['Dev', '메일테스트']"> 
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">메일테스트</h2>
 
@@ -53,7 +54,6 @@
     </div><!-- .card-footer -->
   </form>
 </div><!-- . card --><!-- .card-body -->
-@endsection
 
 @section('styles')
   @parent
@@ -77,3 +77,4 @@ $(function(){
 })
 </script>
 @endsection
+</x-dynamic-component>

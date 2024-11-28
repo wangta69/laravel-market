@@ -1,8 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', 'Dashboard')
-@section('content')
-
-@include('market::admin.layouts.main-top', ['path'=>['대쉬보드']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['Dashboard']"> 
 
 <div class="row">
   <div class="col-6">
@@ -16,7 +15,7 @@
           <col width="120px">
           @forelse ($users as $user)
           <tr>
-            <td>{{ $user->name }} ({{ $user->email }}) <span onclick="win_user('{{ route('market.admin.user', $user->id) }}')"><i class="fas fa-search"></i></span></td>  
+            <td>{{ $user->name }} ({{ $user->email }}) <span onclick="win_user('{{ route('auth.admin.user', $user->id) }}')"><i class="fas fa-search"></i></span></td>  
             <td>{{ date('m-d H:m', strtotime($user->created_at)) }}</td>
           </tr>
           @empty
@@ -27,7 +26,7 @@
         </table>
       </div><!-- .card-body -->
       <div class="card-footer text-end">
-        <a href="{{ route('market.admin.users') }}" class="btn btn-primary btn-sm">더 보기</a>
+        <a href="{{ route('auth.admin.users') }}" class="btn btn-primary btn-sm">더 보기</a>
       </div><!-- .card-footer -->
     </div><!-- .card -->
   </div>
@@ -142,7 +141,7 @@
     </div><!-- .card -->
   </div>
 </div>
-@endsection
+
 
 @section('styles')
 @parent
@@ -151,3 +150,4 @@
 @section('scripts')
   @parent
 @endsection
+</x-dynamic-component>

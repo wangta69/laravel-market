@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', '쇼핑몰정보 설정')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['환경설정', '쇼핑몰정보 설정']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['환경설정', '쇼핑몰정보 설정']"> 
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">쇼핑몰정보 설정</h2>
 
@@ -58,8 +59,6 @@
 	</form>
 </div><!-- .card -->
 
-@endsection
-
 @section('styles')
 @parent
 @endsection
@@ -82,3 +81,4 @@ $(function(){
 })
 </script>
 @endsection
+</x-dynamic-component>

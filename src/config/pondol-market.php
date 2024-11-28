@@ -7,7 +7,7 @@ return [
     'middleware' => ['web']
   ],
   'route_admin' => [
-    'prefix' => 'adm',
+    'prefix' => 'market/admin',
     'as' => 'market.admin.',
     'middleware' => ['web', 'admin']
   ],

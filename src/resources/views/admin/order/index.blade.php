@@ -1,7 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', '주문내역')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['주문/배송관리', '주문내역']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['주문/배송관리', '주문내역']"> 
 
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">주문내역</h2>
@@ -132,7 +132,6 @@
   </div><!-- card-footer -->
 </div>
  
-@endsection
 @section('styles')
   @parent
 <style>
@@ -146,3 +145,4 @@
 @section('scripts')
   @parent
 @endsection
+</x-dynamic-component>

@@ -1,7 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', '리뷰')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['상품문의 및 리뷰', '리뷰']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['상품문의 및 리뷰', '리뷰']"> 
 
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">리뷰</h2>
@@ -67,7 +67,7 @@
             </div><!-- .modal-dialog -->
           </div><!-- .modal -->
         </td>
-        <td class="text-center">{{$item->user_name}} <a onclick="win_user('{{ route('market.admin.user', $item->user_id) }}')"><i class="fas fa-search"></i></a></td>
+        <td class="text-center">{{$item->user_name}} <a onclick="win_user('{{ route('auth.admin.user', $item->user_id) }}')"><i class="fas fa-search"></i></a></td>
         <td class="text-center">{{$item->created_at}}</td>
         <td class="text-center">
           @if($item->reply) 
@@ -92,7 +92,6 @@
   </div><!-- card-footer -->
 </div>
  
-@endsection
 @section('styles')
 @parent
 
@@ -121,3 +120,4 @@ $(function(){
 
 </script>
 @endsection
+</x-dynamic-component>

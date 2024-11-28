@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', 'Template 설정')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['환경설정', '템플릿 설정']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['환경설정', '템플릿 설정']"> 
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">Template 설정</h2>
 
@@ -151,8 +152,6 @@
   </form>
 </div>
 
-@endsection
-
 @section('styles')
 @parent
 <style>
@@ -183,3 +182,5 @@ $(function(){
 })
 </script>
 @endsection
+
+</x-dynamic-component>

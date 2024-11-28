@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', 'Dashboard')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['카테고리', '카테고리관리']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['카테고리', '카테고리관리']"> 
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">카테고리 메니저</h2>
 
@@ -52,11 +53,6 @@
   </div><!-- .card-body -->
 </div><!-- .card -->
 
-
-  
-
-
-@endsection
 @section('styles')
   @parent
 <style>
@@ -236,3 +232,4 @@
   
 </script>
 @endsection
+</x-dynamic-component>

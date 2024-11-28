@@ -1,7 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', '베너등록')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['베너관리', '베너등록']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['베너관리', '베너등록']"> 
 
 <div class="card">
 
@@ -71,7 +71,6 @@
     </div>
   </form>
 </div>
-@endsection
 
 @section('styles')
 @parent
@@ -79,3 +78,4 @@
 @section('scripts')
 @parent
 @endsection
+</x-dynamic-component>

@@ -18,13 +18,14 @@
       "guzzlehttp/guzzle": "^7",
       "kyslik/column-sortable": "^6",
       "laravel/ui": "*",
-      "wangta69/php-thumbnail": "^1",
-      "wangta69/laravel-auth": "^2.0",
-      "wangta69/laravel-board": "^8",
-      "wangta69/laravel-delivery-tracking": "^1",
-      "wangta69/laravel-mailer": "^8",
-      "wangta69/laravel-visitors-statistics": "^0.1",
-      "wangta69/laravel-index-now": "^0"
+      "wangta69/php-thumbnail": "*",
+      "wangta69/laravel-pondol": "*",
+      "wangta69/laravel-auth": "*",
+      "wangta69/laravel-board": "*",
+      "wangta69/laravel-delivery-tracking": "*",
+      "wangta69/laravel-mailer": "*",
+      "wangta69/laravel-visitors-statistics": "*",
+      "wangta69/laravel-index-now": "*"
     },
     "autoload": {
       "files": [

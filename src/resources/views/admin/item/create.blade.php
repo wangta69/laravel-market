@@ -1,7 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', '상품등록')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['상품관리', '상품등록']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['상품관리', '상품등록']"> 
 
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">상품등록</h2>
@@ -118,7 +118,6 @@
   </div><!-- .card -->
 </form>
 
-@endsection
 @section('styles')
 @parent
 @endsection
@@ -146,3 +145,4 @@ $(function () {
 </script>
 
 @endsection
+</x-dynamic-component>

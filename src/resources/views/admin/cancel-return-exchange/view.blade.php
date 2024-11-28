@@ -1,8 +1,7 @@
-@extends('market::admin.layouts.main')
 @section('title', '교환/반품내역')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['주문/배송관리', '교환/반품']])
-
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['주문/배송관리', '교환/반품']"> 
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">교환/반품내역</h2>
 
@@ -99,9 +98,6 @@
 </div> <!-- card -->
 
 
-<!-- /banner-feature -->
-@endsection
-
 @section('styles')
 @parent
 @endsection
@@ -141,3 +137,4 @@ $(function(){
 })
 </script>
 @endsection
+</x-dynamic-component>

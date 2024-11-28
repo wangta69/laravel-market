@@ -1,7 +1,8 @@
-@extends('market::admin.layouts.main')
 @section('title', '베너관리')
-@section('content')
-@include('market::admin.layouts.main-top', ['path'=>['베너관리', '베너관리']])
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['베너관리', '보기']">
+
 <div class="p-3 mb-4 bg-light rounded-3">
   <h2 class="fw-bold">베너관리</h2>
 
@@ -57,7 +58,6 @@
     {{ $items->links("pagination::bootstrap-4") }}
   </div><!-- .card-footer -->
 </div><!-- .card -->
-@endsection
 
 @section('styles')
 @parent
@@ -68,3 +68,5 @@
 var csrf_token = $("meta[name=csrf-token]" ).attr("content");
 </script>
 @endsection
+
+</x-dynamic-component>

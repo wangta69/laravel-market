@@ -1,9 +1,10 @@
 
-@extends('market::admin.layouts.main')
 @section('title', '무통장 입금 계좌 등록')
-@section('content')
+<x-dynamic-component 
+  component="market::app-admin" 
+  :path="['무통장 입금 계좌 등록']"> 
+
 <div id="content">
-  @include('layouts.admin.main-top')
   <h2 class="title">무통장 입금 계좌 등록</h2>
   <form method="POST" action="{{ route('market.admin.config.bank') }}">
   @csrf
@@ -45,10 +46,11 @@
 </div>
 
 
-@endsection
 @section('styles')
 @parent
 @endsection
 @section('scripts')
 @parent
 @endsection
+
+</x-dynamic-component>

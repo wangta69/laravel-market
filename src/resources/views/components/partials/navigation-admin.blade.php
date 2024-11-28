@@ -7,17 +7,27 @@
   <ul class="list-unstyled components" id="navbar-sidebar">
     <li>
       <a href="#member-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.users*']) ? 'true' : 'false' }}"
+        aria-expanded="{{ request()->routeIs(['auth.admin.users*']) ? 'true' : 'false' }}"
         class="dropdown-toggle">
           <i class="fa-solid fa-user"></i>
           회원관리
       </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.users*']) ? 'show' : '' }}" id="member-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.users*']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.users') }}">회원</a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['auth.admin.user*', 'auth.admin.config*']) ? 'show' : '' }}" id="member-sub-menu">
+        <li class="{{ request()->routeIs(['auth.admin.users*']) ? 'current-page' : '' }}">
+          <a href="{{ route('auth.admin.users') }}">회원</a>
         </li>
-        <li class="{{ request()->routeIs(['market.admin.user.config']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.user.config') }}">회원 설정</a>
+        <li class="{{ request()->routeIs(['auth.admin.user.create*']) ? 'current-page' : '' }}">
+          <a href="{{ route('auth.admin.user.create') }}">회원등록</a>
+        </li>
+        <hr/>
+        <li class="{{ request()->routeIs(['auth.admin.config']) ? 'current-page' : '' }}">
+          <a href="{{ route('auth.admin.config') }}">일반환경설정</a>
+        </li>
+        <li class="{{ request()->routeIs(['auth.admin.config.agreement.termsofuse']) ? 'current-page' : '' }}">
+          <a href="{{ route('auth.admin.config.agreement.termsofuse') }}">이용약관</a>
+        </li>
+        <li class="{{ request()->routeIs(['auth.admin.config.agreement.privacypolicy']) ? 'current-page' : '' }}">
+          <a href="{{ route('auth.admin.config.agreement.privacypolicy') }}">개인정보 수집 및 허용</a>
         </li>
         <!-- <li>
             <a href="{{ route('market.admin.config.delivery') }}">배송비 설정</a>
@@ -110,17 +120,17 @@
     </li>
     <li>
       <a href="#mailer-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.mailer*']) ? 'true' : 'false' }}"
+        aria-expanded="{{ request()->routeIs(['mailer.admin*']) ? 'true' : 'false' }}"
         class="dropdown-toggle">
-        <i class="fa fa-envelope"></i>
-          메일발송
+          <i class="fa fa-envelope"></i>
+          메일
       </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.mailer*']) ? 'show' : '' }}" id="mailer-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.mailer']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.mailer') }}">발송리스트</a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['mailer.admin*']) ? 'show' : '' }}" id="mailer-sub-menu">
+        <li class="{{ request()->routeIs(['mailer.admin.index*']) ? 'current-page' : '' }}">
+          <a href="{{ route('mailer.admin.index') }}">발송리스트</a>
         </li>
-        <li class="{{ request()->routeIs(['market.admin.mailer.create']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.mailer.create') }}">발송</a>
+        <li class="{{ request()->routeIs(['mailer.admin.create*']) ? 'current-page' : '' }}">
+          <a href="{{ route('mailer.admin.create') }}">메일 발송</a>
         </li>
       </ul>
     </li>
@@ -132,7 +142,7 @@
           베너관리
       </a>
       <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.banner*']) ? 'show' : '' }}" id="banners-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.bannerㄴ']) ? 'current-page' : '' }}">
+        <li class="{{ request()->routeIs(['market.admin.banner*']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.banners') }}">베너관리</a>
         </li>
       </ul>
@@ -167,20 +177,20 @@
       </ul>
     </li>
     <li>
-      <a href="#visitors-sub-menu" data-bs-toggle="collapse" 
-        aria-expanded="{{ request()->routeIs(['market.admin.visitors*']) ? 'true' : 'false' }}"
+      <a href="#visitor-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['admin.visitors*']) ? 'true' : 'false' }}"
         class="dropdown-toggle">
-        <i class="fa-solid fa-chart-simple"></i>
-          방문자통계
+          <i class="fa-solid fa-user"></i>
+           방문자통계
       </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.visitors*']) ? 'show' : '' }}" id="visitors-sub-menu">
-        <li class="{{ request()->routeIs(['market.admin.visitors']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.visitors') }}">Summarize</a>
-        </li>
-        <li class="{{ request()->routeIs(['market.admin.visitors.log']) ? 'current-page' : '' }}">
-          <a href="{{ route('market.admin.visitors.log') }}">Log</a>
-        </li>
-      </ul>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['admin.visitors*']) ? 'show' : '' }}" id="visitor-sub-menu">
+       <li class="{{ request()->routeIs(['admin.visitors.dashboard']) ? 'current-page' : '' }}">
+          <a href="{{ route('admin.visitors.dashboard') }}">dashboard</a>
+        </li>  
+        <li class="{{ request()->routeIs(['admin.visitors.log']) ? 'current-page' : '' }}">
+            <a href="{{ route('admin.visitors.log') }}">log</a>
+          </li>
+        </ul>
     </li>
 
     <li>
@@ -190,7 +200,7 @@
         <i class="fa-solid fa-code"></i>
           Dev
       </a>
-      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.dev.mail*']) ? 'show' : '' }}" id="dev-sub-menu">
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.dev*']) ? 'show' : '' }}" id="dev-sub-menu">
         <li class="{{ request()->routeIs(['market.admin.dev.mail']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.dev.mail') }}">메일테스트</a>
         </li>
