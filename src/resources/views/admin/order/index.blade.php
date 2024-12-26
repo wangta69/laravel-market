@@ -110,9 +110,9 @@
           {{$item->name}} @if($item->count > 1 ) 외 {{($item->count - 1)}}건 @endif
           <br>({{$item->o_id}})
         </td>
-        <td class="text-center">{{ __('market.pay_method.'.$item->method) }}</td>
-        <td class="text-center">{{ __('market.pay_status.'.$item->status) }}</td>
-        <td class="text-center">{{ __('market.delivery_status.'.$item->delivery_status) }}</td>
+        <td class="text-center">{{ __('market::market.pay_method.'.$item->method) }}</td>
+        <td class="text-center">{{ __('market::market.pay_status.'.$item->status) }}</td>
+        <td class="text-center">{{ __('market::market.delivery_status.'.$item->delivery_status) }}</td>
         <td class="text-center">{{$item->user_name}}</td>
         <td class="text-center">{{$item->created_at}}</td>
         <td class="text-center"><a href="{{ route('market.admin.order', [$item->o_id]) }}" class="btn">상세보기</a></td>

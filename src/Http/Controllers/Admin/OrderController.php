@@ -10,7 +10,6 @@ use Pondol\Market\Models\MarketOrder;
 use Pondol\Market\Models\MarketBuyer;
 use Pondol\Market\Models\MarketPayment;
 
-use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Services\OrderService;
 
 use Pondol\DeliveryTracking\Traits\Tracking;
@@ -26,11 +25,9 @@ class OrderController extends Controller
   use Tracking;
 
   public function __construct(
-    ConfigService $configSvc,
     OrderService $ordergSvc
   )
   {
-    $this->configSvc = $configSvc;
     $this->orderSvc = $ordergSvc;
   }
 
@@ -108,8 +105,8 @@ class OrderController extends Controller
 
     $couriers = $this->_couriers();
 
-    $delivery_status = $this->configSvc->get('delivery_status');
-    $pay_status = $this->configSvc->get('pay_status');
+    $delivery_status = config('pondol-market.delivery_status');
+    $pay_status = config('pondol-market.pay_status');
     
 
     return view('market::admin.order.view', [

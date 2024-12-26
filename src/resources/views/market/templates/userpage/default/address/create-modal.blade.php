@@ -52,9 +52,11 @@
 </div>
 
 
+
 @section('scripts')
 @parent
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/pondol/search-zip.js"></script>
 <script>
 $(function(){
   // var addressCreateModal = new bootstrap.Modal(document.getElementById('addressCreateModal'), {})

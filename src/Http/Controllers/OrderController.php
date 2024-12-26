@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 use DB;
 use Validator;
+use Carbon\Carbon;
 
 use Pondol\Market\Models\MarketItem;
 use Pondol\Market\Models\MarketCart;
@@ -15,9 +16,9 @@ use Pondol\Market\Models\MarketBank;
 use Pondol\Market\Models\MarketPayment;
 use Pondol\Market\Models\MarketOrder;
 use Pondol\Market\Models\MarketAddress;
+use Pondol\Market\Models\MarketCouponIssue;
 
-use Pondol\Market\Services\ConfigService;
-use Pondol\Market\Services\CalDeliveryFee;
+use Pondol\Market\Facades\DeliveryFee;
 
 use Pondol\Market\Events\OrderShipped;
 use Pondol\Auth\Traits\Point;
@@ -33,14 +34,8 @@ class OrderController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc,
-    CalDeliveryFee $delivery
-    // PointService $pointSvc
   ){
-    $this->configSvc = $configSvc;
-    $this->delivery = $delivery;
-    // $this->pointSvc = $pointSvc;
-  }
+   }
 
   /**
    * Show the application dashboard.
@@ -51,11 +46,12 @@ class OrderController extends Controller
   {
 
     $user = $request->user();
+    if(!$user && config('pondol-market.guest_enable_order') == false) {
+      return redirect()->route('login');
+    }
     $orders = session()->get('orderItmes'); 
     // $o_id = session()->get('o_id'); 
     $o_id = $this->order_session('new');
-
-
    
     if(!$orders) {
       return redirect()->route('market.cart');
@@ -64,7 +60,7 @@ class OrderController extends Controller
     $items = MarketCart::
       select(
         'market_carts.qty', 'market_carts.item_price', 'market_carts.option_price', 'market_carts.options',
-        'market_items.id', 'market_items.name', 'market_items.image', 'market_items.model', 'market_items.price')
+        'market_items.id', 'market_items.category', 'market_items.name', 'market_items.image', 'market_items.model', 'market_items.price')
       ->whereIn('market_carts.id', $orders)
       ->leftjoin('market_items', function($join){
         $join->on('market_items.id', '=', 'market_carts.item_id');
@@ -92,7 +88,6 @@ class OrderController extends Controller
       }
     }
 
-    
     $display = new \stdClass;
     $display->totalPrice = 0;
     $display->products = $items[0]->name;
@@ -100,15 +95,13 @@ class OrderController extends Controller
       $display->products .= '외 '.(count($items)-1).'종';
     }
     
-
-  
     foreach($items as $v) {
       $display->totalPrice += ($v->item_price + $v->option_price) * $v->qty;
     }
 
     $display->user_point = $user->point ?? 0;
     // 배송비 계산
-    $display->delivery_fee = $this->delivery->cal($display->totalPrice);
+    $display->delivery_fee = DeliveryFee::cal($display->totalPrice);
 
 
     // 주문을 시도했던 것은 다시 내용을 보여주고 만약 결제가 완료(주문 완료시점에 모든 세션삭제해야되지만 에러로 인해)된 것이라면 
@@ -118,9 +111,7 @@ class OrderController extends Controller
       $buyer = new \stdClass;
     }
     
-    // if ($o_id) {
-    //   $buyer = MarketBuyer::where('o_id', $o_id)->first();
-    // } else if($default_addr) {
+
     $buyer->o_id = $o_id;
     $buyer->tel1 = isset($buyer->tel1) ? $buyer->tel1 : isset($default_addr->tel1) ? $default_addr->tel1 : null;
     $buyer->name = isset($buyer->name) ? $buyer->name : isset($default_addr->name) ? $default_addr->name : null;
@@ -128,7 +119,7 @@ class OrderController extends Controller
     $buyer->addr1 = isset($buyer->addr1) ? $buyer->addr1 : isset($default_addr->addr1) ? $default_addr->addr1 : null;
     $buyer->addr2 = isset($buyer->addr2) ? $buyer->addr2 : isset($default_addr->addr2) ? $default_addr->addr2 : null;
     $buyer->message = isset($buyer->message) ? $buyer->message :  isset($default_addr->message) ? $default_addr->message : null;
-    // }
+
 
     if($buyer->tel1) {
       $tel1 = explode('-', $buyer->tel1);
@@ -139,20 +130,87 @@ class OrderController extends Controller
     $buyer->tel1_3 = isset($tel1[2]) ? $tel1[2] : '';
 
     // 무통장 계좌 가져오기]
-    $codes = $this->configSvc->get('banks');
+    $codes = config('pondol-market.banks');
     $banks = MarketBank::get();
     foreach($banks as $v) {
       $v->name = $codes[$v->code]['name'];
     }
+
+    // 쿠폰 가져오기
+    $coupons = MarketCouponIssue::select(
+      'market_coupon_issues.*',
+      'market_coupons.title', 'market_coupons.apply_type', 'market_coupons.item_id','market_coupons.category',
+      'market_coupons.min_price', 'market_coupons.apply_amount_type', 'market_coupons.price',
+      'market_coupons.percentage', 'market_coupons.percentage_max_price'
+    )
+    ->join('market_coupons', function($join){
+      $join->on('market_coupons.id', '=', 'market_coupon_issues.coupon_id');
+    })
+    ->where('market_coupon_issues.user_id', $user->id)
+    ->whereNull('market_coupon_issues.used_at')
+    ->where('market_coupon_issues.expired_at', '>', Carbon::now())
+    ->orderBy('market_coupon_issues.id', 'desc')->get();
+
+    // 현재 결제 정보를 이용하여 쿠폰 enable disable 시키기
+    foreach($coupons as $coupon) {
+      $coupon->enable = true;
+      $coupon->enable_price = 0;
+
+      if($display->totalPrice < $coupon->min_price) { // 최소 구매 금액을 충족시키지 못할 경우
+        $coupon->enable = false;
+      } else {
+        switch($coupon->apply_type) { // 각각의 경우에 따라 적용금액 산정
+          case 'all': //
+            $coupon->enable_price = $this->couponApplyAmount($coupon, $display->totalPrice);
+            break;
+          case 'product': // 특정 제품일 경우 특정 제품에 한정하여 처리
+            $item_price = 0;
+            foreach($items as $item) {
+              if ($item.id == $coupon.item_id) {
+                $item_price += ($item->item_price + $item->option_price) * $item->qty;
+              }
+            }
+
+            if($item_price == 0) {
+              $coupon->enable = false;
+            } else {
+              $coupon->enable_price = $this->couponApplyAmount($coupon, $item_price);
+            }
+            
+            break;
+          case 'category': // subcategory 까지포함한다.
+            $item_price = 0;
+            foreach($items as $item) {
+              if (substr($item.category, 0, strlen($coupon.category)) == $coupon.category) {
+                $item_price += ($item->item_price + $item->option_price) * $item->qty;
+              }
+            }
+
+            if($item_price == 0) {
+              $coupon->enable = false;
+            } else {
+              $coupon->enable_price = $this->couponApplyAmount($coupon, $item_price);
+            }
+            break;
+        }
+      }
+    }
+
     
-    return view('market.templates.order.'.config('pondol-market.template.order.theme').'.order', [
-      'user' => $user,
-      'items' => $items,
-      'buyer' => $buyer,
-      'display' => $display,
-      'banks' => $banks,
-      'addresses' => $addresses
-    ]);
+    
+    return view('market.templates.order.'.config('pondol-market.template.order.theme').'.order', 
+      compact('user','items','buyer','display','banks','addresses','coupons'));
+  }
+
+  private function couponApplyAmount($coupon, $amount) {
+    switch($coupon->apply_amount_type) {
+      case 'price':
+        return $coupon->price;
+      case 'percent':
+        $calPrice = floor($coupon->percentage / 100 * $amount);
+        return $calPrice > $coupon->percentage_max_price ? $coupon->percentage_max_price : $calPrice;
+        break;
+    }
   }
 
   public function setOrderItems(Request $request)
@@ -224,7 +282,7 @@ class OrderController extends Controller
     $buyer->save();
 
     // address에 신규 address 자동 추가
-    if($user->id) {
+    if($user) {
       $address = MarketAddress::where('user_id', $buyer->user_id)
         ->where('zip', $buyer->zip)
         ->where('addr1', $buyer->addr1)
@@ -262,6 +320,10 @@ class OrderController extends Controller
     $user = $request->user();
     
     $paytype = $request->paytype; // online / card
+    
+    $coupon_id = $request->coupon_id;
+    $coupon_enable_price = $request->coupon_enable_price;
+
     $pointamount = (int)str_replace(',', '', $request->pointamount);
     $total = str_replace(',', '', $request->total); // 실제 결제 금액
     $bank = $request->bank;
@@ -295,7 +357,7 @@ class OrderController extends Controller
 
     $user_point = $user->point ?? 0;
     // 배송비 계산
-    $delivery_fee = $this->delivery->cal($totalPrice);
+    $delivery_fee = DeliveryFee::cal($totalPrice);
     
 
     if($user_point < $pointamount) {
@@ -304,8 +366,8 @@ class OrderController extends Controller
       ]);
     }
 
-    $sum = $totalPrice + $delivery_fee - $pointamount;
-    \Log::info('totalPrice:'.$totalPrice .', delivery_fee:'. $delivery_fee.', pointamount:'. $pointamount);
+    $sum = $totalPrice + $delivery_fee - $pointamount - $coupon_enable_price;
+    \Log::info('totalPrice:'.$totalPrice .', delivery_fee:'. $delivery_fee.', pointamount:'. $pointamount.', coupon_enable_price:'. $coupon_enable_price);
     \Log::info('sum:'.$sum .', total:'. $total);
     if($sum != $total) {
       return response()->json([
@@ -326,6 +388,8 @@ class OrderController extends Controller
       $payment->amt_point = $pointamount;
       $payment->amt_product = $totalPrice;
       $payment->amt_delivery = $delivery_fee;
+      $payment->coupon_issue_id = $coupon_id;
+      $payment->amt_coupon = $coupon_enable_price;
       $payment->amt_total =  $total;
       $payment->save();
       // 회원 포인트 변경
@@ -349,8 +413,15 @@ class OrderController extends Controller
         MarketCart::where('id', $v->id)->delete();
       }
 
+      // 쿠폰 아이디가 있을 경우 used_at update
+      if($coupon_id) {
+        $coupon_issue = MarketCouponIssue::find($coupon_id);
+        $coupon_issue->used_at = Carbon::now();
+        $coupon_issue->save();
+      }
+
       // $user->
-      event(new OrderShipped($user, $o_id));
+      event(new OrderShipped($o_id));
 
       DB::commit();
 

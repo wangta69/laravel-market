@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Models\MarketBank;
 
 class SmsController extends Controller
@@ -16,11 +15,8 @@ class SmsController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -31,7 +27,7 @@ class SmsController extends Controller
   public function index()
   {
 
-    $sms = $this->configSvc->get('sms');
+    $sms = config('pondol-market.sms');
     $vendors = ['smsto'=>'SMS.TO', 'directsend'=>'DIRECTSEND'];
 
     $sms = isset($sms) ? $sms : [];
@@ -53,7 +49,7 @@ class SmsController extends Controller
       'manager_rec_order' => $request->manager_rec_order ? true : false
     ];
     Log::info($params);
-    $this->configSvc->set('sms', $params );
+    set_config('pondol-market.sms', $params );
     return response()->json(['error'=>false]);
   }
    

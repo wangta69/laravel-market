@@ -14,7 +14,6 @@ var categories = {!! $categories !!};
 * 선택된 카테고리의 서브 item을 디스플레이
 */
 function loadOptions(category, index, cat, callback) {
-  console.log('loadOptions', 'category:', category, 'index:', index, cat);
   ROUTE.ajaxroute('GET', 
     {route: 'market.admin.category.sub', data: {type:'json', category: category}}, 
     function(resp) {
@@ -25,16 +24,6 @@ function loadOptions(category, index, cat, callback) {
         callback();
       }
     })
-
-  // var url = "{{ route('market.admin.category.sub') }}?type=json&category=" + category;
-  // $.ajax({
-  //   url: url,
-  //   type: 'GET',
-  //   success: function (resp) {
-  //     setDynamicOption(resp,  index, cat);
-  //     callback(resp);
-  //   }
-  // });
 }
 
 // 수정모드이고 기존 카테고리 정보가 있을 경우

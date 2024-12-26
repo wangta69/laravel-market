@@ -31,7 +31,6 @@ class InstallCommand extends Command
   {
     $type = $this->argument('type');
     return $this->installBladeStack($type);
-
   }
 
 
@@ -112,6 +111,37 @@ mix.scripts([
   {
     file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
   }
+
+  protected function chageOtherConfig() {
+    $configs = [
+      'pondol-auth'=>[
+        'component.admin.layout'=>['pondol-auth::admin', 'market::app-admin'], 
+        'route_auth_admin.prefix'=>['auth/admin', 'admin/auth']
+      ],
+      'pondol-mailer'=>[
+        'component.admin.layout'=>['pondol-mailer::admin', 'market::app-admin'], 
+        'prefix'=>['mailer', 'admin/mailer']
+      ],
+      'pondol-visitor'=>[
+        'component.admin.layout'=>['visitors::admin', 'market::app-admin'], 
+        'route_admin.prefix'=>['visitors/admin', 'admin/visitors']
+      ]
+    ];
+
+    foreach($configs as $key => $val) {
+      foreach($val as $k => $v) {
+        if (config($key.'.'.$k) == $v[0]) {
+          $this->comment( $key);
+          $this->comment( $k);
+          $this->comment( $v[0]);
+          $this->comment( $v[1]);
+          set_config($key, [$k => $v[1]]);
+        }
+      }
+    }
+  }
+
+
   
 /*
   protected static function flushNodeModules()

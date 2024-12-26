@@ -39,7 +39,16 @@
 					<input type="radio" name="type" value="none" class="form-check-input" {{ $cfg["delivery"]["type"] == 'none' ? 'checked' : '' }} >
 				</div>
 				<div class="col-auto">
-					<span class='form-text'>배송비 미 적용</span>
+					<span class='form-text'>배송비 무료</span>
+				</div>
+			</div>
+
+			<div class="row align-items-center mt-1">
+				<div class="col-auto">
+					<input type="radio" name="type" value="on_delivery" class="form-check-input" {{ $cfg["delivery"]["type"] == 'on_delivery' ? 'checked' : '' }} >
+				</div>
+				<div class="col-auto">
+					<span class='form-text'>배송비 착불</span>
 				</div>
 			</div>
 

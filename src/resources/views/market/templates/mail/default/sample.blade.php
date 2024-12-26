@@ -24,12 +24,8 @@
   {{$mailData->message}}
   </div>
 
+  <x-market-mail-footer/>
 
-
-  <div style="clear: both;border-top: 1px solid #000000;padding: 10px;border-bottom: 1px solid #cccccc; color: #aaa; font-size: 11px;">
-  {{config('pondol-market.company.name')}} / 사업번호 : {{config('pondol-market.company.businessNumber')}} / 대표 : {{config('pondol-market.company.representative')}}<br>
-    주소 : {{config('pondol-market.company.address')}}
-  </div>
   <div style="padding: 10px;color: #959595;line-height: 15px;font-size: 11px;">
     본 메일은 2024년 09월 20일 이전에 회원님의 광고이메일 수신동의 여부를 확인한 결과 수신을 동의하였기에 발송되었습니다.<br>
     수신을 원치 않으시면 <a href="" target="_blank" rel="noreferrer noopener">[여기]</a>를 클릭하여 주시기 바랍니다. To unsubscribe this e-mail, 

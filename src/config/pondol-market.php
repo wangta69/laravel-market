@@ -1,13 +1,15 @@
 <?php
 
 return [
+  'guest_enable_order' => false, // 비회원 주문
   'route_web' => [
     'prefix' => '',
     'as' => 'market.',
     'middleware' => ['web']
   ],
   'route_admin' => [
-    'prefix' => 'market/admin',
+    'prefix' => 'admin',
+    // 'prefix' => 'market/admin',
     'as' => 'market.admin.',
     'middleware' => ['web', 'admin']
   ],
@@ -33,7 +35,7 @@ return [
     20 => '교환진행중',
     90 => '교환완료'
   ],
-  'return_status' => [ // 30, 60, 80 일경우 모든 주문이 완료
+  'refund_status' => [ // 30, 60, 80 일경우 모든 주문이 완료
     0 => '접수신청', // 결제대기
     10 => '거절',// 상품준비
     20 => '반품진행중',

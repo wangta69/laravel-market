@@ -8,13 +8,16 @@ use Carbon\Carbon;
 use File;
 use Storage;
 
+
 use Pondol\Market\Models\MarketItem;
 use Pondol\Market\Models\MarketItemCategory;
 use Pondol\Market\Models\MarketItemOption;
+use Pondol\Market\Models\MarketItemSpec;
 use Pondol\Market\Models\MarketItemDisplay;
 use Pondol\Market\Models\MarketItemImage;
 use Pondol\Market\Models\MarketItemTag;
-
+use Pondol\Editor\Facades\Editor;
+use Pondol\Meta\Facades\Meta;
 use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
@@ -56,17 +59,18 @@ class ItemController extends Controller
       $from_date = Carbon::createFromFormat('Y-m-d', $from_date);
       $to_date = Carbon::createFromFormat('Y-m-d', $to_date);
       $items =  $items->whereBetween('market_items.created_at', [$from_date->startOfDay(), $to_date->endOfDay()]);
-
-
-      // $items = $users->where(function ($q) use($from_date, $to_date) {
-      //   $q->whereRaw("DATE(market_items.created_at) >= '".$from_date."' AND DATE(market_items.created_at)<= '".$to_date."'" );
-      // });
     }
 
-    $items = $items->orderBy('id', 'desc')->paginate(15)->withQueryString();
-    return view('market::admin.item.index', [
-      'items'=>$items
-    ]);
+    if($request->ajax()){
+      return response()->json(['error'=>false, 'items'=>$items->get()], 200);//500, 203
+    } else {
+      $items = $items->orderBy('id', 'desc')->paginate(15)->withQueryString();
+      return view('market::admin.item.index', [
+        'items'=>$items
+      ]);
+    }
+
+    
   }
 
   /**
@@ -96,7 +100,7 @@ class ItemController extends Controller
 
     $file = $request->file;
     $option = $request->option;
-
+    $specs = $request->specs;
 
     $item = new MarketItem;
     // $item->category = $category;
@@ -116,40 +120,53 @@ class ItemController extends Controller
       $item->image = $path[0];
     }
     
-    $this->storeOption($item->id,  $option);
+    $this->storeOption($item->id,  $option); // 등록옵션 입력
+    $this->storeSpec($item->id,  $specs); // 추가필드 입력
     $item->category = $this->storeCategory($item->id, $category1, $category2, $category3);
     $this->storeDisplay($item->id, $request->display);
     $this->storeTags($item->id, $request->tags);
     $this->contents_update($item);
     $item->save();
+
+    // $meta 처리하기
+    Meta::set('market.item', ['item'=>(string)$item->id])
+    ->title($item->name)
+    ->description($item->shorten_description)
+    ->extractKeywordsFromArray($item->tags, 'tag')
+    ->image(\Storage::url($item->image))
+    ->update();
+
     return redirect()->route('market.admin.items');
   }
 
   /**
    * 상품 수정 폼
    */
-  public function modify(MarketItem $item) {
+  public function edit(MarketItem $item) {
     $display = $item->display->pluck('name')->all(); // display option
     // $categories = $item->categories->toJson();
     $categories = $item->categories()->select('category')->get()->toJson();
     $images = $item->images()->select('image')->get()->toJson();
     $options = $this->creteOptionForm($item);
-    $tags = MarketItemTag::select(
-      't.id', 't.tag'
-    )->join('market_tags as t', function($join){
-      $join->on('market_item_tags.tag_id', '=', 't.id');
-    })->where('market_item_tags.item_id', $item->id)->get();
+    // $tags = MarketItemTag::select(
+    //   't.id', 't.tag'
+    // )->join('market_tags as t', function($join){
+    //   $join->on('market_item_tags.tag_id', '=', 't.id');
+    // })->where('market_item_tags.item_id', $item->id)->get();
 
-    if ($tags->isEmpty()) {
-      $tags = [];
-    }
+
+    // if ($tags->isEmpty()) {
+    //   $tags = [];
+    // }
+    // $temp = ;
+
     return view('market::admin.item.create', [
       'item' => $item,
       'display' => $display,
       'categories' => $categories,
       'images' => $images,
       'options' => json_encode($options),
-      'tags' => json_encode($tags)
+      'tags' => json_encode($item->tags)
     ]);
   }
 
@@ -161,6 +178,7 @@ class ItemController extends Controller
 
     $file = $request->file;
     $option = $request->option;
+    $specs = $request->specs;
 
     // $item->category = $category;
     $item->name = $request->name;
@@ -171,40 +189,32 @@ class ItemController extends Controller
     $item->stock = $request->stock;
     $item->description = $request->description;
     $item->shorten_description = $request->shorten_description;
-
-    // 제품이미지 업로드
-    // $filepath = 'public/market/items/'.$item->id;
-    // if(is_array($request->file('files'))) {
-    //   foreach ($request->file('files') as $index => $upload) {
-
-    //     if ($upload == null) {
-    //       continue;
-    //     }
-        
-    //     // 기존 이미지는 삭제
-    //     \Storage::delete($item->image);
-
-    //     $filename = $upload->getClientOriginalName();
-    //     $path=\Storage::put($filepath, $upload); // //Storage::disk('local')->put($name,$file,'public');  
-    //     $item->image = $path;
-    //   }
-    // }
-
     $item->save();
 
+    // 업로드 이미지 처리
     $path = $this->storeImage($item->id, $request->file('files'));
     if(isset($path[0])) {
       $item->image = $path[0];
-      
     }
     
-    $this->storeOption($item->id,  $option);
+
+    
+
+    $this->storeOption($item->id,  $option); // 등록옵션 입력
+    $this->storeSpec($item->id,  $specs); // 추가필드 입력
     $item->category = $this->storeCategory($item->id, $category1, $category2, $category3);
     $this->storeDisplay($item->id, $request->display);
     $this->storeTags($item->id, $request->tags);
     $this->contents_update($item);
     $item->save();
 
+    // $meta 처리하기
+    Meta::set('market.item', ['item'=>(string)$item->id])
+      ->title($item->name)
+      ->description($item->shorten_description)
+      ->extractKeywordsFromArray($item->tags, 'tag')
+      ->image(\Storage::url($item->image))
+      ->update();
     return redirect()->route('market.admin.items');
 
   }
@@ -213,19 +223,20 @@ class ItemController extends Controller
   private function storeImage($item_id, $files) {
     $pathes = [];
     $filepath = 'public/market/items/'.$item_id;
-    if(is_array($files)) {
-      foreach ($files as $index => $upload) {
-        if ($upload == null) {
-          array_push($pathes, null);
-          continue;
-        }
-        
-        // 기존 이미지는 삭제
-        // \Storage::delete($item->image);
 
-        $filename = $upload->getClientOriginalName();
-        $path=\Storage::put($filepath, $upload); // //Storage::disk('local')->put($name,$file,'public');  
-        array_push($pathes, $path);
+
+    if(is_array($files)) {
+      $max = max(array_keys($files));
+      echo 'max:'.$max.PHP_EOL;
+      for($i = 0; $i <= $max; $i++) {
+        if(isset($files[$i])) {
+          $upload = $files[$i];
+          $filename = $upload->getClientOriginalName();
+          $path=\Storage::put($filepath, $upload); // //Storage::disk('local')->put($name,$file,'public');  
+          array_push($pathes, $path);
+        } else {
+          array_push($pathes, null);
+        }
       }
     }
 
@@ -264,6 +275,27 @@ class ItemController extends Controller
           $optionItem->sale = $sale;
           $optionItem->save();
         }
+      }
+    }
+  }
+
+  /**
+   * 추가필드 입력
+   */
+  private function storeSpec($item_id, $specs) {
+    // 옵션등록
+    // 1. 기존 옵션은 삭제
+    MarketItemSpec::where('item_id', $item_id)->delete();
+    // 옵션 등록
+    if(isset($specs['name'])) {
+      foreach($specs['name'] as $k=>$title) {
+        $comment = $specs['val'][$k];
+
+        $specsItem = new MarketItemSpec;
+        $specsItem->item_id = $item_id;
+        $specsItem->title = $title;
+        $specsItem->comment = $comment;
+        $specsItem->save();
       }
     }
   }
@@ -347,16 +379,18 @@ class ItemController extends Controller
   * description에 있는 이미지들을 제품 이미지 쪽으로 옮기고 기존 temp에 있는 이미지들을 리셑한다.
   */
   private function contents_update($item) {
+    // editor의 임시 파일일 경우 파일을 이동 처리한다.
     $sourceDir = storage_path() .'/app/public/tmp/editor/'. session()->getId();
     $destinationDir = storage_path() .'/app/public/market/items/'.$item->id.'/editor';
-
-    $item->description = str_replace('/storage/tmp/editor/'.session()->getId(), '/storage/market/items/'.$item->id.'/editor', $item->description);
-
-    $item->save();
-
     $success = File::copyDirectory($sourceDir, $destinationDir);
+    $item->description = str_replace('/storage/tmp/editor/'.session()->getId(), '/storage/market/items/'.$item->id.'/editor', $item->description);
+    // 현재 tmp directory 삭제    
     Storage::deleteDirectory('public/tmp/editor/'. session()->getId());
 
+    // 본문속 이미지가 base64로 된 경우 특정 위치로 이동 처리한다.
+    $item->description = Editor::extractBase64Image($item->description,  $destinationDir, '/storage/market/items/'.$item->id.'/editor/');
+
+    $item->save();
     return;
   }
 

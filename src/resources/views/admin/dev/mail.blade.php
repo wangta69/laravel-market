@@ -25,24 +25,30 @@
           <option value="notice">알림</option>
           <option value="order">주문</option>
           <option value="register">회원가입</option>
+          <option value="resetpassword">패스워드 찾기</option>
+          
         </select>
       </div>
-      <div class="input-group mt-1">
-        <label class='col-sm-3 col-form-label'>To(users.id)</label>
+      <div class="input-group mt-1 element register">
+        <label class='col-sm-3 col-form-label'>User Id(Number)</label>
         <input type="text" name="to" class="form-control" value="">
       </div>
+      <div class="input-group mt-1 element resetpassword">
+        <label class='col-sm-3 col-form-label'>Email</label>
+        <input type="text" name="email" class="form-control" value="">
+      </div>
 
-      <div class="input-group mt-1">
+      <div class="input-group mt-1 element notice">
         <label class='col-sm-3 col-form-label'> subject</label>
         <input type="text" name="subject" class="form-control" value="">
       </div>
 
-      <div class="input-group mt-1">
+      <div class="input-group mt-1 element notice">
         <label class='col-sm-3 col-form-label'>message (알림)</label>
         <textarea name="message" class="form-control"></textarea>
       </div>
 
-      <div class="input-group mt-1">
+      <div class="input-group mt-1 element order">
         <label class='col-sm-3 col-form-label'>o_id(주문)</label>
         <input type="text" name="o_id" class="form-control" value="">
       </div>
@@ -57,6 +63,11 @@
 
 @section('styles')
   @parent
+<style>
+.element {
+  display: none;
+}
+</style>
 @endsection
 
 @section('scripts')
@@ -74,6 +85,25 @@ $(function(){
       }
     })
   });
+
+  $("select[name='type']").on('change', function(){
+    var val = $(this).val();
+    $(".element").hide();
+    switch(val) {
+      case 'notice': //알림
+        $(".element.notice").css('display', 'flex');
+        break;
+      case 'order': //주문
+        $(".element.order").css('display', 'flex');
+        break;
+      case 'register': //회원가입
+        $(".element.register").css('display', 'flex');
+        break;
+      case 'resetpassword': // 패스워드 찾기
+        $(".element.resetpassword").css('display', 'flex');
+        break;
+    }
+  })
 })
 </script>
 @endsection

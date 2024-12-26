@@ -22,13 +22,13 @@
         <tr>
           <td><img src="{{market_get_thumb($item->image, 100, 100)}}" class="img-thumbnail"></td>
           <td>{{$item->name}} @if($item->count > 1 ) 외 {{($item->count - 1)}}건 @endif</td>
-          <!-- <td>{{ __('market.pay_method.'.$item->method) }}</td>
+          <!-- <td>{{ __('market::market.pay_method.'.$item->method) }}</td>
           <td>
-            {{ __('market.pay_status.'.$item->status) }}
+            {{ __('mmarket::arket.pay_status.'.$item->status) }}
             
           </td> -->
           <td>
-            {{ __('market.delivery_status.'.$item->delivery_status) }}
+            {{ __('market::market.delivery_status.'.$item->delivery_status) }}
             
           </td>
           <td>{{date('Y/m/d', strtotime($item->created_at))}}</td>

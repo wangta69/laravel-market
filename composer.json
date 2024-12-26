@@ -2,7 +2,7 @@
     "name": "wangta69/laravel-market",
     "description": "e-commerce plugins",
     "keywords": ["laravel", "market", "pondol" , "쇼핑몰", "mall", "독립형", "korea", "라라벨"],
-    "homepage": "https://mall.onstory.fun",
+    "homepage": "https://www.onstory.fun/packages/laravel-market",
     "license": "MIT",
     "authors": [
       {
@@ -25,6 +25,7 @@
       "wangta69/laravel-delivery-tracking": "*",
       "wangta69/laravel-mailer": "*",
       "wangta69/laravel-visitors-statistics": "*",
+      "wangta69/laravel-meta": "*",
       "wangta69/laravel-index-now": "*"
     },
     "autoload": {

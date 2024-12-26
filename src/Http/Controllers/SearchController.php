@@ -7,8 +7,8 @@ use DB;
 use Illuminate\Support\Facades\Log;
 
 use Pondol\Market\Models\MarketCategory;
-use Pondol\Market\Services\Meta;
 use Pondol\Market\Traits\Item;
+use Pondol\Meta\Facades\Meta;
 
 class SearchController extends Controller
 {
@@ -19,9 +19,8 @@ class SearchController extends Controller
    *
    * @return void
    */
-  public function __construct(Meta $meta)
+  public function __construct()
   {
-    $this->meta = $meta;
   }
 
 
@@ -37,14 +36,13 @@ class SearchController extends Controller
     ->orderBy('category', 'asc')
     ->get();
 
-    $this->meta->title = $request->q;
-    $this->meta->description = $request->q.'에 대한 검색결과';
+    $meta = Meta::get()
+    ->title($request->q)
+    ->description($request->q.'에 대한 검색결과');
+
     // print_r(DB::getQueryLog());
-    return view('market.templates.search.'.config('pondol-market.template.search.theme').'.search', [
-      'items'=> $items,
-      'meta' => $this->meta,
-      'categories'=>$categories
-    ]);
+    return view('market.templates.search.'.config('pondol-market.template.search.theme').'.search', 
+    compact('items', 'meta', 'categories'));
 
   }
 

@@ -56,7 +56,8 @@
 
   <form method="POST" action="{{ route('market.order') }}" name='order-form' onsubmit='return saveOrder(this);'>
     @csrf
-    <!-- <input type="hidden" name="delivery_fee" value="{{$display->delivery_fee}}"> -->
+    <input type="hidden" name="coupon_id">
+    <input type="hidden" name="coupon_enable_price" value="0">
     <div class="card mt-2">
       <div class="card-header">
       배송지 정보
@@ -141,8 +142,17 @@
               </div>
             </div>
           </div>
-
-
+          @if(count($coupons))
+          <div class="row mt-1">
+            <label class="col-sm-3 col-form-label">쿠폰 적용</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input value='' name='coupon' class="form-control" readonly/>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#couponModal">사용가능한 쿠폰</button>
+              </div>
+            </div>
+          </div>
+          @endif
           <div class="row mt-1">
             <label class="col-sm-3 col-form-label">최종결제 금액</label>
             <div class="col-sm-9">
@@ -195,7 +205,7 @@
 </div>
 
 
-
+<!-- Modal for create address start -->
 <div class="modal fade" id="latestAddressModal" tabindex="-1" aria-labelledby="latestAddressModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -223,22 +233,58 @@
     </div>
   </div>
 </div>
-<!-- Modal for create address start -->
+<!-- Modal for create address end -->
+<!-- Modal for coupon list start -->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="couponModalLabel">보유 쿠폰</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body lastest-address-body">
+                @forelse ($coupons as $coupon)
+                <div class="d-flex" user-attr-coupon-id="{{$coupon->id}}" user-attr-coupon-enable_price="{{$coupon->enable_price}}">
+                    <div class="flex-grow-1 ad-bundle">
+                        <span>[{{$coupon->title}}]</span>
+                        <span>{{number_format($coupon->min_price)}} 원 이상 구매시 </span>
+                        <span> @if($coupon->apply_amount_type == 'price')
+                            {{ number_format($coupon->price)}} 원 할인
+                        @elseif($coupon->apply_amount_type == 'percentage')
+                            {{ $coupon->percentage}}% 할인 (최대 {{ number_format($coupon->percentage_max_price)}})
+                        @endif</span><br>
 
-@include('market.templates.userpage.default.address.create-modal')
+                    </div>
+                    <button type="button" class="btn btn-t9 btn-t-sm @if($coupon->enable) on act-set-coupon @endif">선택</button>
+                </div>
+                @empty
+                <div>
+                    <span>- 보유하신 쿠폰이 없습니다.</span>
+                </div>
+                @endforelse
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-t1" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for coupon list end -->
+
+@include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.address.create-modal')
 
 <!-- Modal for create address end -->
 <!-- /banner-feature -->
  <!-- 결제 모듈 삽입 -->
-@if(Config::get('market.payment.pg') == 'kcp'):
+@if(Config::get('pondol-market.payment.pg') == 'kcp'):
   @include('market::payment.pg.kcp.pay-form')
-@elseif(Config::get('market.payment.pg') == 'lg'):
+@elseif(Config::get('pondol-market.payment.pg') == 'lg'):
   @include('market::payment.pg.lg.pay-form')
-@elseif(Config::get('market.payment.pg') == 'inicis'):
+@elseif(Config::get('pondol-market.payment.pg') == 'inicis'):
   @include('market::payment.pg.inicis.pay-form')
 @endif
 
-@if(Config::get('market.payment.kakao')):
+@if(Config::get('pondol-market.payment.kakao')):
   @include('market::payment.smart.kakaopay.pay-form')
 @endif
 @endsection
@@ -354,6 +400,21 @@ $(function(){
 
     $('#latestAddressModal').modal('hide')
   });
+  
+  // 쿠폰 적용 시작
+  $(".act-set-coupon").on('click', function(){
+    $parent = $(this).parent();
+
+    var coupon_id = $parent.attr('user-attr-coupon-id');
+    var enable_price = $parent.attr('user-attr-coupon-enable_price');
+    $("input[name=coupon_id]").val(coupon_id);
+    $("input[name=coupon_enable_price]").val(enable_price);
+    var str = $parent.find('div').eq(0).text();
+    $("input[name=coupon]").val(str.replaceAll(' ', ''));
+    $('#couponModal').modal('hide');
+    
+    paycalculate();
+  })
 })
 </script>
 @endsection

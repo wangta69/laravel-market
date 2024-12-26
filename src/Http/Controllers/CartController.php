@@ -9,8 +9,8 @@ use DB;
 
 use Pondol\Market\Models\MarketItem;
 use Pondol\Market\Models\MarketCart;
-use Pondol\Market\Services\CalDeliveryFee;
-
+use Pondol\Market\Facades\DeliveryFee;
+use Pondol\Meta\Facades\Meta;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
@@ -23,9 +23,9 @@ class CartController extends Controller
    *
    * @return void
    */
-  public function __construct(CalDeliveryFee $delivery)
+  public function __construct()
   {
-    $this->delivery = $delivery;
+    
   }
 
   public function index(Request $request) 
@@ -33,6 +33,7 @@ class CartController extends Controller
 
     $user = $request->user();
     $c_id = $this->cart_cookie();
+    $meta = Meta::get();
 
 
     $items = MarketCart::select(
@@ -42,9 +43,12 @@ class CartController extends Controller
       $join->on('market_items.id', '=', 'market_carts.item_id');
     });
     if($user) { // 로그인 된 회원이면
+      if($c_id) { // 로그인전 cart에 담은 것을 업데이트 한다.
+        MarketCart::whereNull('user_id')->where('c_id', $c_id)->update(['user_id'=>$user->id]);
+      }
       $items->where('market_carts.user_id', $user->id);
     } else if($c_id) {
-      $items->where('market_carts.c_id', $c_id);
+      $items->where('market_carts.c_id', $c_id)->whereNull('market_carts.user_id');
     }
 
     $items = $items->orderby('market_carts.id', 'desc')->get();
@@ -56,15 +60,14 @@ class CartController extends Controller
 
     // 옵션을 분리하여 처리한다.
 
-    return view('market.templates.cart.'.config('pondol-market.template.cart.theme').'.cart', [
-      'items' => $items
-    ]);
+    return view('market.templates.cart.'.config('pondol-market.template.cart.theme').'.cart', compact('items', 'meta'));
   }
 
   public function store(Request $request)
   {
     $c_id = $this->cart_cookie();
     $user = $request->user();
+
 
     $item_id = $request->item;
     $options = $request->options;
@@ -108,6 +111,8 @@ class CartController extends Controller
 
     if ($user) { // 로그인전 장바구니에 넣었다가 로그인 한 경우 이곳을 업데이트 한다.
       MarketCart::where('c_id', $c_id)->whereNull('user_id')->update(['user_id'=>$user->id]);
+      // 기존 장바구니 쿠키는 삭제한다.
+      
     }
 
     $cart = new MarketCart;
@@ -171,9 +176,9 @@ class CartController extends Controller
 
 
   /**
-   * 카트의 item 삭제
+   * 카트의 개별 item 삭제
    */
-  public function delete(MarketCart $cart, Request $request) {
+  public function destroy(MarketCart $cart, Request $request) {
     $c_id = $this->cart_cookie();
     $user = $request->user();
 
@@ -187,6 +192,38 @@ class CartController extends Controller
         'error' => '잘못된 접근입니다.'
       ]);
     }  
+  }
+
+  /**
+   * 카트의 선택 아이템 삭제
+   */
+  public function destroyChecked(Request $request) { // MarketCart $cart, 
+    
+    $c_id = $this->cart_cookie();
+    $user = $request->user();
+    $ids = $request->order;
+    if(is_array($ids)) {
+      foreach($ids as $id) {
+        $cart = MarketCart::find($id);
+        if($cart->c_id == $c_id || ($user->id && $user->id == $cart->user_id)) {
+          $cart->delete();
+        }
+      }
+      return response()->json([
+        'error' => false
+      ]);
+    }
+
+    return response()->json([
+      'error' => '장바구니에서 삭제할 상품을 선택해 주세요'
+    ]);
+ 
+      
+    // } else {
+    //   return response()->json([
+    //     'error' => '잘못된 접근입니다.'
+    //   ]);
+    // }  
   }
 
   public function updateQty(Request $request) {
@@ -210,7 +247,14 @@ class CartController extends Controller
 
   public function updateOverview(Request $request) {
     $orders = $request->order;
+    $display = new \stdClass;
 
+    if(!$orders) {
+      $display->totalPrice = 0;
+      $display->delivery_fee = 0;
+      
+      return response()->json(['error' => false, 'display'=>$display]);
+    }
     $items = MarketCart::
       select(
         'market_carts.qty', 'market_carts.item_price', 'market_carts.option_price')
@@ -225,7 +269,7 @@ class CartController extends Controller
       }
   
       // 배송비 계산
-      $display->delivery_fee = $this->delivery->cal($display->totalPrice);
+      $display->delivery_fee = DeliveryFee::cal($display->totalPrice);
 
       return response()->json(['error' => false, 'display'=>$display]);
   }

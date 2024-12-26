@@ -5,7 +5,7 @@ use Pondol\Market\Models\MarketItemFavorite;
 
 trait Favorite {
 
-  public function index($request, $user = null) {
+  public function _index($request, $user = null) {
     $items = MarketItemFavorite::select(
       'market_item_favorites.id as fav_id',
       'it.id', 'it.name', 'it.model', 'it.price', 'it.cost', 'it.image'
@@ -21,7 +21,7 @@ trait Favorite {
     return $items;
   }
 
-  public function store($request, $item_id)
+  public function _store($request, $item_id)
   {
 
     $user = $request->user();
@@ -33,7 +33,7 @@ trait Favorite {
     return ['error'=> false, 'id'=>$fav->id];
   }
 
-  public function destroy($request, $id)
+  public function _destroy($request, $id)
   {
 
     $user = $request->user();

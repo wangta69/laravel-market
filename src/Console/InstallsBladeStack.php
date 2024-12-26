@@ -49,13 +49,13 @@ trait InstallsBladeStack
     $this->updateWebpackMix();
 
     // 기존 web.php 백업시킨다.
-    copy(base_path('routes/web.php'), base_path('routes/web.back.php'));
-    copy(__DIR__.'/../routes/web-blank.php', base_path('routes/web.php'));
+    // copy(base_path('routes/web.php'), base_path('routes/web.back.php'));
+    // copy(__DIR__.'/../routes/web-blank.php', base_path('routes/web.php'));
 
     $this->replaceInFile('/home', '/', app_path('Providers/RouteServiceProvider.php'));
 
     $this->call('pondol:install-editor');
-    $this->call('pondol:install-auth', ['type'=> 'only']);
+    $this->call('pondol:install-auth', ['type'=> 'simple']);
     $this->call('pondol:install-mailer', ['type'=> 'only']);
     // laravel board
     \Artisan::call('vendor:publish',  [
@@ -73,10 +73,19 @@ trait InstallsBladeStack
       '--provider' => 'Pondol\Market\MarketServiceProvider'
     ]);
 
+    // meta install
+    \Artisan::call('vendor:publish',  [
+      '--force'=> true,
+      '--provider' => 'Pondol\Meta\MetaServiceProvider'
+    ]);
+
     // auth 관련 변경
     configSet('pondol-auth', ['activate' => 'auto', 'template.user'=>'default-market', 'template.mail'=>'default-market']); // 
 
     \Artisan::call('migrate');
+
+    // 연관 패키지의 config  변경
+    $this->chageOtherConfig();
 
     $this->comment('Please execute the "npm install" && "npm run dev" commands to build your assets.');
   }

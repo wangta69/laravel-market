@@ -75,9 +75,6 @@
     </div>
   </div>
 </div>
-
-
-<!-- /banner-feature -->
 @endsection
 @section('styles')
 @parent

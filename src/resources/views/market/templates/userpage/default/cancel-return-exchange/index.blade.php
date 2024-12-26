@@ -39,7 +39,7 @@
             <div>
               @if($item->type == "exchange")
               <span class="btn btn-warning btn-sm">교환</span>
-              @elseif($item->type == "return")
+              @elseif($item->type == "refund")
               <span class="btn btn-danger btn-sm">반품</span>
               @endif
               {{$item->statusStr}}

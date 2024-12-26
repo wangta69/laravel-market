@@ -64,7 +64,7 @@
           구매완료 <a href="{{ route('market.mypage.reviews')}}" class="btn btn-sm btn-primary">상품후기작성</a>
           @else
           <!-- 배송중 시점에서 아래 3개가 뜲 -->
-          <a class="btn" href="{{ route('market.mypage.order.cancel-return-exchange', ['return', $display->o_id]) }}">반품신청</a>
+          <a class="btn" href="{{ route('market.mypage.order.cancel-return-exchange', ['refund', $display->o_id]) }}">반품신청</a>
           <a class="btn" href="{{ route('market.mypage.order.cancel-return-exchange', ['exchange', $display->o_id]) }}">교환신청</a>
           <button class="btn btn-primary act-order-confirm">수취확인</button>
           @endif
@@ -115,7 +115,7 @@
           <div class="row">
             <label class="col-sm-3 col-md-2">배송상태</label>
             <div class="col-sm-9 col-md-10">
-            {{ __('market.delivery_status.'.$display->delivery_status) }}
+            {{ __('market::market.delivery_status.'.$display->delivery_status) }}
             </div>
           </div>
           <div class="row">
@@ -155,7 +155,13 @@
             <label class="col-sm-3 col-md-2">포인트사용금액</label>
             <div class="col-sm-9 col-md-10">{{number_format($display->amt_point)}} 원</div>
           </div>
-
+          <!-- 쿠폰 사용 -->
+          @if($display->amt_coupon)
+          <div class="row">
+            <label class="col-sm-3 col-md-2">쿠폰사용</label>
+            <div class="col-sm-9 col-md-10">{{number_format($display->amt_coupon)}} 원</div>
+          </div>
+          @endif
           <div class="row">
           <label class="col-sm-3 col-md-2">최종결제 금액</label>
             <div class="col-sm-9 col-md-10">{{number_format($display->amt_total)}} 원</div>
@@ -163,7 +169,7 @@
                       
           <div class="row">
             <label class="col-sm-3 col-md-2">결제방식</label>
-            <div class="col-sm-9 col-md-10">{{ __('market.pay_method.'.$display->method) }}</div>
+            <div class="col-sm-9 col-md-10">{{ __('market::market.pay_method.'.$display->method) }}</div>
           </div>
 
           @if(@$display->method == 'online')
@@ -179,7 +185,7 @@
 
           <div class="row">
             <label class="col-sm-3 col-md-2">결제상태</label>
-            <div class="col-sm-9 col-md-10">{{ __('market.pay_status.'.$display->pay_status) }}</div>
+            <div class="col-sm-9 col-md-10">{{ __('market::market.pay_status.'.$display->pay_status) }}</div>
           </div>  
         </div><!-- .card-body -->
       </div><!-- .card -->

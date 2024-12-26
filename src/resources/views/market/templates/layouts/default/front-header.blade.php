@@ -5,7 +5,6 @@
   <menu>
     <li><a href="{{ route('login') }}" class="nav-link" href="{{ route('login') }}">로그인</a></li>
     <li><a href="{{ route('register') }}" class="nav-link">회원가입</a></li>
-    <!-- <li>고객센터</li> -->
   </menu>
   @else
   <menu>

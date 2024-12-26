@@ -29,18 +29,6 @@
         <li class="{{ request()->routeIs(['auth.admin.config.agreement.privacypolicy']) ? 'current-page' : '' }}">
           <a href="{{ route('auth.admin.config.agreement.privacypolicy') }}">개인정보 수집 및 허용</a>
         </li>
-        <!-- <li>
-            <a href="{{ route('market.admin.config.delivery') }}">배송비 설정</a>
-        </li>
-        <li>
-            <a href="{{ route('market.admin.category') }}">PG 및 결제 설정</a>
-        </li>
-        <li>
-            <a href="{{ route('market.admin.category') }}">SMS 설정</a>
-        </li>
-        <li>
-            <a href="{{ route('market.admin.config.banks') }}">무통장 입급 계좌</a>
-        </li> -->
       </ul>
     </li>
     <li>
@@ -116,6 +104,27 @@
         <li class="{{ request()->routeIs(['market.admin.item.create']) ? 'current-page' : '' }}">
           <a href="{{ route('market.admin.item.create') }}">상품등록</a>
         </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#coupon-sub-menu" data-bs-toggle="collapse" 
+        aria-expanded="{{ request()->routeIs(['market.admin.coupon*']) ? 'true' : 'false' }}"
+        class="dropdown-toggle">
+        <i class="fa-brands fa-product-hunt"></i>
+          쿠폰관리
+      </a>
+      <ul class="collapse list-unstyled {{ request()->routeIs(['market.admin.coupon*']) ? 'show' : '' }}" id="coupon-sub-menu">
+        <li class="{{ request()->routeIs(['market.admin.coupon.create']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.coupon.create') }}">쿠폰등록</a>
+        </li>  
+        <li class="{{ request()->routeIs(['market.admin.coupons']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.coupons') }}">쿠폰발급</a>
+        </li>
+        <li class="{{ request()->routeIs(['market.admin.coupon.issues']) ? 'current-page' : '' }}">
+          <a href="{{ route('market.admin.coupon.issues') }}">쿠폰발급내역</a>
+        </li> 
+        
+        
       </ul>
     </li>
     <li>

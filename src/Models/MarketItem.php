@@ -28,6 +28,11 @@ class MarketItem extends Model
   {
     return $this->hasMany('Pondol\Market\Models\MarketItemOption', 'item_id');
   }
+
+  public function specs()
+  {
+    return $this->hasMany('Pondol\Market\Models\MarketItemSpec', 'item_id');
+  }
   
   public function reviews()
   {
@@ -38,6 +43,36 @@ class MarketItem extends Model
   {
     return $this->hasMany('Pondol\Market\Models\MarketItemQna', 'item_id');
   }
+
+
+  public function getTagsAttribute()  {
+    $tags = $this->hasMany('Pondol\Market\Models\MarketItemTag', 'item_id')->join('market_tags as t', function($join){
+      $join->on('market_item_tags.tag_id', '=', 't.id');
+    })->get()->toArray();
+
+    return $tags;
+  }
+
+  /*
+  public function tags() {
+    $tags = $this->hasMany('Pondol\Market\Models\MarketItemTag', 'item_id')->join('market_tags as t', function($join){
+      $join->on('market_item_tags.tag_id', '=', 't.id');
+    });
+    // $tags = MarketItemTag::select(
+    //   't.id', 't.tag'
+    // )->join('market_tags as t', function($join){
+    //   $join->on('market_item_tags.tag_id', '=', 't.id');
+    // })->where('market_item_tags.item_id', $item->id)->get();
+
+
+    // if ($tags->isEmpty()) {
+    //   $tags = [];
+    // }
+
+    return $tags;
+  }
+*/
+
   
 
 }

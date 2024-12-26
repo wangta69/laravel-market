@@ -42,7 +42,7 @@ class OrderController extends Controller
 
 
     if(!$user && !$o_id) {
-      return redirect()->route('market.login', ['f'=>'market.mypage.order']);
+      return redirect()->route('login', ['f'=>'market.mypage.order']);
     } else if($o_id){ // 주문 아이디가 있을 경우 바로 상세 보기로 넘긴다.
       return redirect()->route('market.mypage.order.view', [$o_id]);
     }

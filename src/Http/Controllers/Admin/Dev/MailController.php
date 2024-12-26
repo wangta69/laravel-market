@@ -2,7 +2,9 @@
 namespace Pondol\Market\Http\Controllers\Admin\Dev;
 
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
+// use Illuminate\Auth\Events\Registered;
+use Pondol\Auth\Events\Registered;
+use Pondol\Auth\Events\ResetPasswordToken;
 use Pondol\Market\Events\OrderShipped;
 
 use DB;
@@ -42,7 +44,7 @@ class MailController extends Controller
   public function send(Request $request)
   {
 
-    $user = User::select('id', 'email', 'name')->find($request->to);
+    
     switch($request->type) {
       
       case 'notice':
@@ -52,12 +54,18 @@ class MailController extends Controller
  
         break;
       case 'order':
-        event(new OrderShipped($user, $request->o_id));
+        $user = User::select('id', 'email', 'name')->find($request->to);
+        event(new OrderShipped($request->o_id));
         break;
       case 'register':
         // $this->mailSvc->registerMail($user);
+        $user = User::select('id', 'email', 'name')->find($request->to);
         event(new Registered($user));
         break;
+      case 'resetpassword':
+          $user = User::select('id', 'email', 'name')->where('email', $request->email)->first();
+          event(new ResetPasswordToken($user));
+          break;
       
     }
     // return view('market.::admin.dev.mail', []);
@@ -65,22 +73,20 @@ class MailController extends Controller
 
   public function preview(Request $request)
   {
-
-    $user = User::select('id', 'email', 'name')->find($request->to);
-      $mailData = $request;
-      $mailData->user = $user;
-      
+    $mailData = $request;
     switch($request->type) {
       case 'notice':
+        $user = User::select('id', 'email', 'name')->find($request->to);
         
+        $mailData->user = $user;
         return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
 
         break;
       case 'order':
-
+       
         $mailData->items = $this->orderSvc->orderItemsByOrderid($mailData->o_id)->orderBy('market_orders.id', 'desc')->get();     
         $mailData->display = $this->orderSvc->orderDetailByOrderid($mailData->o_id);
-
+        $user = User::select('id', 'email', 'name')->find($mailData->display->user_id);
         foreach($mailData->items as $item) {
       
           $item->displayOptions = extractOptions($item);     
@@ -89,13 +95,19 @@ class MailController extends Controller
         return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['user'=>$user, 'data'=>$mailData]);
         break;
       case 'register':
-
+        $user = User::select('id', 'email', 'name')->find($request->to);
         return view('auth.templates.mail.'.config('pondol-auth.template.mail').'.register',  ['notifiable'=>$user]);
+        break;
+
+      case 'resetpassword':
+        $user = User::select('id', 'email', 'name')->where('email', $request->email)->first();
+        $token=app('auth.password.broker')->createToken($user);
+        $actionUrl  = route('password.reset', [$token]);
+
+        return view('auth.templates.mail.'.config('pondol-auth.template.mail').'.resetpassword',  ['notifiable'=>$user, 'actionUrl'=>$actionUrl, 'token'=>$token]);
         break;
       
     }
   }
   
-
-
 }

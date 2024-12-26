@@ -32,17 +32,25 @@
         <div class="p-2 mt-1 bg-light rounded-3">{{$item->shorten_description}}</div>
         @endif
         <table class="table items">
+          @foreach($item->specs as $spec)
+          <tr>
+            <th>{{$spec->title}}</th>
+            <td>{{$spec->comment}}</td>
+          </tr>
+          @endforeach
           <tr>
             <th>판매가격</th>
-            <td> {{number_format($item->price)}}</td>
+            <td>{{number_format($item->price)}}</td>
           </tr>
+          @if($item->t_point)
           <tr>
             <th>포인트</th>
-            <td> {{$item->name}}</td>
+            <td>{{number_format($item->t_point)}}/td>
           </tr>
+          @endif
           <tr>
             <th>배송비</th>
-            <td>착불</td>
+            <td>{{delivery_fee_show()}}</td>
           </tr>
         </table>
       </article>

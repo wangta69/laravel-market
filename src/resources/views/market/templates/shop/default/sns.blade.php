@@ -87,7 +87,7 @@
 }
 
 .social-sns .kakao i {
-  background-image: url(/market/assets/images/kakao-icon.svg);
+  background-image: url(/pondol/market/assets/images/kakao-icon.svg);
 }
 
 .social-sns .naver {
@@ -96,7 +96,7 @@
 }
 
 .social-sns .naver i {
-  background-image: url(/market/assets/images/naver-icon.svg);
+  background-image: url(/pondol/market/assets/images/naver-icon.svg);
 }
 
 .social-sns .facebook {
@@ -174,10 +174,26 @@ function share(sns) {
       window.open(sns_url);
       break;
     case 'link':
-      // navigator.clipboard.writeText(encodeURIComponent(url)).then(() => {
-      navigator.clipboard.writeText(url).then(() => {
+      if (navigator.clipboard !== undefined) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToaster({title: '알림', message: '링크가 copy되었습니다..', alert: false});
+        });
+      } else {
+        // execCommand 사용
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        textArea.setSelectionRange(0, 99999);
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+         console.error('복사 실패', err);
+        }
+        textArea.setSelectionRange(0, 0);
+        document.body.removeChild(textArea);
         showToaster({title: '알림', message: '링크가 copy되었습니다..', alert: false});
-      });
+      }
     }
 }
 

@@ -1,5 +1,5 @@
 @extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
-@section('title', '주문내역')
+@section('title', '상품문의')
 @section('content')
 
 <div class="container body">

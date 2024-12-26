@@ -9,7 +9,6 @@ use File;
 use Storage;
 
 use App\Http\Controllers\Controller;
-use Pondol\Market\Services\ConfigService;
 
 
 class TemplateController extends Controller
@@ -20,11 +19,8 @@ class TemplateController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -79,7 +75,7 @@ class TemplateController extends Controller
     $pages_dir =  resource_path('views/market/templates/pages');
     $pages = array_map('basename',\File::directories($pages_dir));
 
-    $template = $this->configSvc->get('template');
+    $template = config('pondol-market.template');
 
     return view('market::admin.config.template', [
       'template'=>$template,
@@ -98,7 +94,7 @@ class TemplateController extends Controller
   }
 
   public function update(Request $request) {
-    $template = $this->configSvc->get('template');
+    $template = config('pondol-market.template');
 
     $template['layout']['theme'] = $request->layout;
     $template['main']['theme'] = $request->main;
@@ -115,7 +111,7 @@ class TemplateController extends Controller
     $template['mail']['theme']  = $request->mail;
     $template['pages']['theme']  = $request->pages;
 
-    $this->configSvc->set('template', $template );
+    set_config('pondol-market.template', $template );
     return response()->json(['error'=>false]);
   }
 
@@ -132,7 +128,7 @@ class TemplateController extends Controller
       // $path=\Storage::put($filepath, $file); // 
 
       $result = $file->storeAs($filepath, $fileName);
-      $this->configSvc->set('template.ci', $fileName );
+      set_config('pondol-market.template.ci', $fileName );
     }
 
     return redirect()->back();
@@ -149,7 +145,7 @@ class TemplateController extends Controller
       // $path=\Storage::put($filepath, $file); // 
 
       $result = $file->storeAs($filepath, $fileName);
-      $this->configSvc->set('template.favicon', $fileName );
+      set_config('pondol-market.template.favicon', $fileName );
     }
 
     // return redirect()->back();

@@ -1,7 +1,7 @@
 <h5>대표이미지</h5>
 <div id="main-image-box">
   <div class="input-group">
-    <input type='file' name='files[]' class="form-control">
+    <input type='file' name='files[0]' class="form-control" value="adfadsfaf">
     @if($item->image)
     <img src="{{market_get_thumb($item->image, 30, 30)}}" class="img-thumbnail">
     @endif

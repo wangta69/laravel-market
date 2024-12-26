@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Services\ConfigService;
 
 
 class DeliveryController extends Controller
@@ -16,11 +15,8 @@ class DeliveryController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -33,7 +29,7 @@ class DeliveryController extends Controller
     // config()->set('app.name','My Project App');
     // $cat1 = $this->subCategory('');
     // \Artisan::call('config:clear'); // 만약 production mode이고 config를 cache 하여 사용하면
-    $cfg = $this->configSvc->get();
+    $cfg = config('pondol-market');
 
     return view('market::admin.config.delivery', [
       'cfg'=>$cfg
@@ -47,7 +43,7 @@ class DeliveryController extends Controller
       'min' => $request->min
     ];
     // [TACKBAE_MONEY] => 1000 
-    $this->configSvc->set('delivery', $config );
+    set_config('pondol-market.delivery', $config );
 
 
   }

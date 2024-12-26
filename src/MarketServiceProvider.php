@@ -11,6 +11,8 @@ use Pondol\Market\Listeners\MarketEventSubscriber;
 use Pondol\Market\View\Components\MarketCategory;
 use Pondol\Market\View\Components\MarketNavyCategory;
 use Pondol\Market\View\Components\Banner;
+use Pondol\Market\View\Components\MailFooter;
+use Pondol\Market\Services\DeliveryFee;
 
 class MarketServiceProvider extends ServiceProvider { //  implements DeferrableProvider
   /**
@@ -20,6 +22,9 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
    */
   public function register()
   {
+    $this->app->singleton('market-delivery-fee', function () {
+      return new DeliveryFee();
+    });
   }
 
   /**
@@ -35,10 +40,14 @@ class MarketServiceProvider extends ServiceProvider { //  implements DeferrableP
     Blade::component('market-category', MarketCategory::class);
     Blade::component('market-navy-category', MarketNavyCategory::class);
     Blade::component('market-banner', Banner::class);
+    Blade::component('market-mail-footer', MailFooter::class);
+   
+    if (!config()->has('pondol-market')) {
+      $this->publishes([
+        __DIR__ . '/config/pondol-market.php' => config_path('pondol-market.php'),
+      ], 'config'); 
+    } 
 
-    $this->publishes([
-      __DIR__ . '/config/pondol-market.php' => config_path('pondol-market.php'),
-    ], 'config');
     $this->mergeConfigFrom(
       __DIR__ . '/config/pondol-market.php',
       'pondol-market'

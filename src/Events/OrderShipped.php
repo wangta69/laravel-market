@@ -20,11 +20,9 @@ class OrderShipped
    * @return void
    */
   public $order;
-  public $user;
 
-  public function __construct($user, $order)
+  public function __construct($order)
   {
-    $this->user = $user;
     $this->order = $order;
 
   }

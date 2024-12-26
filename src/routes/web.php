@@ -4,7 +4,7 @@
 Route::group(['as' => 'market.', 'namespace' => 'App\Http\Controllers\Market', 'middleware' => ['web']], function () {
 });
 
-Route::get('/', 'MainController@index')->name('main');
+Route::get('market', 'MainController@index')->name('main');
 
 Route::get('category/{category}', 'MarketController@category')->name('category');
 Route::get('item/{item}', 'MarketController@view')->name('item');
@@ -13,7 +13,8 @@ Route::get('search', 'SearchController@index')->name('search');
 // 장바구니 관련 시작
 Route::get('cart', 'CartController@index')->name('cart');
 Route::post('cart/add', 'CartController@store')->name('cart.add');
-Route::delete('cart/{cart}', 'CartController@delete')->name('cart.delete');
+Route::delete('cart/{cart}', 'CartController@destroy')->name('cart.delete'); // 개별아이템 삭제
+Route::put('cart/delete-checked', 'CartController@destroyChecked')->name('cart.delete.checked'); // 선택된 아이템 삭제
 Route::put('cart/update/qty', 'CartController@updateQty')->name('cart.update.qty');
 Route::get('cart/update/overview', 'CartController@updateOverview')->name('cart.update.overview');
 // 구매하기
@@ -60,11 +61,14 @@ Route::get('mypage/review/{order}', 'Mypage\ReviewController@create')->name('myp
 Route::post('mypage/review/{order}', 'Mypage\ReviewController@store');
 
 // 찜한 상품
-Route::get('mypage/favorite', 'Mypage\FavoriteController@_index')->name('mypage.favorite');
+Route::get('mypage/favorite', 'Mypage\FavoriteController@index')->name('mypage.favorite');
+
+## 쿠폰
+Route::get('mypage/coupons', 'Mypage\CouponController@index')->name('mypage.coupons');
 
 // 상품찜하기
-Route::post('item/{item}/favorite', 'FavoriteController@_store')->name('item.favorite');
-Route::delete('item/{fav}/favorite', 'FavoriteController@_destroy');
+Route::post('item/{item}/favorite', 'FavoriteController@store')->name('item.favorite');
+Route::delete('item/{fav}/favorite', 'FavoriteController@destroy');
 // 상품문의
 Route::post('item/{item}/qna', 'QnaController@store')->name('item.qna');
 

@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Models\MarketBank;
 
 class BankController extends Controller
@@ -16,11 +15,8 @@ class BankController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -34,7 +30,7 @@ class BankController extends Controller
     // $cat1 = $this->subCategory('');
    
     $banks = MarketBank::where('type', 'manager')->paginate(20)->appends(request()->query());
-    $codes = $this->configSvc->get('banks');
+    $codes = config('pondol-market.banks');
     return view('market::admin.config.bank', [
       'banks'=>$banks,
       'codes' => $codes
@@ -45,7 +41,7 @@ class BankController extends Controller
 
 
     // [TACKBAE_MONEY] => 1000 
-    $codes = $this->configSvc->get('banks');
+    $codes = config('pondol-market.banks');
     return view('market::admin.config.bank-create', [
       'codes' => $codes
     ]);

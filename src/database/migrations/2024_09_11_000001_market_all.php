@@ -42,7 +42,6 @@ class MarketAll extends Migration
       });
     }
     
-
     if (!Schema::hasTable('market_buyers')) {
       Schema::create('market_buyers', function(BluePrint $table) {
         $table->id();
@@ -62,8 +61,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_carts')) {
       Schema::create('market_carts', function(BluePrint $table) {
         $table->id();
@@ -79,8 +76,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_categories')) {
       Schema::create('market_categories', function(BluePrint $table) {
         $table->id();
@@ -99,28 +94,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
-    // if (!Schema::hasTable('market_configs')) {
-    //   Schema::create('market_configs', function(BluePrint $table) {
-    //     $table->string('key', '20');
-    //     $table->text('value');
-    //   });
-    // }
-    
-
-
-    // if (!Schema::hasTable('market_delivery_companies')) {
-    //   Schema::create('market_delivery_companies', function(BluePrint $table) {
-    //     $table->id();
-    //     $table->string('code', '20')->nullable()->comment('택배사코드');
-    //     $table->string('name', '20')->nullable()->comment('택배사명');
-    //     $table->string('url', '100')->nullable()->comment('택배사 url');
-    //     $table->string('query_url', '100')->nullable()->comment('배송조회url');
-    //   });
-    // }
-
-
     if (!Schema::hasTable('market_exchange_returns')) {
       Schema::create('market_exchange_returns', function(BluePrint $table) {
         $table->id();
@@ -146,8 +119,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_items')) {
       Schema::create('market_items', function(BluePrint $table) {
         $table->id();
@@ -156,6 +127,7 @@ class MarketAll extends Migration
         $table->string('name', '50')->nullable()->comment('상품명');
         $table->string('brand', '50')->nullable()->comment('브랜드');
         $table->string('model', '50')->nullable()->comment('모델');
+        $table->string('Ingredients', '50')->nullable()->comment('제품소재');
         $table->integer('price')->default(0)->unsigned()->comment('판매가격(sales price)');
         $table->integer('cost')->default(0)->unsigned()->comment('원가(cost)');
         $table->mediumInteger('t_point')->default(0)->unsigned()->comment('제품별 지급 포인트');
@@ -170,7 +142,6 @@ class MarketAll extends Migration
       });
     }
 
-
     if (!Schema::hasTable('market_item_categories')) {
       Schema::create('market_item_categories', function(BluePrint $table) {
         $table->id();
@@ -181,7 +152,6 @@ class MarketAll extends Migration
         $table->softDeletes();
       });
     }
-
 
     if (!Schema::hasTable('market_item_displays')) {
       Schema::create('market_item_displays', function(BluePrint $table) {
@@ -195,8 +165,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_favorites')) {
       Schema::create('market_item_favorites', function(BluePrint $table) {
         $table->id();
@@ -207,8 +175,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_images')) {
       Schema::create('market_item_images', function(BluePrint $table) {
         $table->id();
@@ -219,8 +185,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_options')) {
       Schema::create('market_item_options', function(BluePrint $table) {
         $table->id();
@@ -234,8 +198,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_qnas')) {
       Schema::create('market_item_qnas', function(BluePrint $table) {
         $table->id();
@@ -250,8 +212,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_reviews')) {
       Schema::create('market_item_reviews', function(BluePrint $table) {
         $table->id();
@@ -266,8 +226,6 @@ class MarketAll extends Migration
       });
     }
     
-
-
     if (!Schema::hasTable('market_item_tags')) {
       Schema::create('market_item_tags', function(BluePrint $table) {
         $table->bigInteger('item_id')->unsigned()->index();
@@ -295,7 +253,6 @@ class MarketAll extends Migration
       });
     }
 
-
     if (!Schema::hasTable('market_payments')) {
       Schema::create('market_payments', function(BluePrint $table) {
         $table->id();
@@ -309,27 +266,12 @@ class MarketAll extends Migration
         $table->bigInteger('amt_point')->default(0)->unsigned()->comment('포인트 결제 금액');
         $table->bigInteger('amt_product')->default(0)->unsigned()->comment('총 상품 금액');
         $table->bigInteger('amt_delivery')->default(0)->unsigned()->comment('택배비');
+        $table->bigInteger('coupon_issue_id')->nullable()->unsigned()->comment('사용한 쿠폰 아이디');
+        $table->bigInteger('amt_coupon')->nullable()->unsigned()->comment('쿠폰 사용 금액');
         $table->bigInteger('amt_total')->default(0)->unsigned()->comment(' 최종 결제금액(택배비 및 기타 경비를 계산한 후 최종결제금액)');
         $table->timestamps();
       });
     }
-    
-
-
-    // if (!Schema::hasTable('market_points')) {
-    //   Schema::create('market_points', function(BluePrint $table) {
-    //     $table->id();
-    //     $table->bigInteger('user_id')->index()->unsigned();
-    //     $table->bigInteger('point')->default(0)->unsigned();
-    //     $table->bigInteger('cur_sum')->default(0)->unsigned()->comment('users.point + users.hold_point 와 동일한 값이 되어야 함');
-    //     $table->string('item', '20')->comment('이벤트, 구매포인트');
-    //     $table->string('sub_item', '20')->nullable()->comment('item의 세부정, buy, event..');
-    //     $table->bigInteger('rel_item')->nullable()->unsigned()->comment('주로 참조 테이블 아이디');
-    //     $table->timestamp('created_at')->index();
-    //   });
-    // }
-    
-
 
     if (!Schema::hasTable('market_tags')) {
       Schema::create('market_tags', function(BluePrint $table) {
@@ -338,8 +280,6 @@ class MarketAll extends Migration
       });
     }
 
-
-    
   }
 
 

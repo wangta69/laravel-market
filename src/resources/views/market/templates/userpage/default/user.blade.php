@@ -91,7 +91,7 @@
         <div class="input-group">
           
           <label class='col-sm-4 col-form-label'>연락처</label>
-          <span class="btn btn-warning disabled"><i class="fa fa-envelope"></i></span>
+          <span class="btn btn-warning disabled"><i class="fa-solid fa-square-phone"></i></span>
          <input type="text" name="mobile" class="form-control" value="{{addHypenToMobile($user->mobile)}}" onkeyup="this.value = add_phone_hyphen(this.value)">
         </div>
         <span style="font-size: small; color: red;">* 보안을 위해 현재 비밀번호를 입력해 주세요</span>

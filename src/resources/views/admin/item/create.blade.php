@@ -28,57 +28,61 @@
         <col width="120px" />
         <col width="*" />
         <tr>
-          <th class="active">카테고리</th>
+          <th>카테고리</th>
           <td>@include("market::admin.item.sub-category", ['category'=>$categories])</td>
         </tr>
         <tr>
-          <th class="active">상품명</th>
+          <th>상품명</th>
           <td><input name="name" value="{{$item->name}}" class="form-control"></td>
         </tr>
         <tr>
-          <th class="active">상품모델명</th>
+          <th>상품모델명</th>
           <td><input name="model" value="{{$item->model}}" class="form-control">- 사용하지 않을경우 공백처리</td>
         </tr>
         <tr>
-          <th class="active">시중가</th>
+          <th>시중가</th>
           <td><input name="cost" value="{{number_format($item->cost)}}" class="form-control" onkeyup="this.value = add_comma(this.value)"></td>
         </tr>
         <tr>
-          <th class="active">판매가</th>
+          <th>판매가</th>
           <td><input name="price" value="{{number_format($item->price)}}" class="form-control" onkeyup="this.value = add_comma(this.value)"></td>
         </tr>
         <tr>
-          <th class="active">지급포인트</th>
+          <th>지급포인트</th>
           <td><input name="t_point" value="{{number_format($item->t_point)}}" class="form-control" onkeyup="this.value = add_comma(this.value)"></td>
         </tr>
         <tr>
-          <th class="active">재고수량</th>
+          <th>재고수량</th>
           <td><input name="stock" value="{{$item->stock}}" class="form-control">제한없음(-1), 품절(0), 기타 재고수량 입력</td>
         </tr>
         <tr>
-          <th class="active">등록옵션</th>
+          <th>등록옵션</th>
           <td>@include("market::admin.item.sub-option", [])</td>
         </tr>
         <tr>
-          <th class="active">이미지</th>
+          <th>추가필드</th>
+          <td>@include("market::admin.item.sub-spec", [])</td>
+        </tr>
+        <tr>
+          <th>이미지</th>
           <td>@include("market::admin.item.sub-image", ['images'=>$images])</td>
         </tr>
         <tr>
-          <th class="active">간략설명</th>
+          <th>간략설명</th>
           <td><textarea name="shorten_description" class="form-control">{{$item->shorten_description}}</textarea></td>
         </tr>
         <tr>
-          <th class="active">자세한설명</th>
+          <th>자세한설명</th>
           <td>
           @include ('editor::default', ['name'=>'description', 'id'=>'description', 'value'=>$item->description, 'attr'=>['class'=>'form-control']])
           </td>
         </tr>
         <tr>
-          <th class="active">태그</th>
+          <th>태그</th>
           <td>@include("market::admin.item.sub-tag")</td>
         </tr>
         <tr>
-          <th class="active">표시 옵션</th>
+          <th>표시 옵션</th>
           <td class="input-group">
             <div class="form-check">
               <input class="form-check-input" name="display[main] "type="checkbox" value="" id="display-main" 

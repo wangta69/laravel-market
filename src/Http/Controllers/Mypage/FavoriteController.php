@@ -24,12 +24,12 @@ class FavoriteController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function _index(Request $request)
+  public function index(Request $request)
   {
     
     // 마켙order 접근시 비회원 경우는 o_id가 있어야한다.
     $user = $request->user();
-    $items = $this->index($request, $user);
+    $items = $this->_index($request, $user);
 
     // 현재 선택한 상품을 리스트업 한다.
     $items = $items->orderBy('market_item_favorites.id', 'desc')->paginate(15)->withQueryString();

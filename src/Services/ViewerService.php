@@ -3,15 +3,6 @@ namespace Pondol\Market\Services;
 use Pondol\Image\GetHttpImage;
 class ViewerService
 {
-  /**
-   * 기존 스토리지 경로를 public 경로로 변경
-   */
-  static function getImageUrl($url) {
-    return \Storage::url($url);
-  }
-
-
-
 
   /**
    * @param String $file  public/bbs/5/201804/37/filename.jpeg

@@ -28,14 +28,14 @@
               </div> -->
 
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="delivery_status[]" value="60"
-                 @if(isset(request()->delivery_status) && in_array('60', request()->delivery_status)) checked @endif>
+                <input class="form-check-input" type="checkbox" name="types[]" value="refund"
+                 @if(isset(request()->types) && in_array('refund', request()->types)) checked @endif>
                 <label class="form-check-label">반품요청</label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="delivery_status[]" value="70"
-                 @if(isset(request()->delivery_status) && in_array('70', request()->delivery_status)) checked @endif>
+                <input class="form-check-input" type="checkbox" name="types[]" value="exchange"
+                 @if(isset(request()->types) && in_array('exchange', request()->types)) checked @endif>
                 <label class="form-check-label">교환요청</label>
               </div>
             </div>

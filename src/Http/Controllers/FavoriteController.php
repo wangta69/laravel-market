@@ -28,13 +28,13 @@ class FavoriteController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function _store(Request $request, $item)
+  public function store(Request $request, $item)
   {
-    return response()->json($this->store($request, $item));
+    return response()->json($this->_store($request, $item));
   }
 
-  public function _destroy(Request $request, $fav)
+  public function destroy(Request $request, $fav)
   {
-    return response()->json($this->destroy($request, $fav));
+    return response()->json($this->_destroy($request, $fav));
   }
 }

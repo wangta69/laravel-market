@@ -152,7 +152,7 @@
                   
     <div class="input-group mt-1">
       <label class="col-sm-3 col-md-2">결제방식</label>
-      <div class="col-sm-9 col-md-10">{{ __('market.pay_method.'.$display->method) }}</div>
+      <div class="col-sm-9 col-md-10">{{ __('market::market.pay_method.'.$display->method) }}</div>
     </div>
 
     @if(@$display->method == 'online')

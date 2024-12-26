@@ -11,22 +11,38 @@ if (!function_exists('getImageUrl')) {
   }
 }
 
+if (!function_exists('delivery_fee_show')) {
+  function delivery_fee_show() {
+    $delivery = config('pondol-market.delivery');
+    switch($delivery["type"]) {
+      case 'none':
+        return '무료';
+      case 'on_delivery':
+        return '착불';
+      case 'apply':
+        return number_format($delivery["fee"]);
+      case 'partial':
+        return number_format($delivery["fee"]).'('. number_format($delivery["min"]). ' 이상 구매시 무료) ';
+    }
+  }
+}
 
 /**
  * $item
  * @return  [[0] => 옵션 ID, [1] => 옵션명, [2] => 옵션값, [3] => 재고여부]
  */
-function extractOptions($item) {
-  if($item->options) {
-    $options = explode('|', $item->options);
-    $displayOption = [];
-    foreach($options as $option) {
-      array_push($displayOption, explode(':', $option));
-    }
-    return  $displayOption; 
-  } 
+if (!function_exists('extractOptions')) {
+  function extractOptions($item) {
+    if($item->options) {
+      $options = explode('|', $item->options);
+      $displayOption = [];
+      foreach($options as $option) {
+        array_push($displayOption, explode(':', $option));
+      }
+      return  $displayOption; 
+    } 
+  }
 }
-
 
 if (!function_exists('configSet')) {
   function configSet($file, $data) {

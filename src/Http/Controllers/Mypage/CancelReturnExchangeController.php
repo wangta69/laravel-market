@@ -50,7 +50,7 @@ class CancelReturnExchangeController extends Controller
       ->where("re.user_id", $user->id)
       ->orderBy('re.id', 'desc')->paginate(15)->withQueryString();
 
-    $return_status = config('pondol-market.return_status');
+    $refund_status = config('pondol-market.refund_status');
     $exchange_status = config('pondol-market.exchange_status');
     foreach($items as $item) {
       $item->displayOptions = extractOptions($item);
@@ -58,15 +58,15 @@ class CancelReturnExchangeController extends Controller
         case 'exchange':
           $item->statusStr = $exchange_status[$item->status];
           break;
-        case 'return':
-          $item->statusStr = $return_status[$item->status];
+        case 'refund':
+          $item->statusStr = $refund_status[$item->status];
           break;
       }
     }
 
     return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.cancel-return-exchange.index', [
       'items'=>$items,
-      'return_status' => config('pondol-market.return_status'),
+      'refund_status' => config('pondol-market.refund_status'),
       'exchange_status' => config('pondol-market.exchange_status')
     ]);
   }
@@ -102,7 +102,7 @@ class CancelReturnExchangeController extends Controller
 
     $typeStr = '';
     switch($type) {
-      case 'return':
+      case 'refund':
         $typeStr = '반품';
         break;
       case 'exchange':
@@ -203,8 +203,8 @@ class CancelReturnExchangeController extends Controller
     
 
     switch($item->type) {
-      case 'return':
-        $configs = config('pondol-market.return_status');
+      case 'refund':
+        $configs = config('pondol-market.refund_status');
         break;
       case 'exchange':
         $configs = config('pondol-market.exchange_status');

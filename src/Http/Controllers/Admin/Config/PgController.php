@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Services\ConfigService;
 use Pondol\Market\Models\MarketBank;
 
 class PgController extends Controller
@@ -16,11 +15,8 @@ class PgController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -34,8 +30,7 @@ class PgController extends Controller
     // $cat1 = $this->subCategory('');
    
     // $banks = MarketBank::paginate(20)->appends(request()->query());
-    // $codes = $this->configSvc->get('banks');
-    $payment = $this->configSvc->get('payment');
+    $payment = config('pondol-market.payment');
     $pgs = ['inicis'=>'Inicis', 'kcp'=>'KCP', 'lg'=>'LG'];
     $simples = ['naver'=>'네이버 페이', 'kakao'=>'카카오 페이']; // simplePayments
     return view('market::admin.config.pg', [
@@ -57,7 +52,7 @@ class PgController extends Controller
       'kakao' => $request->kakao ? true : false,
     ];
     Log::info($params);
-    $this->configSvc->set('payment', $params );
+    set_config('pondol-market.payment', $params );
     return response()->json(['error'=>false]);
   }
 

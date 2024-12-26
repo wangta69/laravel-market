@@ -13,7 +13,7 @@
     {{--Title and Meta--}}
     {{--@meta--}}
     @yield('meta')
-    <title>@yield('title', config('app.name', '온스토리'))</title>
+    <title>@yield('title', config('app.name', 'OnStory'))</title>
 
     <!-- Scripts -->
 

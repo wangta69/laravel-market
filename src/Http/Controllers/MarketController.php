@@ -13,7 +13,7 @@ use Pondol\Market\Models\MarketItemFavorite;
 use Pondol\Market\Models\MarketCategory;
 
 use Pondol\Market\Traits\Item;
-use Pondol\Market\Services\Meta;
+use Pondol\Meta\Facades\Meta;
 
 class MarketController extends Controller
 {
@@ -25,10 +25,8 @@ class MarketController extends Controller
    *
    * @return void
    */
-  public function __construct(Meta $meta)
+  public function __construct()
   {
-    $this->meta = $meta;
-    \Log::info(url()->previous());
   }
 
   /**
@@ -50,16 +48,17 @@ class MarketController extends Controller
     $categoryObj = $this->buildCategory($category);
 
     $keywords = [];
-    $this->meta->title = $categoryObj->path[0]->name;
+    // $this->meta->title = $categoryObj->path[0]->name;
+    $meta = Meta::get();
     array_push($keywords,  $categoryObj->path[0]->name);
     
     if(isset($categoryObj->path[1])) {
-      $this->meta->title = $categoryObj->path[1]->name;
+      // $this->meta->title = $categoryObj->path[1]->name;
       array_push($keywords,  $categoryObj->path[1]->name);
     } 
 
     if(isset($categoryObj->path[2])) {
-      $this->meta->title = $categoryObj->path[2]->name;
+      // $this->meta->title = $categoryObj->path[2]->name;
       array_push($keywords,  $categoryObj->path[2]->name);
     }
 
@@ -69,14 +68,10 @@ class MarketController extends Controller
       }
     }
 
-    $this->meta->keywords = implode(',', $keywords);
+    // $this->meta->keywords = implode(',', $keywords);
 
-    return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.category', [
-      'category' => $category,
-      'items' => $items,
-      'categoryObj' => $categoryObj,
-      'meta' => $this->meta,
-    ]);
+    return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.category',
+      compact('category', 'items', 'categoryObj', 'meta'));
   }
 
   public function view(MarketItem $item, Request $request)
@@ -128,10 +123,13 @@ class MarketController extends Controller
       }
     }
 
-    $this->meta->setItem($item);
+    // $this->meta->setItem($item);
+    $meta = Meta::get();
+    // $meta->title('');
+    // return;
 
     return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.view', [
-      'meta' => $this->meta,
+      'meta' => $meta,
       'item' => $item,
       'images' => $images,
       'options' => $options,

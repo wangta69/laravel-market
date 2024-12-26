@@ -34,6 +34,14 @@
     </a>
   </li>
 
+  <li class="mt-3 nav-link">혜택</li>
+  <li class="nav-item">
+    <a href="{{ route('market.mypage.coupons') }}" class="link {{ request()->routeIs(['market.mypage.coupons*']) ? 'active' : '' }}">
+      <i class="fa fa-heart" aria-hidden="true"></i>
+      <span >할인쿠폰</span>
+    </a>
+  </li>
+
   <li class="nav-item">
     <a href="{{ route('market.mypage.qnas') }}" class="link {{ request()->routeIs(['market.mypage.qna*']) ? 'active' : '' }}">
     <i class="fa-regular fa-circle-question"></i>

@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Auth\Models\User\UserConfig;
-
+// use Pondol\Auth\Models\User\UserConfig;
+use Pondol\Common\Facades\JsonKeyValue;
 use Pondol\Market\Services\Meta;
 
 
@@ -33,14 +33,13 @@ class PagesController extends Controller
     switch($page) {
       case 'privacy-policy':
         $this->meta->title = "개인정보처리방침";
-        
-        $privacyPolicy = UserConfig::where('key', 'privacyPolicy')->first();
-        $item = $privacyPolicy->value;
+        $item = JsonKeyValue::get('user.aggrement.privacy-policy');
         break;
       case 'terms-of-use':
         $this->meta->title = "서비스이용약관";
-        $termsOfUse = UserConfig::where('key', 'termsOfUse')->first();
-        $item = $termsOfUse->value;
+        // $termsOfUse = UserConfig::where('key', 'termsOfUse')->first();
+        // $item = $termsOfUse->value;
+        $item = JsonKeyValue::get('user.aggrement.term-of-use');
         break;
     }
 
@@ -48,8 +47,6 @@ class PagesController extends Controller
     'meta' => $this->meta,
     'item' => $item,
     ]);
-
-
   }
 
   // protected function get_order_num($params=null){

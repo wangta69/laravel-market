@@ -15,48 +15,54 @@
 
 <div class="card">
   <form name="company-form">
-		@csrf
-		@method('PUT')
-		<div class="card-body">
-			<div class="input-group">
-				<label class='col-sm-2 col-form-label'>쇼핑몰명</label>
-				<span>쇼핑몰명은 .env 파일의 APP_NAME 에서 설정 하시기 바랍니다.</span>
-			</div>
+    @csrf
+    @method('PUT')
+    <div class="card-body">
+      <div class="input-group">
+        <label class='col-sm-2 col-form-label'>쇼핑몰명</label>
+        <span>쇼핑몰명은 .env 파일의 APP_NAME 에서 설정 하시기 바랍니다.</span>
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>상호</label>
+        <input name="name" type="text" class="form-control" value="{{$company->name}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>사업자등록번호</label>
+        <input name="businessNumber" type="text" class="form-control" value="{{$company->businessNumber}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>통신판매업신고번호</label>
+        <input name="mailOrderSalesRegistrationNumber" type="text" class="form-control" value="{{$company->mailOrderSalesRegistrationNumber}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>사업장주소</label>
+        <input name="address" type="text" class="form-control" value="{{$company->address}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>대표자명</label>
+        <input name="representative" type="text" class="form-control" value="{{$company->representative}}">
+      </div>
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>연락처</label>
+        <input name="tel1" type="text" class="form-control" value="{{$company->tel1}}">
+      </div>
+		
+      <div class="input-group mt-1">
+        <label class='col-sm-2 col-form-label'>팩스</label>
+        <input name="fax1" type="text" class="form-control" value="{{$company->fax1}}">
+      </div>
 			<div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>상호</label>
-				<input name="name" type="text" class="form-control" value="{{$company['name']}}">
-			</div>
-			<div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>사업자등록번호</label>
-				<input name="businessNumber" type="text" class="form-control" value="{{$company['businessNumber']}}">
-			</div>
-      <div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>통신판매업신고번호</label>
-				<input name="mailOrderSalesRegistrationNumber" type="text" class="form-control" value="{{$company['mailOrderSalesRegistrationNumber']}}">
+        <label class='col-sm-2 col-form-label'>copyright</label>
+        <input name="copyright" type="text" class="form-control" value="{{$company->copyright}}">
       </div>
-      <div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>사업장주소</label>
-				<input name="address" type="text" class="form-control" value="{{$company['address']}}">
-      </div>
-      <div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>대표자명</label>
-				<input name="representative" type="text" class="form-control" value="{{$company['representative']}}">
-      </div>
-      <div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>연락처</label>
-				<input name="tel1" type="text" class="form-control" value="{{$company['tel1']}}">
-      </div>
-      <div class="input-group mt-1">
-				<label class='col-sm-2 col-form-label'>팩스</label>
-				<input name="fax1" type="text" class="form-control" value="{{$company['fax1']}}">
-      </div>
-		</div> <!-- .card-body -->
+	
+    </div> <!-- .card-body -->
 
-		<div class="card-footer text-end">
-			<!-- <button type="submit"class="btn btn-primary">적용</button> -->
+    <div class="card-footer text-end">
+      <!-- <button type="submit"class="btn btn-primary">적용</button> -->
       <button type="button"class="btn btn-primary act-update-company">적용</button>
-		</div> <!-- .card-footer -->
-	</form>
+    </div> <!-- .card-footer -->
+  </form>
 </div><!-- .card -->
 
 @section('styles')
@@ -67,7 +73,7 @@
 @parent
 <script>
 $(function(){
-	$(".act-update-company").on('click', function(){
+  $(".act-update-company").on('click', function(){
     ROUTE.ajaxroute('put', 
     {route: 'market.admin.config.company', data: $("form[name='company-form']").serializeObject()}, 
     function(resp) {
@@ -77,7 +83,7 @@ $(function(){
         showToaster({title: '알림', message: '처리되었습니다.', alert: false});
       }
     })
-	})
+  })
 })
 </script>
 @endsection

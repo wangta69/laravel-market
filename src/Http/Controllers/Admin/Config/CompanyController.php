@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Services\ConfigService;
-use Pondol\Market\Models\MarketBank;
+
+use Pondol\Common\Facades\JsonKeyValue;
 // use Pondol\Auth\Models\User\UserConfig;
 
 class CompanyController extends Controller
@@ -17,11 +17,8 @@ class CompanyController extends Controller
    * @return void
    */
   public function __construct(
-    ConfigService $configSvc
   )
   {
-      // $this->middleware('auth');
-    $this->configSvc = $configSvc;
   }
 
   /**
@@ -32,13 +29,12 @@ class CompanyController extends Controller
   public function index()
   {
 
-    $company = $this->configSvc->get('company');
-    // $termsOfUse = UserConfig::where('key', 'termsOfUse')->first();
-    // $termsOfPersonal = UserConfig::where('key', 'termsOfPersonal')->first();
+    
+    $company = JsonKeyValue::getAsJson('company');
+    $company->copyright = isset($company->copyright) ? $company->copyright: '';
 
-    return view('market::admin.config.company', [
-      'company'=>$company
-    ]);
+
+    return view('market::admin.config.company', compact('company'));
   }
 
   public function update(Request $request) {
@@ -51,9 +47,11 @@ class CompanyController extends Controller
       'representative' => $request->representative,
       'tel1' => $request->tel1,
       'fax1' => $request->fax1,
+      'copyright' => $request->copyright,
     ];
 
-    $this->configSvc->set('company', $params );
+    set_config('pondol-market.company', $params );
+    JsonKeyValue::storeAsJson('company', $params);
     return response()->json(['error'=>false]);
   }
    
