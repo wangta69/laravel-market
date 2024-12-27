@@ -84,8 +84,8 @@ trait InstallsBladeStack
 
     \Artisan::call('migrate');
 
-    // 연관 패키지의 config  변경
-    $this->chageOtherConfig();
+    // 연관 패키지의 config  변경 (수동으로 변경하기)
+    // $this->chageOtherConfig();
 
     $this->comment('Please execute the "npm install" && "npm run dev" commands to build your assets.');
   }

@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '상품구매')
 @section('content')
 <div class="container body">
@@ -255,7 +255,7 @@
                         @endif</span><br>
 
                     </div>
-                    <button type="button" class="btn btn-t9 btn-t-sm @if($coupon->enable) on act-set-coupon @endif">선택</button>
+                    <button type="button" @class(['btn', 'btn-sm', 'on' => $coupon->enable, , 'act-set-coupon' => $coupon->enable])>선택</button>
                 </div>
                 @empty
                 <div>
@@ -271,20 +271,20 @@
 </div>
 <!-- Modal for coupon list end -->
 
-@include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.address.create-modal')
+@include(market_theme('userpage').'.address.create-modal')
 
 <!-- Modal for create address end -->
 <!-- /banner-feature -->
  <!-- 결제 모듈 삽입 -->
-@if(Config::get('pondol-market.payment.pg') == 'kcp'):
+@if(jsonval('payment', 'pg') == 'kcp'):
   @include('market::payment.pg.kcp.pay-form')
-@elseif(Config::get('pondol-market.payment.pg') == 'lg'):
+@elseif(jsonval('payment', 'pg') == 'lg'):
   @include('market::payment.pg.lg.pay-form')
-@elseif(Config::get('pondol-market.payment.pg') == 'inicis'):
+@elseif(jsonval('payment', 'pg') == 'inicis'):
   @include('market::payment.pg.inicis.pay-form')
 @endif
 
-@if(Config::get('pondol-market.payment.kakao')):
+@if(jsonval('payment', '')):
   @include('market::payment.smart.kakaopay.pay-form')
 @endif
 @endsection

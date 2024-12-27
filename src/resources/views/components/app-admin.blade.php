@@ -8,7 +8,9 @@ $path = isset($path) ? $path : [];
       @if(count($path))
       <x-pondol-common::partials.main-top-navigation :path="$path"/>
       @endif
+      <div style="padding-bottom: 70px;">
       {{ $slot }}
+      </div>
       <x-pondol-common::partials.footer />
     </div><!--. container -->
   </div>

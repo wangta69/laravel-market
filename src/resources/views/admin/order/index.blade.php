@@ -22,17 +22,18 @@
             <div >
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="delivery_status[]" value="ready"
-                  @if(isset(request()->delivery_status) && in_array('ready', request()->delivery_status)) checked @endif>
+                @checkedtrue(isset(request()->delivery_status) && in_array('ready', request()->delivery_status))>
+
                 <label class="form-check-label">주문접수</label>
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="delivery_status[]" value="ing" 
-                  @if(isset(request()->delivery_status) && in_array('ing', request()->delivery_status)) checked @endif>
+                @checkedtrue(isset(request()->delivery_status) && in_array('ing', request()->delivery_status))>
                 <label class="form-check-label">배송진행</label>
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="delivery_status[]" value="done" 
-                  @if(isset(request()->delivery_status) && in_array('done', request()->delivery_status)) checked @endif>
+                @checkedtrue(isset(request()->delivery_status) && in_array('done', request()->delivery_status))>
                 <label class="form-check-label">거래완료</label>
               </div>
               

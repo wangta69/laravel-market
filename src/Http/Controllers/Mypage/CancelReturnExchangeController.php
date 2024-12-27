@@ -50,8 +50,8 @@ class CancelReturnExchangeController extends Controller
       ->where("re.user_id", $user->id)
       ->orderBy('re.id', 'desc')->paginate(15)->withQueryString();
 
-    $refund_status = config('pondol-market.refund_status');
-    $exchange_status = config('pondol-market.exchange_status');
+    $refund_status = __('market::market.refund_status');
+    $exchange_status = __('market::market.exchange_status');
     foreach($items as $item) {
       $item->displayOptions = extractOptions($item);
       switch($item->type) {
@@ -64,10 +64,10 @@ class CancelReturnExchangeController extends Controller
       }
     }
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.cancel-return-exchange.index', [
+    return view(market_theme('userpage').'.cancel-return-exchange.index', [
       'items'=>$items,
-      'refund_status' => config('pondol-market.refund_status'),
-      'exchange_status' => config('pondol-market.exchange_status')
+      'refund_status' => __('market::market.refund_status'),
+      'exchange_status' => __('market::market.exchange_status')
     ]);
   }
   /**
@@ -110,7 +110,7 @@ class CancelReturnExchangeController extends Controller
         break;
     }
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.cancel-return-exchange.create', [
+    return view(market_theme('userpage').'.cancel-return-exchange.create', [
       'type'=>$type,
       'o_id'=>$o_id,
       'items' => $items,
@@ -204,15 +204,15 @@ class CancelReturnExchangeController extends Controller
 
     switch($item->type) {
       case 'refund':
-        $configs = config('pondol-market.refund_status');
+        $configs = __('market::market.refund_status');
         break;
       case 'exchange':
-        $configs = config('pondol-market.exchange_status');
+        $configs = __('market::market.exchange_status');
         break;
     }
 
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.cancel-return-exchange.view', [
+    return view(market_theme('userpage').'.cancel-return-exchange.view', [
       'item'=>$item,
       'configs' => $configs,
     ]);
@@ -230,8 +230,8 @@ class CancelReturnExchangeController extends Controller
       $bank->no = null;
       $bank->owner = null;
     }
-    $codes = config('pondol-market.banks');
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.cancel-return-exchange.refund', [
+    $codes = JsonKeyValue::getAsArray('banks');
+    return view(market_theme('userpage').'.cancel-return-exchange.refund', [
       'bank'=>$bank,
       'codes' => $codes
     ]);

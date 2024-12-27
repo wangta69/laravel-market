@@ -70,7 +70,7 @@ class EventController extends Controller
     switch($request->type) {
       case 'notice':
         
-        return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view(market_theme('mail').'.'.$request->type,  ['mailData'=>$mailData]);
 
         break;
       case 'order':
@@ -83,11 +83,11 @@ class EventController extends Controller
           $item->displayOptions = extractOptions($item);     
         }
 
-        return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view(market_theme('mail').'.'.$request->type,  ['mailData'=>$mailData]);
         break;
       case 'register':
 
-        return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view(market_theme('mail').'.'.$request->type,  ['mailData'=>$mailData]);
         break;
       
     }

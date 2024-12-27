@@ -53,7 +53,7 @@ class OrderShippedNotification extends Notification  implements ShouldQueue
 
     return (new MailMessage)
       ->subject($notifiable->name.'님의 주문정보입니다.')
-      ->markdown('market.templates.mail.'.config('pondol-market.template.mail.theme').'.order', [
+      ->markdown(market_theme('mail').'.order', [
         'user' => $notifiable,
         'data' => $this->data
       ]);

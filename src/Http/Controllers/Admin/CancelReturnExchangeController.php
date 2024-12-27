@@ -62,8 +62,8 @@ class CancelReturnExchangeController extends Controller
 
     return view('market::admin.cancel-return-exchange.index', [
       'items'=>$items,
-      'return_status' => config('pondol-market.return_status'),
-      'exchange_status' => config('pondol-market.exchange_status')
+      'refund_status' => __('market::market.refund_status'),
+      'exchange_status' => __('market::market.exchange_status')
     ]);
   }
 
@@ -90,16 +90,15 @@ class CancelReturnExchangeController extends Controller
     $item->displayOptions = extractOptions($item);
 
     
-
+    // echo $item->type;
     switch($item->type) {
-      case 'return':
-        $configs = config('pondol-market.return_status');
+      case 'refund':
+        $configs = __('market::market.refund_status');
         break;
       case 'exchange':
-        $configs = config('pondol-market.exchange_status');
+        $configs = __('market::market.exchange_status');
         break;
     }
-
 
     return view('market::admin.cancel-return-exchange.view', [
       'item'=>$item,

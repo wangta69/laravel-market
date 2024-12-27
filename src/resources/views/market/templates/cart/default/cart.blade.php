@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '장바구니')
 @section('content')
 

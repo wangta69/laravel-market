@@ -1,10 +1,10 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('content')
 
 <div class="container body">
   <div class="row">
     <div class="col-3">
-      @include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.tabs')
+      @include(market_theme('userpage').'.tabs')
     </div>
     <div class="col-9">
 
@@ -27,7 +27,7 @@
             <div class="col-5">무통장환불계좌 정보</div>
             <div class="col-7">
               @if($bank->id)
-              {{ config('pondol-market.banks.'.$bank->code.'.name') }} {{ $bank->no }} (예금주: {{ $bank->owner }}) <span data-bs-toggle="modal" data-bs-target="#bankCreateModal">[수정]</span>
+              {{ $codes[$bank->code]['name'] }} {{ $bank->no }} (예금주: {{ $bank->owner }}) <span data-bs-toggle="modal" data-bs-target="#bankCreateModal">[수정]</span>
               @else
                 <span data-bs-toggle="modal" data-bs-target="#bankCreateModal">[등록]</span>
               @endif

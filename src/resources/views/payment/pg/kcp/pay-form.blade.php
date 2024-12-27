@@ -1,7 +1,7 @@
 @php
-$service = config('pondol-market.payment.service');
+$service = jsonval('payment', 'service');
 if ($service) {
-  $mid = "SR".config('pondol-market.payment.mid');
+  $mid = "SR".jsonval('payment', 'mid');
   $submit_url = 'https://pay.kcp.co.kr/plugin/payplus_web.jsp';
 } else {
   $mid = 'T0000'; // T0007 에스크로 결제

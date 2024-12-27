@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '회원탈퇴')
 @section('content')
 <section>
@@ -20,7 +20,7 @@
           </div> <!-- .card-body -->
           <div class="card-footer text-end">
             <a class="btn btn-primary" href="">쇼핑몰 메인</a>
-            @extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+            @extends(market_theme('layouts').'.front')
 @section('title', '회원탈퇴')
 @section('content')
 <section>

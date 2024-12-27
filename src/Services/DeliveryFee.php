@@ -5,7 +5,7 @@ class DeliveryFee
 {
 
   public function cal($total) {
-    $delivery = config('pondol-market.delivery');
+    $delivery = jsonval('market.delivery');
 
     $delivery_fee = 0;
 
@@ -18,7 +18,7 @@ class DeliveryFee
   }
 
   public function view() {
-    $delivery = config('pondol-market.delivery');
+    $delivery = jsonval('market.delivery');
     switch($delivery["type"]) {
       case 'none':
         return '무료';

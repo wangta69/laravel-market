@@ -2,10 +2,14 @@
 namespace Pondol\Market\Http\Controllers\Admin\Config;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
+
+use DB;
+
+use Pondol\Common\Facades\JsonKeyValue;
 use Pondol\Market\Models\MarketBank;
+
+use App\Http\Controllers\Controller;
 
 class BankController extends Controller
 {
@@ -26,11 +30,9 @@ class BankController extends Controller
    */
   public function index()
   {
-    // config()->set('app.name','My Project App');
-    // $cat1 = $this->subCategory('');
    
     $banks = MarketBank::where('type', 'manager')->paginate(20)->appends(request()->query());
-    $codes = config('pondol-market.banks');
+    $codes = JsonKeyValue::getAsArray('banks');
     return view('market::admin.config.bank', [
       'banks'=>$banks,
       'codes' => $codes
@@ -39,9 +41,7 @@ class BankController extends Controller
 
   public function create() {
 
-
-    // [TACKBAE_MONEY] => 1000 
-    $codes = config('pondol-market.banks');
+    $codes = JsonKeyValue::getAsArray('banks');
     return view('market::admin.config.bank-create', [
       'codes' => $codes
     ]);

@@ -35,7 +35,7 @@
           <tbody>
             @forelse($banks as $bank)
             <tr user-attr-id="{{ $bank->id }}">
-              <td class="text-center">{{ config('pondol-market.banks.'.$bank->code.'.name') }}</td>
+              <td class="text-center">{{  $codes[$bank->code]['name'] }}</td>
               <td class="text-center">{{ $bank->no }}</td>
               <td class="text-center">{{ $bank->owner }}</td>
               <td class="text-center">

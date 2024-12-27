@@ -22,6 +22,8 @@ use Pondol\Market\Facades\DeliveryFee;
 
 use Pondol\Market\Events\OrderShipped;
 use Pondol\Auth\Traits\Point;
+use Pondol\Common\Facades\JsonKeyValue;
+
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -130,7 +132,7 @@ class OrderController extends Controller
     $buyer->tel1_3 = isset($tel1[2]) ? $tel1[2] : '';
 
     // 무통장 계좌 가져오기]
-    $codes = config('pondol-market.banks');
+    $codes = JsonKeyValue::getAsArray('banks');
     $banks = MarketBank::get();
     foreach($banks as $v) {
       $v->name = $codes[$v->code]['name'];
@@ -198,7 +200,7 @@ class OrderController extends Controller
 
     
     
-    return view('market.templates.order.'.config('pondol-market.template.order.theme').'.order', 
+    return view(market_theme('order').'.order', 
       compact('user','items','buyer','display','banks','addresses','coupons'));
   }
 

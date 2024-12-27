@@ -1,6 +1,6 @@
 @php
-$service = config('pondol-market.payment.service');
-$CST_MID = config('pondol-market.payment.mid');
+$service = jsonval('payment', 'service');
+$CST_MID = jsonval('payment', 'mid');
 if ($service) {
   $CST_PLATFORM = "service";
   $LGD_MID = $CST_MID;

@@ -77,8 +77,8 @@ class LgController extends Controller
     $xpay = new XPay($configPath, $CST_PLATFORM);
    
     // Mert Key 설정
-    $xpay->set_config_value('t'.$LGD_MID, config('pondol-market.payment.mid'));
-    $xpay->set_config_value($LGD_MID, config('pondol-market.payment.mid'));
+    $xpay->set_config_value('t'.$LGD_MID, jsonval('payment', 'mid'));
+    $xpay->set_config_value($LGD_MID, jsonval('payment', 'mid'));
    
     $xpay->Init_TX($LGD_MID);
     $LGD_HASHDATA = md5($LGD_MID.$LGD_OID.$LGD_AMOUNT.$LGD_TIMESTAMP.$xpay->config[$LGD_MID]);

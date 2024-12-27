@@ -29,13 +29,12 @@
 
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="types[]" value="refund"
-                 @if(isset(request()->types) && in_array('refund', request()->types)) checked @endif>
+                @inarray('refund', request()->types, 'checked')>
                 <label class="form-check-label">반품요청</label>
               </div>
-
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="types[]" value="exchange"
-                 @if(isset(request()->types) && in_array('exchange', request()->types)) checked @endif>
+                @inarray('exchange', request()->types, 'checked')>
                 <label class="form-check-label">교환요청</label>
               </div>
             </div>
@@ -96,8 +95,8 @@
         <td class="text-center">
           @if($item->type == "exchange")
             {{$exchange_status[$item->status]}}
-          @elseif($item->type == "return")
-            {{$return_status[$item->status]}}
+          @elseif($item->type == "refund")
+            {{$refund_status[$item->status]}}
           @endif
         </td>
         <td class="text-center"><a href="{{ route('market.admin.order', [$item->o_id]) }}" class="btn">{{$item->o_id}}</a></td>

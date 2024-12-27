@@ -53,7 +53,7 @@ class ReviewController extends Controller
     })
     ->orderBy('market_buyers.id', 'desc')->paginate(15)->withQueryString();
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.review.index', [
+    return view(market_theme('userpage').'.review.index', [
       'user' => $user,
       'items' => $items,
     ]);    

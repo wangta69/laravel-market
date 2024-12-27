@@ -53,7 +53,7 @@ class CouponController extends Controller
     }
 
     // print_r($items);
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.coupons', [
+    return view(market_theme('userpage').'.coupons', [
       'items' => $items,
     ]);
   }

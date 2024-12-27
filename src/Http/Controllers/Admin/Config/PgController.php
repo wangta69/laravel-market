@@ -2,11 +2,13 @@
 namespace Pondol\Market\Http\Controllers\Admin\Config;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
-use Pondol\Market\Models\MarketBank;
 
+use DB;
+
+use Pondol\Common\Facades\JsonKeyValue;
+
+use App\Http\Controllers\Controller;
 class PgController extends Controller
 {
   /**
@@ -26,18 +28,12 @@ class PgController extends Controller
    */
   public function index()
   {
-    // config()->set('app.name','My Project App');
-    // $cat1 = $this->subCategory('');
-   
-    // $banks = MarketBank::paginate(20)->appends(request()->query());
-    $payment = config('pondol-market.payment');
+    $payment = JsonKeyValue::getAsJson('payment');
     $pgs = ['inicis'=>'Inicis', 'kcp'=>'KCP', 'lg'=>'LG'];
     $simples = ['naver'=>'네이버 페이', 'kakao'=>'카카오 페이']; // simplePayments
-    return view('market::admin.config.pg', [
-      'payment' => $payment,
-      'pgs'=>$pgs,
-      'simples' => $simples
-    ]);
+    return view('market::admin.config.pg', compact(
+      'payment', 'pgs', 'simples'
+    ));
   }
 
 
@@ -51,19 +47,8 @@ class PgController extends Controller
       'naver' => $request->naver ? true : false,
       'kakao' => $request->kakao ? true : false,
     ];
-    Log::info($params);
-    set_config('pondol-market.payment', $params );
+
+    JsonKeyValue::update('payment', $params);
     return response()->json(['error'=>false]);
   }
-
-  // public function destroy(MarketBank $bank, Request $request) {
-  //   $bank->delete();
-  //   return response()->json([
-  //     'error' => false
-  //   ]);
-  //   // return redirect()->route('market.admin.config.banks');
-  // }
-
-   
-
 }

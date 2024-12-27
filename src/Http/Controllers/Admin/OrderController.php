@@ -105,9 +105,9 @@ class OrderController extends Controller
 
     $couriers = $this->_couriers();
 
-    $delivery_status = config('pondol-market.delivery_status');
-    $pay_status = config('pondol-market.pay_status');
-    
+    $delivery_status = __('market::market.delivery_status');
+    $pay_status = __('market::market.pay_status');
+
 
     return view('market::admin.order.view', [
       'items'=>$items,

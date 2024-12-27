@@ -53,7 +53,6 @@
         </tr>
         
         <tr>
-
           <td>
             @if($coupon->apply_amount_type == 'price')
             <div class="input-group apply-amount-type price">

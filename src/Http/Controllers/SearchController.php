@@ -41,7 +41,7 @@ class SearchController extends Controller
     ->description($request->q.'에 대한 검색결과');
 
     // print_r(DB::getQueryLog());
-    return view('market.templates.search.'.config('pondol-market.template.search.theme').'.search', 
+    return view(market_theme('search').'.search', 
     compact('items', 'meta', 'categories'));
 
   }

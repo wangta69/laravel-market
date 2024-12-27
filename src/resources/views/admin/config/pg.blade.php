@@ -20,30 +20,30 @@
 				<label for='name' class='col-sm-2 col-form-label'>기본 PG</label>
 				<select class="form-select" name="pg">
 					@foreach($pgs as $k=>$v)
-					<option value="{{$k}}" @if($k == $payment['pg']) selected @endif>{{$v}}</option>
+					<option value="{{$k}}" @if($k == $payment->pg) selected @endif>{{$v}}</option>
 					@endforeach
 				</select>
 			</div>
 			<div class="input-group mt-1">
 				<label class='col-sm-2 col-form-label'>상점아이디</label>
-				<input name="mid" type="text" class="form-control" value="{{$payment['mid']}}">
+				<input name="mid" type="text" class="form-control" value="{{$payment->mid}}">
 			</div>
 			<div class="input-group mt-1">
 				<label class='col-sm-2 col-form-label'>사이트키</label>
-				<input name="sitekey" type="text" class="form-control" value="{{$payment['sitekey']}}">
+				<input name="sitekey" type="text" class="form-control" value="{{$payment->sitekey}}">
 			</div>
 			<!-- <div class="input-group mt-1">
 				<label class='col-sm-2 col-form-label'>결제 URL</label>
-				<input name="submit_url" type="text" class="form-control" value="{{$payment['submit_url']}}">
+				<input name="submit_url" type="text" class="form-control" value="{{$payment->submit_url}}">
 			</div> -->
 			<div class="input-group mt-1">
 				<label class='col-sm-2 col-form-label'></label>
 				<div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="service" value="dev" @if(!$payment['service']) checked @endif>
+          <input class="form-check-input" type="radio" name="service" value="dev" @if(!$payment->service) checked @endif>
           <label class="form-check-label">Development</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="service" value="prod" @if($payment['service']) checked @endif>
+          <input class="form-check-input" type="radio" name="service" value="prod" @if($payment->service) checked @endif>
           <label class="form-check-label">Production</label>
         </div>
 			</div>
@@ -51,11 +51,11 @@
 			<div class="input-group mt-1">
 				<label class='col-sm-2 col-form-label'>간편결제</label>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" name="naver" value="1" @if($payment['naver']) checked @endif>
+					<input class="form-check-input" type="checkbox" name="naver" value="1" @if($payment->naver) checked @endif>
 					<label class="form-check-label">Naver Pay</label>
 				</div>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" name="kakao" value="1" @if($payment['kakao']) checked @endif>
+					<input class="form-check-input" type="checkbox" name="kakao" value="1" @if($payment->kakao) checked @endif>
 					<label class="form-check-label">Kakao Pay</label>
 				</div>
 			</div>

@@ -28,11 +28,8 @@ class CompanyController extends Controller
    */
   public function index()
   {
-
-    
     $company = JsonKeyValue::getAsJson('company');
     $company->copyright = isset($company->copyright) ? $company->copyright: '';
-
 
     return view('market::admin.config.company', compact('company'));
   }
@@ -50,7 +47,6 @@ class CompanyController extends Controller
       'copyright' => $request->copyright,
     ];
 
-    set_config('pondol-market.company', $params );
     JsonKeyValue::storeAsJson('company', $params);
     return response()->json(['error'=>false]);
   }

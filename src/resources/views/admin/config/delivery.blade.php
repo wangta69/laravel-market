@@ -19,15 +19,12 @@
 	<form name="delivery-fee-form">
 		<div class="card-body">
 
-
-
-
 			<div class="row align-items-center mt-1">	
 				<div class="col-auto">
 					<span class='form-text'>배송비</span>
 				</div>
 				<div class="col-auto">
-					<input type="text" name="fee" value='{{$cfg["delivery"]["fee"]}}' class="form-control">
+					<input type="text" name="fee" value='{{ $delivery->fee }}' class="form-control">
 				</div>
 				<div class="col-auto">
 					<span class="form-text">원</span>
@@ -36,7 +33,7 @@
 
 			<div class="row align-items-center mt-1">
 				<div class="col-auto">
-					<input type="radio" name="type" value="none" class="form-check-input" {{ $cfg["delivery"]["type"] == 'none' ? 'checked' : '' }} >
+					<input type="radio" name="type" value="none" class="form-check-input" {{ $delivery->type == 'none' ? 'checked' : '' }} >
 				</div>
 				<div class="col-auto">
 					<span class='form-text'>배송비 무료</span>
@@ -45,7 +42,7 @@
 
 			<div class="row align-items-center mt-1">
 				<div class="col-auto">
-					<input type="radio" name="type" value="on_delivery" class="form-check-input" {{ $cfg["delivery"]["type"] == 'on_delivery' ? 'checked' : '' }} >
+					<input type="radio" name="type" value="on_delivery" class="form-check-input" {{ $delivery->type == 'on_delivery' ? 'checked' : '' }} >
 				</div>
 				<div class="col-auto">
 					<span class='form-text'>배송비 착불</span>
@@ -54,7 +51,7 @@
 
 			<div class="row align-items-center mt-1">
 				<div class="col-auto">
-					<input type="radio" name="type" value="apply" class="form-check-input" {{ $cfg["delivery"]["type"] == 'apply' ? 'checked' : '' }}>
+					<input type="radio" name="type" value="apply" class="form-check-input" {{ $delivery->type == 'apply' ? 'checked' : '' }}>
 				</div>
 				<div class="col-auto">
 					<span class='form-text'>구매액에 관계없이 배송비적용</span>
@@ -63,35 +60,19 @@
 
 			<div class="row mt-1 align-items-center">
 				<div class="col-auto">
-					<input type="radio" name="type" value="partial" class="form-check-input" {{ $cfg["delivery"]["type"] == 'partial' ? 'checked' : '' }}>
+					<input type="radio" name="type" value="partial" class="form-check-input" {{ $delivery->type == 'partial' ? 'checked' : '' }}>
 				</div>
 				<div class="col-auto">
 				<span class='form-text'>상품구매액이 </span>
 				</div>
 				<div class="col-auto">
-					<input type="text" name="min" class="form-control" value='{{$cfg["delivery"]["min"]}}' >
+					<input type="text" name="min" class="form-control" value='{{ $delivery->min }}' >
 				</div>
 				<div class="col-auto">
 					<span class='form-text'>미만일 경우 배송비 적용</span>
 				</div>
 			</div>
-{{-- 
-			<input type="radio" name="delivery_fee_type" value="qty" {{ $cfg["delivery"]["delivery_fee_type"] == 'qty' ? 'checked' : '' }}>
-			제품(수)당 배송비적용(
-			<input type="checkbox" name="ENABLE_ADD_TACKBAE_MONEY" value='checked' {{ $cfg["padeliveryy"]["ENABLE_ADD_TACKBAE_MONEY"]}}>
-			기본배송료+추가 수량당
-			<input type="text" name="ADD_TACKBAE_MONEY" value='{{ $cfg["delivery"]["ADD_TACKBAE_MONEY"]}}'>
-			원 추가)
-			<br />
-
-			<input type="checkbox" name="ENABLE_EXPRESS_TACKBAE_MONEY" value='checked' {{ $cfg["delivery"]["ENABLE_EXPRESS_TACKBAE_MONEY"]}}>
-			추가배송료
-			<input type="text" name="EXPRESS_TACKBAE_MONEY" value='{{ $cfg["delivery"]["EXPRESS_TACKBAE_MONEY"]}}' >
-			(기본배송료에 추가배송료(장바구니에서 사용자 체크시 적용))
-			<br /> --}}
-
-
-			
+		
 			
 		</div>
 		<div class="card-footer text-end">

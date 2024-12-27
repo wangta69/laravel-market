@@ -46,14 +46,14 @@ class UserController extends Controller
     // 현재 선택한 상품을 리스트업 한다.
     // $items = $this->orderSvc->orderList($user->id)->orderBy('market_orders.id', 'desc')->paginate(15)->withQueryString();
     // default를 먼저 가져오고 최근 사용한 순으로 가져온다.
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.user', [
+    return view(market_theme('userpage').'.user', [
       'user' => $user
     ]);
   }
 
   public function edit(Request $request) {
     $user = $request->user();
-    return view('market.templates.'.config('pondol-market.template.theme').'.auth.edit', [
+    return view(market_theme('template').'.auth.edit', [
       'user' => $user,
     ]);
   }

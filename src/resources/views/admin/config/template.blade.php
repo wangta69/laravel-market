@@ -19,7 +19,7 @@
     @csrf
     <div class="input-group">
       <div class="input-group-text" id="btnGroupAddon">CI</div>
-      <img src="/storage/market/{{Config::get('market.template.ci')}}" class="ci-image input-group-text">
+      <img src="/storage/market/{{ $template["ci"] }}" class="ci-image input-group-text">
       <input type='file' name='file' class="form-control">
       
       <button type="submit" class="btn btn-primary">Logo 변경 </button>
@@ -33,7 +33,7 @@
     @csrf
     <div class="input-group">
       <div class="input-group-text" id="btnGroupAddon">Favicon</div>
-      <img src="/storage/market/{{Config::get('market.template.favicon')}}" class="ci-image input-group-text">
+      <img src="/storage/market/{{ $template["favicon"] }}" class="ci-image input-group-text">
       <input type='file' name='file' class="form-control">
       
       <button type="submit" class="btn btn-primary">Favicon 변경 </button>
@@ -42,14 +42,18 @@
 </div><!-- .card -->
 
 <div class="card mt-1">
-  <form name="template_form">
+   <form name="template_form">
+  <!--<form method="POST" action="{{ route('market.admin.config.template') }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+     -->
     <div class="card-body">
 
       <div class="input-group">
         <label class="col-form-label col-2">Layout</label>
-        <select class="form-select" name="layout">
+        <select class="form-select" name="layouts">
           @foreach($layouts as $v)
-          <option value="{{$v}}" @if($v == $template["layout"]['theme']) selected @endif>{{$v}}</option>
+          <option value="{{$v}}" @if($v == $template["layouts"]['theme']) selected @endif>{{$v}}</option>
           @endforeach
         </select>
       </div>
@@ -123,9 +127,9 @@
       --}}
       <div class="input-group mt-1">
         <label class="col-form-label col-2">Component</label>
-        <select class="form-select" name="component">
+        <select class="form-select" name="components">
           @foreach($components as $v)
-          <option value="{{$v}}" @if($v == $template["component"]['theme']) selected @endif>{{$v}}</option>
+          <option value="{{$v}}" @if($v == $template["components"]['theme']) selected @endif>{{$v}}</option>
           @endforeach
         </select>
       </div>
@@ -148,6 +152,7 @@
     </div>
     <div class="card-footer text-end">
       <button type="button"class="btn btn-primary act-submit">적용</button>
+      <!-- <button type="submit"class="btn btn-primary">적용</button> -->
     </div>
   </form>
 </div>
@@ -156,7 +161,7 @@
 @parent
 <style>
 .ci-image {
-  width: 38px;
+  width: auto;
   height: 38px;
 }
 </style>

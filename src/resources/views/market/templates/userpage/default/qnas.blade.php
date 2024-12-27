@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '상품문의')
 @section('content')
 
@@ -6,7 +6,7 @@
 
   <div class="row">
     <div class="col-3">
-      @include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.tabs')
+      @include(market_theme('userpage').'.tabs')
     </div>
     <div class="col-9">
       <div class="card mt-5">

@@ -1,4 +1,13 @@
 <?php
+use Pondol\Common\Facades\JsonKeyValue;
+
+if (!function_exists('market_theme')) {
+  function market_theme($theme){
+    $template = JsonKeyValue::getAsJson('market.template');
+    return 'market.templates.'.$theme.'.'.$template->{$theme}->theme;
+  }
+}
+
 if (!function_exists('market_get_thumb')) {
   function market_get_thumb($file, $width=null, $height=null){
     return Pondol\Market\Services\ViewerService::get_thumb($file, $width, $height);
@@ -13,7 +22,7 @@ if (!function_exists('getImageUrl')) {
 
 if (!function_exists('delivery_fee_show')) {
   function delivery_fee_show() {
-    $delivery = config('pondol-market.delivery');
+    $delivery = jsonval('market.delivery');
     switch($delivery["type"]) {
       case 'none':
         return '무료';

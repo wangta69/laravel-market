@@ -47,7 +47,7 @@ class AddressController extends Controller
     // $items = $this->orderSvc->orderList($user->id)->orderBy('market_orders.id', 'desc')->paginate(15)->withQueryString();
     // default를 먼저 가져오고 최근 사용한 순으로 가져온다.
     $addresses = MarketAddress::where('user_id', $user->id)->orderBy('default', 'desc')->orderBy('updated_at', 'desc')->get();
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.address.index', [
+    return view(market_theme('userpage').'.address.index', [
       'addresses' => $addresses,
     ]);
   }

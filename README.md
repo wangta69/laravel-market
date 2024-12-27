@@ -48,7 +48,7 @@ php artisan pondol:create-auth
 
 ### 관리자 페이지 접근
 ```
-https://yourdomain/adm
+https://yourdomain/admin
 ```
 
 ### 기타 설정

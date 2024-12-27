@@ -9,7 +9,7 @@ use File;
 use Storage;
 
 use App\Http\Controllers\Controller;
-
+use Pondol\Common\Facades\JsonKeyValue;
 
 class TemplateController extends Controller
 {
@@ -75,28 +75,14 @@ class TemplateController extends Controller
     $pages_dir =  resource_path('views/market/templates/pages');
     $pages = array_map('basename',\File::directories($pages_dir));
 
-    $template = config('pondol-market.template');
-
-    return view('market::admin.config.template', [
-      'template'=>$template,
-      'layouts'=>$layouts,
-      'main'=>$main,
-      'shop'=>$shop,
-      'cart'=>$cart,
-      'order'=>$order,
-      'userpage'=>$userpage,
-      'search'=>$search,
-      // 'auth'=>$auth,
-      'components'=>$components,
-      'mail'=>$mail,
-      'pages'=>$pages,
-    ]);
+    $template = JsonKeyValue::getAsArray('market.template');
+    return view('market::admin.config.template', compact(
+      'template','layouts','main','shop','cart','order','userpage','search','components','mail','pages'
+    ));
   }
 
   public function update(Request $request) {
-    $template = config('pondol-market.template');
-
-    $template['layout']['theme'] = $request->layout;
+    $template['layouts']['theme'] = $request->layouts;
     $template['main']['theme'] = $request->main;
     $template['shop']['theme'] = $request->shop;
     $template['shop']['theme'] = $request->shop;
@@ -107,11 +93,11 @@ class TemplateController extends Controller
     $template['search']['theme'] = $request->search;
     $template['search']['lists'] = $request->search_lists;
     $template['auth']['theme']  = $request->auth;
-    $template['component']['theme']  = $request->component;
+    $template['components']['theme']  = $request->components;
     $template['mail']['theme']  = $request->mail;
     $template['pages']['theme']  = $request->pages;
 
-    set_config('pondol-market.template', $template );
+    JsonKeyValue::update('market.template', $template);
     return response()->json(['error'=>false]);
   }
 
@@ -119,16 +105,10 @@ class TemplateController extends Controller
 
     $file = $request->file('file');
     if($file) {
-      // $filepath = storage_path('app/public/market');
       $filepath = 'public/market';
-      // $filepath = public_path('storage/market');
       $fileName = $file->getClientOriginalName();
-      // $ext = $file->getClientOriginalExtension();
-      // $fileName = $name.'.'.$ext;
-      // $path=\Storage::put($filepath, $file); // 
-
       $result = $file->storeAs($filepath, $fileName);
-      set_config('pondol-market.template.ci', $fileName );
+      JsonKeyValue::update('market.template', ['ci'=>$fileName]);
     }
 
     return redirect()->back();
@@ -137,17 +117,12 @@ class TemplateController extends Controller
   public function updateFavicon(Request $request) {
     $file = $request->file('file');
     if($file) {
-      // $filepath = storage_path('market');
       $filepath = 'public/market';
       $fileName = $file->getClientOriginalName();
-      // $ext = $file->getClientOriginalExtension();
-      // $fileName = $name.'.'.$ext;
-      // $path=\Storage::put($filepath, $file); // 
-
       $result = $file->storeAs($filepath, $fileName);
-      set_config('pondol-market.template.favicon', $fileName );
+      JsonKeyValue::update('market.template', ['favicon'=>$fileName]);
     }
 
-    // return redirect()->back();
+    return redirect()->back();
   }
 }

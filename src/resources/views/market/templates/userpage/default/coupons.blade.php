@@ -1,10 +1,10 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '할인쿠폰')
 @section('content')
 <div class="container body">
   <div class="row">
     <div class="col-3">
-      @include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.tabs')
+      @include(market_theme('layouts').'.tabs')
     </div>
     <div class="col-9">
       <h2 class="mt-5">발급된 쿠폰</h2>

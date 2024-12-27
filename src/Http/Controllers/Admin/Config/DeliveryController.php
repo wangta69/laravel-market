@@ -2,10 +2,13 @@
 namespace Pondol\Market\Http\Controllers\Admin\Config;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
 
+use DB;
+
+use Pondol\Common\Facades\JsonKeyValue;
+
+use App\Http\Controllers\Controller;
 
 class DeliveryController extends Controller
 {
@@ -26,13 +29,8 @@ class DeliveryController extends Controller
    */
   public function index()
   {
-    // config()->set('app.name','My Project App');
-    // $cat1 = $this->subCategory('');
-    // \Artisan::call('config:clear'); // 만약 production mode이고 config를 cache 하여 사용하면
-    $cfg = config('pondol-market');
-
     return view('market::admin.config.delivery', [
-      'cfg'=>$cfg
+      'delivery'=>JsonKeyValue::getAsJson('market.delivery')
     ]);
   }
 
@@ -42,12 +40,7 @@ class DeliveryController extends Controller
       'type' => $request->type,
       'min' => $request->min
     ];
-    // [TACKBAE_MONEY] => 1000 
-    set_config('pondol-market.delivery', $config );
 
-
+    JsonKeyValue::update('market.delivery', $config);
   }
-
-   
-
 }

@@ -52,7 +52,7 @@ class OrderController extends Controller
     // 현재 선택한 상품을 리스트업 한다.
     $items = $this->orderSvc->orderList($user->id)->orderBy('market_orders.id', 'desc')->paginate(15)->withQueryString();
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.order.orders', [
+    return view(market_theme('userpage').'.order.orders', [
       'user' => $user,
       'items' => $items,
     ]);
@@ -71,7 +71,7 @@ class OrderController extends Controller
            
     }
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.order.view', [
+    return view(market_theme('userpage').'.order.view', [
       'user' => $user,
       'items' => $items,
       'display' =>$display,

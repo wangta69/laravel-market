@@ -1,11 +1,11 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '배송지관리')
 @section('content')
 <div class="container body">
 
   <div class="row">
     <div class="col-3">
-      @include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.tabs')
+      @include(market_theme('userpage').'.tabs')
     </div>
     <div class="col-9">
 
@@ -47,7 +47,7 @@
 <!-- /banner-feature -->
 
 <!-- Modal for create address start -->
-@include('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.address.create-modal')
+@include(market_theme('userpage').'.address.create-modal')
 <!-- Modal for create address end -->
 @endsection
 

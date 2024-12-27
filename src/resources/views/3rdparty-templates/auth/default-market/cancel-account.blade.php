@@ -1,4 +1,4 @@
-@extends('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front')
+@extends(market_theme('layouts').'.front')
 @section('title', '회원탈퇴')
 @section('content')
 <section>
@@ -10,7 +10,7 @@
             <p class="mini-title">{{ Config::get('app.name') }}</p>
             <h3 class="title">회원탈퇴</h3>
           </div>
-          <form method="POST" action="{{ route('market.cancel.account') }}" onsubmit="return checkConfirm()">
+          <form method="POST" action="{{ route('cancel.account') }}" onsubmit="return checkConfirm()">
             @csrf
             @method('DELETE')
             <div class="card-body">

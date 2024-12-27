@@ -4,9 +4,9 @@
 
 @section('page')
 
-  @include('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front-header')
+  @include(market_theme('layouts').'.front-header')
   @yield('content')
-  @include('market.templates.layouts.'.config('pondol-market.template.layout.theme').'.front-footer')
+  @include(market_theme('layouts').'.front-footer')
 
   <!-- toaseer box start -->
   <div class="bg-body-secondary position-relative bd-example-toasts rounded-3">

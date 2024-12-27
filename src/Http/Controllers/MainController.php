@@ -48,7 +48,7 @@ class MainController extends Controller
       $main[$v->display][] = $v;
     }
 
-    return view('market.templates.main.'.config('pondol-market.template.main.theme').'.index', [
+    return view(market_theme('main').'.index', [
       'main' => $main
     ]);
   }

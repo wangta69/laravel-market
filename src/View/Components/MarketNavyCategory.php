@@ -23,7 +23,7 @@ class MarketNavyCategory extends Component
       return null;
     }
     
-    return view('market.templates.components.'.config('pondol-market.template.component.theme').'.navycategory', [
+    return view(market_theme('components').'.navycategory', [
       'categoryObj'=>$this->categoryObj
     ]);
   }

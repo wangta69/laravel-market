@@ -79,7 +79,7 @@ class MailController extends Controller
         $user = User::select('id', 'email', 'name')->find($request->to);
         
         $mailData->user = $user;
-        return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['mailData'=>$mailData]);
+        return view(market_theme('mail').'.'.$request->type,  ['mailData'=>$mailData]);
 
         break;
       case 'order':
@@ -92,7 +92,7 @@ class MailController extends Controller
           $item->displayOptions = extractOptions($item);     
         }
 
-        return view('market.templates.mail.'.config('pondol-market.template.mail.theme').'.'.$request->type,  ['user'=>$user, 'data'=>$mailData]);
+        return view(market_theme('mail').'.'.$request->type,  ['user'=>$user, 'data'=>$mailData]);
         break;
       case 'register':
         $user = User::select('id', 'email', 'name')->find($request->to);

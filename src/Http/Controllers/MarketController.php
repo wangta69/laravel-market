@@ -39,9 +39,8 @@ class MarketController extends Controller
 
     $items = $this->categoryItems($request, $category)
       ->orderBy('market_items.id', 'desc')
-      ->paginate(config('pondol-market.template.shop.lists'))->withQueryString();
+      ->paginate(jsonval('market.template', 'shop.lists'))->withQueryString();
 
-    
     // 현재 카테고리를 저장해 둔다.
     $request->session()->put('category', $category);
 
@@ -70,7 +69,7 @@ class MarketController extends Controller
 
     // $this->meta->keywords = implode(',', $keywords);
 
-    return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.category',
+    return view(market_theme('shop').'.category',
       compact('category', 'items', 'categoryObj', 'meta'));
   }
 
@@ -123,12 +122,9 @@ class MarketController extends Controller
       }
     }
 
-    // $this->meta->setItem($item);
     $meta = Meta::get();
-    // $meta->title('');
-    // return;
 
-    return view('market.templates.shop.'.config('pondol-market.template.shop.theme').'.view', [
+    return view(market_theme('shop').'.view', [
       'meta' => $meta,
       'item' => $item,
       'images' => $images,

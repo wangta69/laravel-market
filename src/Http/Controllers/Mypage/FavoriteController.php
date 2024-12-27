@@ -34,7 +34,7 @@ class FavoriteController extends Controller
     // 현재 선택한 상품을 리스트업 한다.
     $items = $items->orderBy('market_item_favorites.id', 'desc')->paginate(15)->withQueryString();
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.favorite', [
+    return view(market_theme('userpage').'.favorite', [
       'items' => $items,
     ]);
 
@@ -49,7 +49,7 @@ class FavoriteController extends Controller
 
   //   // exit;
 
-  //   return view('market.templates.'.config('pondol-market.template.userpage.theme').'.mypage.order-view', [
+  //   return view(market_theme('userpage').'.mypage.order-view', [
   //     'user' => $user,
   //     'items' => $items,
   //     'display' =>$display,

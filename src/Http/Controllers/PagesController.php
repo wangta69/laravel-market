@@ -43,7 +43,7 @@ class PagesController extends Controller
         break;
     }
 
-    return view('market.templates.pages.'.config('pondol-market.template.pages.theme').'.'.$page, [
+    return view(market_theme('pages').'.'.$page, [
     'meta' => $this->meta,
     'item' => $item,
     ]);

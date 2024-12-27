@@ -45,7 +45,7 @@ class QnaController extends Controller
     // 현재 선택한 상품을 리스트업 한다.
     // $items = $this->orderSvc->orderList($user->id)->orderBy('market_orders.id', 'desc')->paginate(15)->withQueryString();
 
-    return view('market.templates.userpage.'.config('pondol-market.template.userpage.theme').'.qnas', [
+    return view(market_theme('userpage').'.qnas', [
       'user' => $user,
       'items' => $items,
     ]);
